@@ -1,0 +1,35 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const publications = await getCollection("publications");
+---
+
+<Layout title="Research - i2">
+  <h1>Research</h1>
+  <p>Publications and projects produced by i2.</p>
+
+  <section>
+    <h2>Publications</h2>
+    <ul>
+      {publications.map((pub) => (
+        <li>
+          {pub.data.url ? (
+            <a href={pub.data.url}>{pub.data.title}</a>
+          ) : (
+            <span>{pub.data.title}</span>
+          )}
+          — {pub.data.authors.join(", ")}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section>
+    <h2>Related Programs</h2>
+    <ul>
+      <li><a href="/initiatives/research-room">Research Room</a></li>
+      <li><a href="/initiatives/fellows">Fellows</a></li>
+    </ul>
+  </section>
+</Layout>

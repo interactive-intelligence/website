@@ -1,11 +1,29 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="i2 - interactive intelligence">
+  <section>
+    <h1>interactive intelligence</h1>
+    <p>UW's student-led NeuroAI education and research organization.</p>
+  </section>
+
+  <section>
+    <h2>Initiatives</h2>
+    <ul>
+      <li><a href="/initiatives/intro-course">Intro Course</a></li>
+      <li><a href="/initiatives/dsi">Data Science Initiative</a></li>
+      <li><a href="/initiatives/fellows">Fellows</a></li>
+      <li><a href="/initiatives/research-room">Research Room</a></li>
+      <li><a href="/initiatives/talks">Talks</a></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Affiliations</h2>
+    <ul>
+      <li>Allen School</li>
+      <li>Center for Neurotechnology</li>
+    </ul>
+  </section>
 </Layout>

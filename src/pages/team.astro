@@ -1,0 +1,36 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const members = await getCollection("team");
+const active = members.filter((m) => m.data.active);
+const alumni = members.filter((m) => !m.data.active);
+---
+
+<Layout title="Team - i2">
+  <h1>Team</h1>
+
+  <section>
+    <h2>Active Members</h2>
+    <ul>
+      {active.map((member) => (
+        <li>
+          <strong>{member.data.name}</strong> — {member.data.role}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  {alumni.length > 0 && (
+    <section>
+      <h2>Alumni</h2>
+      <ul>
+        {alumni.map((member) => (
+          <li>
+            <strong>{member.data.name}</strong> — {member.data.role}
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+</Layout>

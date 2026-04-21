@@ -1,0 +1,24 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const projects = await getCollection("projects");
+---
+
+<Layout title="Data Science Initiative - i2">
+  <h1>Data Science Initiative</h1>
+  <p>Quarterly data science projects exploring NeuroAI topics.</p>
+
+  <section>
+    <h2>Projects</h2>
+    <ul>
+      {projects.map((project) => (
+        <li>
+          <a href={`/initiatives/dsi/${project.id}`}>{project.data.title}</a>
+          — {project.data.quarter}
+          <p>{project.data.description}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Layout>

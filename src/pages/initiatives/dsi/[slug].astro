@@ -1,0 +1,23 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<Layout title={`${project.data.title} - i2`}>
+  <p><a href="/initiatives/dsi">&larr; Back to DSI</a></p>
+  <h1>{project.data.title}</h1>
+  <p>{project.data.quarter}</p>
+  <p>{project.data.description}</p>
+  <Content />
+</Layout>
