@@ -25,6 +25,8 @@ html {
 	font-family: 'Open Sauce Sans', system-ui, sans-serif;
 	color: var(--text);
 	scrollbar-gutter: stable;
+	scrollbar-width: thin;
+	scrollbar-color: var(--rule) transparent;
 }
 
 body {
