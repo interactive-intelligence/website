@@ -1,29 +1,324 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import { Image } from 'astro:assets'
+import Layout from '../layouts/Layout.astro'
+import hero1 from '../assets/hero-1.jpg'
+import hero2 from '../assets/hero-2.jpg'
+import hero3 from '../assets/hero-3.jpg'
+
+const initiatives = [
+	{
+		name: 'Intro Course',
+		description:
+			'A comprehensive introduction to the fundamentals of machine learning and neuroscience. Perfect for beginners looking to understand how biological and artificial intelligence systems work. Hands-on projects and weekly lectures designed to build a strong foundation.',
+		actions: [
+			{ label: 'Learn More', href: '/initiatives/intro-course', style: 'accent' },
+			{ label: 'Apply for Fall 2026', href: '#', style: 'primary' }
+		]
+	},
+	{
+		name: 'Data Science Initiative',
+		description:
+			'A project-based initiative where members collaborate on real-world data science problems. Teams work on end-to-end pipelines — from data collection and cleaning to modeling and presentation — guided by experienced mentors.',
+		actions: [{ label: 'Learn More', href: '/initiatives/dsi', style: 'accent' }]
+	},
+	{
+		name: 'Fellows',
+		description:
+			'A selective program for advanced students pursuing independent research at the intersection of AI and neuroscience. Fellows receive funding, mentorship, and a dedicated workspace to develop their own projects over the academic year.',
+		actions: [{ label: 'Learn More', href: '/initiatives/fellows', style: 'accent' }]
+	},
+	{
+		name: 'Research Room',
+		description:
+			'A collaborative space where small teams tackle open research questions in NeuroAI. Each team is paired with a faculty advisor and works toward publishable results, with the goal of contributing to the broader scientific community.',
+		actions: [{ label: 'Learn More', href: '/initiatives/research-room', style: 'accent' }]
+	},
+	{
+		name: 'Talks',
+		description:
+			'A speaker series featuring researchers, industry experts, and students presenting their work in AI, neuroscience, and adjacent fields. Talks are open to all and include time for discussion afterward.',
+		actions: [{ label: 'Learn More', href: '/initiatives/talks', style: 'accent' }]
+	}
+]
+
+const stats = [
+	{ value: '180', plus: true, label: 'Intro Course graduates since 2023' },
+	{ value: '140', plus: true, label: 'Active members across 5 initiatives' },
+	{ value: '7', label: 'Research Room teams' },
+	{ value: '11', label: 'Talks hosted with researchers' }
+]
+
+const heroImages = [hero1, hero2, hero3]
 ---
 
 <Layout title="i2 - interactive intelligence">
-  <section>
-    <h1>interactive intelligence</h1>
-    <p>UW's student-led NeuroAI education and research organization.</p>
-  </section>
+	<h1 class="hero">
+		<span>interactive intelligence</span>
+		<span>(i2)</span>
+	</h1>
 
-  <section>
-    <h2>Initiatives</h2>
-    <ul>
-      <li><a href="/initiatives/intro-course">Intro Course</a></li>
-      <li><a href="/initiatives/dsi">Data Science Initiative</a></li>
-      <li><a href="/initiatives/fellows">Fellows</a></li>
-      <li><a href="/initiatives/research-room">Research Room</a></li>
-      <li><a href="/initiatives/talks">Talks</a></li>
-    </ul>
-  </section>
+	<div class="hero-images">
+		{heroImages.map((img) => <Image src={img} alt="" widths={[400, 800]} />)}
+	</div>
 
-  <section>
-    <h2>Affiliations</h2>
-    <ul>
-      <li>Allen School</li>
-      <li>Center for Neurotechnology</li>
-    </ul>
-  </section>
+	<p class="lede">
+		I2 is UW's student-led NeuroAI education and research organization. We aim to create a
+		community of project-driven, outcome-oriented students interested in the intersections of
+		artificial intelligence, cognitive science, neuroscience, and philosophy. Our goal is to
+		make machines learn like humans.
+	</p>
+
+	<section class="initiatives">
+		<h2>Our initiatives</h2>
+		<div class="accordion">
+			{
+				initiatives.map((item, i) => (
+					<details open={i === 0}>
+						<summary>
+							<span class="num">{String(i + 1).padStart(2, '0')}</span>
+							<h3 class="title">{item.name}</h3>
+							<span class="indicator" aria-hidden="true" />
+						</summary>
+						{(item.description || item.actions) && (
+							<div class="body">
+								{item.description && <p>{item.description}</p>}
+								{item.actions && (
+									<div class="actions">
+										{item.actions.map((a) => (
+											<a href={a.href} class:list={['btn', `btn-${a.style}`]}>
+												{a.label}
+											</a>
+										))}
+									</div>
+								)}
+							</div>
+						)}
+					</details>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="numbers">
+		<h2>By the numbers</h2>
+		<div class="stats">
+			{
+				stats.map((s) => (
+					<div class="stat">
+						<div class="value">
+							{s.value}
+							{s.plus && <span class="plus">+</span>}
+						</div>
+						<div class="label">{s.label}</div>
+					</div>
+				))
+			}
+		</div>
+	</section>
+
+	<section class="announcements">
+		<h2>Announcements</h2>
+		<div class="cards">
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
+	</section>
 </Layout>
+
+<style>
+	.hero {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 2rem;
+		font-size: 4rem;
+		line-height: 1;
+		letter-spacing: -0.04em;
+	}
+
+	.hero-images {
+		display: flex;
+		height: 18rem;
+		margin-top: 1rem;
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+	}
+
+	.hero-images :global(img) {
+		flex: 1;
+		min-width: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.lede {
+		margin-top: 2rem;
+		font-size: 1.25rem;
+	}
+
+	.initiatives {
+		display: grid;
+		grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+		gap: 4rem;
+		align-items: start;
+		margin-top: 5rem;
+	}
+
+	.initiatives h2 {
+		font-size: 2.5rem;
+	}
+
+	.accordion details {
+		border-top: 1px solid var(--rule);
+	}
+
+	.accordion details:last-of-type {
+		border-bottom: 1px solid var(--rule);
+	}
+
+	.accordion summary {
+		display: grid;
+		grid-template-columns: 1.75rem 1fr auto;
+		align-items: center;
+		gap: 2rem;
+		padding: 1rem 0;
+		cursor: pointer;
+		list-style: none;
+	}
+
+	.accordion summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.accordion .num {
+		font-size: 1rem;
+		color: var(--text-accent);
+		letter-spacing: -0.02em;
+	}
+
+	.accordion .title {
+		font-size: 1.5rem;
+		font-weight: 600;
+		line-height: 1.5;
+		margin: 0;
+	}
+
+	.accordion .indicator {
+		position: relative;
+		width: 1rem;
+		height: 1rem;
+	}
+
+	.accordion .indicator::before,
+	.accordion .indicator::after {
+		content: '';
+		position: absolute;
+		background: var(--text);
+		top: 50%;
+		left: 50%;
+	}
+
+	.accordion .indicator::before {
+		width: 100%;
+		height: 2px;
+		transform: translate(-50%, -50%);
+	}
+
+	.accordion .indicator::after {
+		width: 2px;
+		height: 100%;
+		transform: translate(-50%, -50%);
+	}
+
+	.accordion details[open] .indicator::after {
+		display: none;
+	}
+
+	.accordion .body {
+		display: grid;
+		grid-template-columns: 1.75rem 1fr;
+		column-gap: 2rem;
+		padding-bottom: 1.5rem;
+	}
+
+	.accordion .body > * {
+		grid-column: 2;
+	}
+
+	.accordion .body p {
+		margin-bottom: 1rem;
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.numbers,
+	.announcements {
+		margin-top: 5rem;
+	}
+
+	.stats,
+	.cards {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 1rem;
+	}
+
+	.cards {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.stat,
+	.cards > div {
+		background: var(--surface);
+		border-radius: var(--radius);
+	}
+
+	.stat {
+		display: flex;
+		flex-direction: column;
+		padding: 1.5rem;
+		gap: 0.5rem;
+	}
+
+	.stat .value {
+		display: flex;
+		align-items: center;
+		font-size: 3.5rem;
+		font-weight: 600;
+		line-height: 1;
+	}
+
+	.stat .plus {
+		font-size: 2.5rem;
+		color: var(--text-accent);
+	}
+
+	.stat .label {
+		font-size: 0.75rem;
+	}
+
+	@media (max-width: 48rem) {
+		.hero {
+			font-size: 2.5rem;
+		}
+
+		.initiatives {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
+
+		.stats {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.cards {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
