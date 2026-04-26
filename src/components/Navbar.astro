@@ -1,6 +1,7 @@
 ---
 import logoRaw from '../assets/i2logo.svg?raw'
 
+const base = import.meta.env.BASE_URL
 const currentPath = Astro.url.pathname
 
 const links = [
@@ -12,26 +13,30 @@ const links = [
 	{ href: '/initiatives', label: 'Initiatives' }
 ]
 
-const isActive = (href: string) =>
-	href === '/' ? currentPath === '/' : currentPath.startsWith(href)
+const prefixed = (path: string) => base + path.slice(1)
+
+const isActive = (href: string) => {
+	const full = prefixed(href)
+	return href === '/' ? currentPath === full : currentPath.startsWith(full)
+}
 ---
 
 <nav>
-	<a href="/" class="logo" aria-label="Home">
+	<a href={base} class="logo" aria-label="Home">
 		<Fragment set:html={logoRaw} />
 	</a>
 	<ul>
 		{
 			links.map(({ href, label }) => (
 				<li>
-					<a href={href} class:list={[{ active: isActive(href) }]}>
+					<a href={prefixed(href)} class:list={[{ active: isActive(href) }]}>
 						{label}
 					</a>
 				</li>
 			))
 		}
 	</ul>
-	<a href="/join" class="btn btn-primary">Join Us</a>
+	<a href={prefixed('/join')} class="btn btn-primary">Join Us</a>
 </nav>
 
 <style>

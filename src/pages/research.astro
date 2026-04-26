@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { getCollection } from "astro:content";
+const base = import.meta.env.BASE_URL;
 
 const publications = await getCollection("publications");
 ---
@@ -28,8 +29,8 @@ const publications = await getCollection("publications");
   <section>
     <h2>Related Programs</h2>
     <ul>
-      <li><a href="/initiatives/research-room">Research Room</a></li>
-      <li><a href="/initiatives/fellows">Fellows</a></li>
+      <li><a href={`${base}initiatives/research-room`}>Research Room</a></li>
+      <li><a href={`${base}initiatives/fellows`}>Fellows</a></li>
     </ul>
   </section>
 </Layout>

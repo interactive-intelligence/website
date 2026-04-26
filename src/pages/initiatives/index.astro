@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+const base = import.meta.env.BASE_URL;
 ---
 
 <Layout title="Initiatives - i2">
@@ -7,23 +8,23 @@ import Layout from "../../layouts/Layout.astro";
 
   <ul>
     <li>
-      <a href="/initiatives/intro-course">Intro Course</a>
+      <a href={`${base}initiatives/intro-course`}>Intro Course</a>
       <p>Introductory course on NeuroAI.</p>
     </li>
     <li>
-      <a href="/initiatives/dsi">Data Science Initiative</a>
+      <a href={`${base}initiatives/dsi`}>Data Science Initiative</a>
       <p>Quarterly data science projects.</p>
     </li>
     <li>
-      <a href="/initiatives/fellows">Fellows</a>
+      <a href={`${base}initiatives/fellows`}>Fellows</a>
       <p>Research fellowship program.</p>
     </li>
     <li>
-      <a href="/initiatives/research-room">Research Room</a>
+      <a href={`${base}initiatives/research-room`}>Research Room</a>
       <p>Collaborative research space.</p>
     </li>
     <li>
-      <a href="/initiatives/talks">Talks</a>
+      <a href={`${base}initiatives/talks`}>Talks</a>
       <p>Speaker series and presentations.</p>
     </li>
   </ul>
