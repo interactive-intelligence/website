@@ -13,7 +13,7 @@ const links = [
 	{ href: '/initiatives', label: 'Initiatives' }
 ]
 
-const prefixed = (path: string) => base + path.slice(1)
+const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\//, '')
 
 const isActive = (href: string) => {
 	const full = prefixed(href)
