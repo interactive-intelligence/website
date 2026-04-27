@@ -80,11 +80,12 @@ const isActive = (href: string) => {
 		border-radius: var(--radius);
 		font-weight: 500;
 		background: var(--surface);
-		transition: background-color 0.15s;
+		border: 1px solid var(--border);
 	}
 
 	ul a:hover,
 	ul a.active {
-		background: var(--accent-alt);
+		background: var(--accent-light);
+		border: 1px solid var(--border-accent-light);
 	}
 </style>

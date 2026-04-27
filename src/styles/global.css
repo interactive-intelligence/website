@@ -1,12 +1,14 @@
 :root {
 	--bg: hsl(260, 50%, 95%);
 	--surface: hsl(260, 50%, 92%);
+	--border: hsl(260, 50%, 87%);
+	--rule: hsl(260, 30%, 75%);
 	--text: hsl(260, 30%, 10%);
 	--text-accent: hsl(260, 40%, 40%);
-	--accent: hsl(260, 45%, 35%);
-	--accent-alt: hsl(275, 80%, 80%);
+	--accent-dark: hsl(260, 45%, 35%);
+	--accent-light: hsl(260, 70%, 80%);
+	--border-accent-light: hsl(260, 70%, 75%);
 	--logo-tile: #839dd3;
-	--rule: hsl(260, 30%, 75%);
 
 	--container: 70rem;
 	--radius: 1.5rem;
@@ -112,11 +114,12 @@ section {
 }
 
 .btn-primary {
-	background: var(--accent);
+	background: var(--accent-dark);
 	color: white;
 }
 
 .btn-accent {
-	background: var(--accent-alt);
+	background: var(--accent-light);
 	color: var(--text);
+	border: 1px solid var(--border-accent-light);
 }
