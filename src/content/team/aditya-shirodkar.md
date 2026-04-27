@@ -1,0 +1,10 @@
+---
+name: Aditya Shirodkar
+role: Alumni
+active: false
+image: /images/team/aditya_shirodkar.jpg
+email: shirodkar987@gmail.com
+tags: ["NeuroAI Ethics Vanguard"]
+---
+
+Hi, I'm Aditya Shirodkar and I'm on the NeuroAI Ethics Vanguard team as an Ethics Lead. As an informatics major interested in Data Science and ML/AI, I'm excited to delve into the technical and ethical implications of various topics at i2! Looking ahead, I'm eager to foster discussion around NeuroAI technologies. Some things I like to do in my free time include swimming, watching movies with friends/family, or just hanging out.

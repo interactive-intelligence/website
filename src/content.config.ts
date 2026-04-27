@@ -8,6 +8,9 @@ const team = defineCollection({
     role: z.string(),
     active: z.boolean(),
     image: z.string().optional(),
+    tags: z.array(z.string()).optional(),
+    website: z.string().url().optional(),
+    email: z.string().email().optional(),
   }),
 });
 

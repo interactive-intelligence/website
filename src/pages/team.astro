@@ -1,36 +1,317 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import { getCollection } from "astro:content";
+import Layout from '../layouts/Layout.astro'
+import { getCollection, render } from 'astro:content'
 
-const members = await getCollection("team");
-const active = members.filter((m) => m.data.active);
-const alumni = members.filter((m) => !m.data.active);
+const withBase = (path: string) => import.meta.env.BASE_URL.replace(/\/$/, '') + path
+
+const members = await getCollection('team')
+
+const roleOrder: Record<string, number> = {
+	President: 0,
+	Founder: 1,
+	Advisor: 2,
+	Officer: 3,
+	Alumni: 4
+}
+
+const sorted = [...members].sort((a, b) => {
+	const ra = roleOrder[a.data.role] ?? 99
+	const rb = roleOrder[b.data.role] ?? 99
+	if (ra !== rb) return ra - rb
+	return a.data.name.localeCompare(b.data.name)
+})
+
+const active = sorted.filter((m) => m.data.active)
+const alumni = sorted.filter((m) => !m.data.active)
+
+const activeWithBody = await Promise.all(
+	active.map(async (m) => {
+		const { Content } = await render(m)
+		return { ...m, Content }
+	})
+)
 ---
 
 <Layout title="Team - i2">
-  <h1>Team</h1>
+	<header class="page-header">
+		<h1>Team</h1>
+		<p class="lede">i2 is built by a diverse community of students, faculty, and alumni.</p>
+	</header>
 
-  <section>
-    <h2>Active Members</h2>
-    <ul>
-      {active.map((member) => (
-        <li>
-          <strong>{member.data.name}</strong> — {member.data.role}
-        </li>
-      ))}
-    </ul>
-  </section>
+	<section class="active">
+		<div class="grid">
+			{
+				activeWithBody.map(({ data, Content }) => (
+					<article class="card">
+						{data.image && (
+							<div class="photo">
+								<img src={withBase(data.image)} alt={data.name} loading="lazy" />
+							</div>
+						)}
+						<div class="info">
+							<div class="head">
+								<h3>{data.name}</h3>
+								<span class="role">{data.role}</span>
+							</div>
+							{data.tags && data.tags.length > 0 && (
+								<ul class="tags">
+									{data.tags.map((t) => (
+										<li>{t}</li>
+									))}
+								</ul>
+							)}
+							<div class="bio">
+								<Content />
+							</div>
+							<div class="links">
+								{data.email && (
+									<a
+										href={`mailto:${data.email}`}
+										aria-label={`Email ${data.name}`}
+									>
+										email
+									</a>
+								)}
+								{data.website && (
+									<a href={data.website} target="_blank" rel="noopener">
+										link
+									</a>
+								)}
+							</div>
+						</div>
+					</article>
+				))
+			}
+		</div>
+	</section>
 
-  {alumni.length > 0 && (
-    <section>
-      <h2>Alumni</h2>
-      <ul>
-        {alumni.map((member) => (
-          <li>
-            <strong>{member.data.name}</strong> — {member.data.role}
-          </li>
-        ))}
-      </ul>
-    </section>
-  )}
+	{
+		alumni.length > 0 && (
+			<section class="alumni">
+				<h2>Alumni</h2>
+				<div class="alumni-grid">
+					{alumni.map(({ data }) => (
+						<article class="alum">
+							{data.image && (
+								<div class="alum-photo">
+									<img
+										src={withBase(data.image)}
+										alt={data.name}
+										loading="lazy"
+									/>
+								</div>
+							)}
+							<div class="alum-info">
+								<h3>{data.name}</h3>
+								{data.tags && data.tags.length > 0 && (
+									<p class="alum-tags">{data.tags.join(' · ')}</p>
+								)}
+								<div class="alum-links">
+									{data.email && <a href={`mailto:${data.email}`}>email</a>}
+									{data.website && (
+										<a href={data.website} target="_blank" rel="noopener">
+											link
+										</a>
+									)}
+								</div>
+							</div>
+						</article>
+					))}
+				</div>
+			</section>
+		)
+	}
 </Layout>
+
+<style>
+	.page-header {
+		margin-bottom: 2rem;
+	}
+
+	section {
+		margin-bottom: 5rem;
+	}
+
+	section h2 {
+		margin-bottom: 2rem;
+	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1.5rem;
+	}
+
+	.card {
+		display: grid;
+		grid-template-columns: 9rem 1fr;
+		gap: 1.25rem;
+		padding: 1.25rem;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+	}
+
+	.photo {
+		aspect-ratio: 1;
+		border-radius: calc(var(--radius) - 0.5rem);
+		overflow: hidden;
+		background: var(--border);
+	}
+
+	.photo img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.info {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+
+	.head {
+		display: flex;
+		flex-direction: column;
+		gap: 0.125rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.head h3 {
+		font-size: 1.125rem;
+		margin: 0;
+	}
+
+	.role {
+		font-size: 0.875rem;
+		color: var(--text-accent);
+		font-weight: 500;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem;
+		list-style: none;
+		padding: 0;
+		margin: 0 0 0.75rem;
+	}
+
+	.tags li {
+		margin: 0;
+		padding: 0.125rem 0.5rem;
+		font-size: 0.75rem;
+		font-weight: 500;
+		background: var(--accent-light);
+		border: 1px solid var(--border-accent-light);
+		border-radius: 999px;
+		color: var(--accent-dark);
+	}
+
+	.bio {
+		font-size: 0.875rem;
+		line-height: 1.6;
+		color: var(--text);
+		flex: 1;
+	}
+
+	.bio :global(p) {
+		margin: 0 0 0.5rem;
+		line-height: 1.6;
+	}
+
+	.bio :global(p:last-child) {
+		margin-bottom: 0;
+	}
+
+	.links {
+		display: flex;
+		gap: 0.75rem;
+		margin-top: 0.75rem;
+		font-size: 0.875rem;
+	}
+
+	.links a {
+		color: var(--text-accent);
+		text-decoration: underline;
+		text-decoration-color: var(--rule);
+		text-underline-offset: 2px;
+	}
+
+	.links a:hover {
+		text-decoration-color: var(--text-accent);
+	}
+
+	.alumni-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.alum {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.alum-photo {
+		aspect-ratio: 1;
+		border-radius: var(--radius);
+		overflow: hidden;
+		background: var(--surface);
+		border: 1px solid var(--border);
+	}
+
+	.alum-photo img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.alum-info h3 {
+		font-size: 0.95rem;
+		margin: 0 0 0.25rem;
+		font-weight: 600;
+	}
+
+	.alum-tags {
+		font-size: 0.75rem;
+		color: var(--text-accent);
+		margin: 0 0 0.25rem;
+		line-height: 1.4;
+	}
+
+	.alum-links {
+		display: flex;
+		gap: 0.5rem;
+		font-size: 0.75rem;
+	}
+
+	.alum-links a {
+		color: var(--text-accent);
+		text-decoration: underline;
+		text-decoration-color: var(--rule);
+		text-underline-offset: 2px;
+	}
+
+	.alum-links a:hover {
+		text-decoration-color: var(--text-accent);
+	}
+
+	@media (max-width: 48rem) {
+		.grid {
+			grid-template-columns: 1fr;
+		}
+
+		.card {
+			grid-template-columns: 6.5rem 1fr;
+			gap: 1rem;
+			padding: 1rem;
+		}
+
+		.alumni-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+</style>

@@ -1,0 +1,10 @@
+---
+name: Eric Ye
+role: Officer
+active: true
+image: /images/team/eric_ye.jpg
+email: ericy4@uw.edu
+tags: ["Research"]
+---
+
+Hello, I'm Eric, and I'm studying CS and applied mathematics. I joined this club mostly because I found the idea of intelligence really interesting. Is it something that is special and unique, or is it something that could be recreated? I'm leaning towards the latter due to the impressive recent advancements in AI. I really enjoyed all the programs and events that this club offered in the past, such as the Intro Course, i2 Talks, Kaggle Wrangling, and i2 Fellows, and I hope we can bring all of these (and others!) back. In my spare time, I enjoy reading and hiking, and I occasionally play tennis.
