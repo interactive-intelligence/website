@@ -14,9 +14,7 @@ const links = [
 	{ href: '/initiatives', label: 'Initiatives', dropdown: true }
 ]
 
-const initiatives = (await getCollection('initiatives')).sort(
-	(a, b) => a.data.order - b.data.order
-)
+const initiatives = (await getCollection('initiatives')).sort((a, b) => a.data.order - b.data.order)
 
 const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\//, '')
 
@@ -80,9 +78,10 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 		width: 4rem;
 		height: 4rem;
 		padding: 0.25rem;
-		background: var(--logo-tile);
+		background: var(--logo-bg);
 		border-radius: var(--radius);
 		overflow: hidden;
+		border: 1px solid var(--border-logo-bg);
 	}
 
 	.logo :global(svg) {
@@ -135,7 +134,10 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 		opacity: 0;
 		visibility: hidden;
 		transform: translateY(-0.25rem);
-		transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
+		transition:
+			opacity 0.15s,
+			transform 0.15s,
+			visibility 0.15s;
 		z-index: 10;
 	}
 

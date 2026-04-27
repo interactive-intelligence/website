@@ -5,10 +5,12 @@
 	--rule: hsl(260, 30%, 75%);
 	--text: hsl(260, 30%, 10%);
 	--text-accent: hsl(260, 40%, 40%);
-	--accent-dark: hsl(260, 45%, 35%);
+	--accent-dark: hsl(260, 45%, 40%);
+	--border-accent-dark: hsl(260, 45%, 35%);
 	--accent-light: hsl(260, 70%, 80%);
 	--border-accent-light: hsl(260, 70%, 75%);
-	--logo-tile: #839dd3;
+	--logo-bg: hsl(221, 48%, 67%);
+	--border-logo-bg: hsl(221, 48%, 62%);
 
 	--container: 70rem;
 	--radius: 1.5rem;
@@ -116,6 +118,7 @@ section {
 .btn-primary {
 	background: var(--accent-dark);
 	color: white;
+	border: 1px solid var(--border-accent-dark);
 }
 
 .btn-accent {
