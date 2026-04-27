@@ -4,6 +4,8 @@ import Layout from '../layouts/Layout.astro'
 import hero1 from '../assets/hero-1.jpg'
 import hero2 from '../assets/hero-2.jpg'
 import hero3 from '../assets/hero-3.jpg'
+import allenLogo from '../assets/allen-school-logo.svg'
+import cntLogo from '../assets/cnt-logo.png'
 
 const initiatives = [
 	{
@@ -116,12 +118,39 @@ const heroImages = [hero1, hero2, hero3]
 		</div>
 	</section>
 
-	<section class="announcements">
+	{
+		/* <section class="announcements">
 		<h2>Announcements</h2>
 		<div class="cards">
 			<div></div>
 			<div></div>
 			<div></div>
+		</div>
+	</section> */
+	}
+
+	<section class="affiliations">
+		<h2>Affiliated with</h2>
+		<div class="affil-cards">
+			<a
+				href="https://www.cs.washington.edu"
+				target="_blank"
+				rel="noopener"
+				class="affil-card affil-allen"
+			>
+				<Image
+					src={allenLogo}
+					alt="Paul G. Allen School of Computer Science & Engineering"
+				/>
+			</a>
+			<a
+				href="https://centerforneurotech.uw.edu"
+				target="_blank"
+				rel="noopener"
+				class="affil-card affil-cnt"
+			>
+				<Image src={cntLogo} alt="UW Center for Neurotechnology" />
+			</a>
 		</div>
 	</section>
 </Layout>
@@ -156,6 +185,10 @@ const heroImages = [hero1, hero2, hero3]
 	.lede {
 		margin-top: 2rem;
 		font-size: 1.25rem;
+	}
+
+	section {
+		margin-bottom: 5rem;
 	}
 
 	.initiatives {
@@ -257,11 +290,6 @@ const heroImages = [hero1, hero2, hero3]
 		gap: 0.5rem;
 	}
 
-	.numbers,
-	.announcements {
-		margin-top: 5rem;
-	}
-
 	.stats,
 	.cards {
 		display: grid;
@@ -278,6 +306,38 @@ const heroImages = [hero1, hero2, hero3]
 		background: var(--surface);
 		border-radius: var(--radius);
 		border: 1px solid var(--border);
+	}
+
+	.affil-cards {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+	}
+
+	.affil-card {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1rem 2rem;
+		border-radius: var(--radius);
+	}
+
+	.affil-card:hover {
+		opacity: 0.8;
+	}
+
+	.affil-allen {
+		background: var(--accent-dark);
+	}
+
+	.affil-cnt {
+		background: #000;
+	}
+
+	.affil-card :global(img) {
+		width: 100%;
+		height: auto;
+		object-fit: contain;
 	}
 
 	.stat {
@@ -297,6 +357,8 @@ const heroImages = [hero1, hero2, hero3]
 
 	.stat .plus {
 		font-size: 2.5rem;
+		margin-left: 0.125rem;
+		font-weight: 400;
 		color: var(--text-accent);
 	}
 
@@ -319,6 +381,10 @@ const heroImages = [hero1, hero2, hero3]
 		}
 
 		.cards {
+			grid-template-columns: 1fr;
+		}
+
+		.affil-cards {
 			grid-template-columns: 1fr;
 		}
 	}
