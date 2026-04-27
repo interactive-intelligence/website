@@ -2,7 +2,7 @@
 name: Devrin Chen-Sorasith Chullanandana
 role: Alumni
 active: false
-image: /images/team/devrin.jpg
+image: devrin.jpg
 email: dr2592@uw.edu
 website: https://www.instagram.com/devrin.cc/
 tags: ["Business Advisor", "Mathematics"]

@@ -2,7 +2,7 @@
 name: Ajit Mallavarapu
 role: Alumni
 active: false
-image: /images/team/ajit_mallavarapu.jpg
+image: ajit_mallavarapu.jpg
 email: aj1tmallav@gmail.com
 tags: ["NeuroAI Ethics Vanguard"]
 ---

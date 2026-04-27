@@ -2,7 +2,7 @@
 name: Yegor Kuznetsov
 role: Alumni
 active: false
-image: /images/team/yegor.jpg
+image: yegor.jpg
 email: yegor@uw.edu
 tags: ["CS", "Emergent Lang"]
 ---

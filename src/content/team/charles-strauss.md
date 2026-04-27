@@ -2,7 +2,7 @@
 name: Charles M. S. Strauss
 role: Alumni
 active: false
-image: /images/team/blank.png
+image: blank.png
 email: cstrau2@uw.edu
 website: https://www.linkedin.com/in/charles-strauss-a53883161/
 tags: ["Prescience", "CS", "Network Splitting", "Environment"]

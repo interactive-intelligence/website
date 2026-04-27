@@ -2,7 +2,7 @@
 name: Benjamin So
 role: Alumni
 active: false
-image: /images/team/benjamin_so.png
+image: benjamin_so.png
 email: benso10@uw.edu
 tags: ["i2 Talks"]
 ---

@@ -2,7 +2,7 @@
 name: Abel Mesfin
 role: Officer
 active: true
-image: /images/team/abel_m.png
+image: abel_m.png
 email: abelmtc@uw.edu
 tags: ["i2 Talks", "Technical Team"]
 ---

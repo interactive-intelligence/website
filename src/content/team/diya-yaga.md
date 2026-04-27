@@ -2,7 +2,7 @@
 name: Diya Yaga
 role: Officer
 active: true
-image: /images/team/diya_yaga.jpg
+image: diya_yaga.jpg
 email: dyaga@uw.edu
 tags: ["Education", "Research"]
 ---

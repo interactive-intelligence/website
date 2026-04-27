@@ -2,7 +2,7 @@
 name: Frank Li
 role: Alumni
 active: false
-image: /images/team/frank_li.jpg
+image: frank_li.jpg
 email: angli23@cs.washington.edu
 website: https://www.linkedin.com/in/anglifrank
 tags: ["Research", "CS"]

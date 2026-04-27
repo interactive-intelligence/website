@@ -2,7 +2,7 @@
 name: Janna Hong
 role: Alumni
 active: false
-image: /images/team/janna.jpg
+image: janna.jpg
 email: jannahg@uw.edu
 website: https://www.linkedin.com/in/janna-hong-662956231/
 tags: ["Neuroscience Lead", "Neuro", "RL"]

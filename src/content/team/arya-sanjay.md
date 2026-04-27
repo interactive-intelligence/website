@@ -2,7 +2,7 @@
 name: Arya Sanjay
 role: President
 active: true
-image: /images/team/arya_s.jpg
+image: arya_s.jpg
 email: aryas1@cs.washington.edu
 tags: ["Administrative", "Education"]
 ---

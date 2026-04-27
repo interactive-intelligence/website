@@ -2,7 +2,7 @@
 name: Hilal Mufti
 role: Alumni
 active: false
-image: /images/team/blank.png
+image: blank.png
 email: hilalmufti1@gmail.com
 tags: ["CS"]
 ---

@@ -2,7 +2,7 @@
 name: Aditya Shirodkar
 role: Alumni
 active: false
-image: /images/team/aditya_shirodkar.jpg
+image: aditya_shirodkar.jpg
 email: shirodkar987@gmail.com
 tags: ["NeuroAI Ethics Vanguard"]
 ---

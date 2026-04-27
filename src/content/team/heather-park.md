@@ -2,7 +2,7 @@
 name: Heather Park
 role: Officer
 active: true
-image: /images/team/heather_p.png
+image: heather_p.png
 email: hwpark22@uw.edu
 tags: ["Curriculum"]
 ---

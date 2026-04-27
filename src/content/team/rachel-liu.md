@@ -2,7 +2,7 @@
 name: Rachel Liu
 role: Officer
 active: true
-image: /images/team/rachel_l.png
+image: rachel_l.png
 email: rlliu@uw.edu
 tags: ["Administrative"]
 ---

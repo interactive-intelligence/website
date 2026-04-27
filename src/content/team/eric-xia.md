@@ -2,7 +2,7 @@
 name: Eric Xia
 role: Alumni
 active: false
-image: /images/team/eric.jpg
+image: eric.jpg
 email: ericxia@uw.edu
 website: https://www.linkedin.com/in/eric-xia-seattle/
 tags: ["Math", "RL", "Emergent Lang"]

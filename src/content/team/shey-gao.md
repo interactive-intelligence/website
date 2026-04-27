@@ -2,7 +2,7 @@
 name: Shey Gao
 role: Alumni
 active: false
-image: /images/team/shey.jpg
+image: shey.jpg
 email: shengg6@uw.edu
 tags: ["ACMS"]
 ---

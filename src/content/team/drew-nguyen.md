@@ -2,7 +2,7 @@
 name: Drew Nguyen
 role: Alumni
 active: false
-image: /images/team/blank.png
+image: blank.png
 email: nguyen.mail496@gmail.com
 website: https://www.linkedin.com/in/drew-nguyen-68abb5173/
 tags: ["CS", "Neuro", "RL"]

@@ -2,7 +2,7 @@
 name: Rohan Pandey
 role: Alumni
 active: false
-image: /images/team/rohan_pandey.jpg
+image: rohan_pandey.jpg
 email: rpande@uw.edu
 tags: ["Education"]
 ---

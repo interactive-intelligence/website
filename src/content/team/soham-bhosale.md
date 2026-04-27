@@ -2,7 +2,7 @@
 name: Soham Bhosale
 role: Officer
 active: true
-image: /images/team/soham_bhosale.jpg
+image: soham_bhosale.jpg
 email: sohamsbhosale@gmail.com
 tags: ["Research"]
 ---
