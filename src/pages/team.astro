@@ -3,16 +3,6 @@ import Layout from '../layouts/Layout.astro'
 import { Image } from 'astro:assets'
 import { getCollection, render } from 'astro:content'
 
-const teamImages = import.meta.glob<{ default: ImageMetadata }>(
-	'../assets/team/*.{jpg,jpeg,png,webp,avif}'
-)
-
-const resolveImage = (filename: string | undefined) => {
-	if (!filename) return undefined
-	const key = `../assets/team/${filename}`
-	return teamImages[key]
-}
-
 const members = await getCollection('team')
 
 const roleOrder: Record<string, number> = {
@@ -30,24 +20,14 @@ const sorted = [...members].sort((a, b) => {
 	return a.data.name.localeCompare(b.data.name)
 })
 
-const loadImage = async (filename: string | undefined) => {
-	const loader = resolveImage(filename)
-	return loader ? (await loader()).default : undefined
-}
-
 const active = sorted.filter((m) => m.data.active)
 const alumni = sorted.filter((m) => !m.data.active)
 
 const activeWithBody = await Promise.all(
 	active.map(async (m) => {
 		const { Content } = await render(m)
-		const image = await loadImage(m.data.image)
-		return { ...m, Content, image }
+		return { ...m, Content }
 	})
-)
-
-const alumniWithImage = await Promise.all(
-	alumni.map(async (m) => ({ ...m, image: await loadImage(m.data.image) }))
 )
 ---
 
@@ -60,13 +40,13 @@ const alumniWithImage = await Promise.all(
 	<section class="active">
 		<div class="grid">
 			{
-				activeWithBody.map(({ data, Content, image }) => (
+				activeWithBody.map(({ data, Content }) => (
 					<article class="card">
 						<div class="card-top">
-							{image && (
+							{data.image && (
 								<div class="photo">
 									<Image
-										src={image}
+										src={data.image}
 										alt={data.name}
 										widths={[112, 224, 336]}
 										sizes="7rem"
@@ -113,16 +93,16 @@ const alumniWithImage = await Promise.all(
 	</section>
 
 	{
-		alumniWithImage.length > 0 && (
+		alumni.length > 0 && (
 			<section class="alumni">
 				<h2>Alumni</h2>
 				<div class="alumni-grid">
-					{alumniWithImage.map(({ data, image }) => (
+					{alumni.map(({ data }) => (
 						<article class="alum">
-							{image && (
+							{data.image && (
 								<div class="alum-photo">
 									<Image
-										src={image}
+										src={data.image}
 										alt={data.name}
 										widths={[160, 320, 480]}
 										sizes="(max-width: 40rem) 25vw, 12rem"

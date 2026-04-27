@@ -2,7 +2,7 @@
 name: Pushpesh Thakur
 role: Officer
 active: true
-image: pushpesh_thakur.jpg
+image: ./pushpesh_thakur.jpg
 email: pthakur@uw.edu
 tags: ["Education"]
 ---

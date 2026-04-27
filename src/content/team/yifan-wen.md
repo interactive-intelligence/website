@@ -2,7 +2,7 @@
 name: Yifan Wen
 role: Officer
 active: true
-image: yifan_w.png
+image: ./yifan_w.png
 email: yifanw64@uw.edu
 website: https://refact0r.dev
 tags: ["Technical Team"]

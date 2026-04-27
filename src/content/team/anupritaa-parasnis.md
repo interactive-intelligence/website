@@ -2,7 +2,7 @@
 name: Anupritaa Parasnis
 role: Alumni
 active: false
-image: anupritaa_parasnis.jpg
+image: ./anupritaa_parasnis.jpg
 email: aparas2@uw.edu
 tags: ["Education"]
 ---

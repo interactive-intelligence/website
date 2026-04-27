@@ -2,7 +2,7 @@
 name: Chaytan Inman
 role: Founder
 active: false
-image: chaytan.png
+image: ./chaytan.png
 email: chaytan@uw.edu
 website: https://www.linkedin.com/in/chaytan-inman/
 tags: ["Team Captain", "CS", "RL", "Environment"]

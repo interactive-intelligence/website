@@ -3,15 +3,16 @@ import { glob } from "astro/loaders";
 
 const team = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/team" }),
-  schema: z.object({
-    name: z.string(),
-    role: z.string(),
-    active: z.boolean(),
-    image: z.string().optional(),
-    tags: z.array(z.string()).optional(),
-    website: z.string().url().optional(),
-    email: z.string().email().optional(),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      role: z.string(),
+      active: z.boolean(),
+      image: image().optional(),
+      tags: z.array(z.string()).optional(),
+      website: z.string().url().optional(),
+      email: z.string().email().optional(),
+    }),
 });
 
 const projects = defineCollection({
@@ -43,4 +44,19 @@ const publications = defineCollection({
   }),
 });
 
-export const collections = { team, projects, talks, publications };
+const initiatives = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/initiatives" }),
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      short_description: z.string(),
+      long_description: z.string(),
+      photo: image(),
+      external_url: z.string().url().optional(),
+      form_url: z.string().url().optional(),
+      form_label: z.string().optional(),
+      order: z.number(),
+    }),
+});
+
+export const collections = { team, projects, talks, publications, initiatives };

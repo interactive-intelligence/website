@@ -2,7 +2,7 @@
 name: Eric Ye
 role: Officer
 active: true
-image: eric_ye.jpg
+image: ./eric_ye.jpg
 email: ericy4@uw.edu
 tags: ["Research"]
 ---

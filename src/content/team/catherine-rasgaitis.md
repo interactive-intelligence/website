@@ -2,7 +2,7 @@
 name: Catherine Rasgaitis
 role: Alumni
 active: false
-image: catherine.jpg
+image: ./catherine.jpg
 email: catraz@uw.edu
 website: https://www.linkedin.com/in/catherine-rasgaitis/
 tags: ["CS"]

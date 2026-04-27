@@ -2,7 +2,7 @@
 name: Sabrina Burka
 role: Alumni
 active: false
-image: sabrina.jpg
+image: ./sabrina.jpg
 email: sburka@uw.edu
 website: https://www.linkedin.com/in/sabrina-burka
 tags: ["Informatics", "Social Media Head"]

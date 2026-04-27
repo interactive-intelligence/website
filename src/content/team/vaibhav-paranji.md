@@ -2,7 +2,7 @@
 name: Vaibhav Paranji
 role: Alumni
 active: false
-image: vaibhav_paranji.jpg
+image: ./vaibhav_paranji.jpg
 email: paranjivaibhav@gmail.com
 tags: ["Education"]
 ---

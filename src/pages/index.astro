@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets'
+import { getCollection } from 'astro:content'
 import Layout from '../layouts/Layout.astro'
 import hero1 from '../assets/hero-1.jpg'
 import hero2 from '../assets/hero-2.jpg'
@@ -7,41 +8,14 @@ import hero3 from '../assets/hero-3.jpg'
 import allenLogo from '../assets/allen-school-logo.svg'
 import cntLogo from '../assets/cnt-logo.png'
 
-const initiatives = [
-	{
-		name: 'Intro Course',
-		description:
-			'A comprehensive introduction to the fundamentals of machine learning and neuroscience. Perfect for beginners looking to understand how biological and artificial intelligence systems work. Hands-on projects and weekly lectures designed to build a strong foundation.',
-		actions: [
-			{ label: 'Learn More', href: '/initiatives/intro-course', style: 'accent' },
-			{ label: 'Apply for Fall 2026', href: '#', style: 'primary' }
-		]
-	},
-	{
-		name: 'Data Science Initiative',
-		description:
-			'A project-based initiative where members collaborate on real-world data science problems. Teams work on end-to-end pipelines — from data collection and cleaning to modeling and presentation — guided by experienced mentors.',
-		actions: [{ label: 'Learn More', href: '/initiatives/dsi', style: 'accent' }]
-	},
-	{
-		name: 'Fellows',
-		description:
-			'A selective program for advanced students pursuing independent research at the intersection of AI and neuroscience. Fellows receive funding, mentorship, and a dedicated workspace to develop their own projects over the academic year.',
-		actions: [{ label: 'Learn More', href: '/initiatives/fellows', style: 'accent' }]
-	},
-	{
-		name: 'Research Room',
-		description:
-			'A collaborative space where small teams tackle open research questions in NeuroAI. Each team is paired with a faculty advisor and works toward publishable results, with the goal of contributing to the broader scientific community.',
-		actions: [{ label: 'Learn More', href: '/initiatives/research-room', style: 'accent' }]
-	},
-	{
-		name: 'Talks',
-		description:
-			'A speaker series featuring researchers, industry experts, and students presenting their work in AI, neuroscience, and adjacent fields. Talks are open to all and include time for discussion afterward.',
-		actions: [{ label: 'Learn More', href: '/initiatives/talks', style: 'accent' }]
-	}
-]
+const base = import.meta.env.BASE_URL
+
+const initiatives = (await getCollection('initiatives')).sort(
+	(a, b) => a.data.order - b.data.order
+)
+
+const learnMoreHref = (data: { external_url?: string }, id: string) =>
+	data.external_url ?? `${base}initiatives/${id}`
 
 const stats = [
 	{ value: '180', plus: true, label: 'Intro Course graduates since 2023' },
@@ -78,23 +52,22 @@ const heroImages = [hero1, hero2, hero3]
 					<details open={i === 0}>
 						<summary>
 							<span class="num">{String(i + 1).padStart(2, '0')}</span>
-							<h3 class="title">{item.name}</h3>
+							<h3 class="title">{item.data.name}</h3>
 							<span class="indicator" aria-hidden="true" />
 						</summary>
-						{(item.description || item.actions) && (
-							<div class="body">
-								{item.description && <p>{item.description}</p>}
-								{item.actions && (
-									<div class="actions">
-										{item.actions.map((a) => (
-											<a href={a.href} class:list={['btn', `btn-${a.style}`]}>
-												{a.label}
-											</a>
-										))}
-									</div>
+						<div class="body">
+							<p>{item.data.short_description}</p>
+							<div class="actions">
+								<a href={learnMoreHref(item.data, item.id)} class="btn btn-accent">
+									Learn More
+								</a>
+								{item.data.form_url && (
+									<a href={item.data.form_url} class="btn btn-primary">
+										{item.data.form_label}
+									</a>
 								)}
 							</div>
-						)}
+						</div>
 					</details>
 				))
 			}

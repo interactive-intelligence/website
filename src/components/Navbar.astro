@@ -1,4 +1,5 @@
 ---
+import { getCollection } from 'astro:content'
 import logoRaw from '../assets/i2logo.svg?raw'
 
 const base = import.meta.env.BASE_URL
@@ -10,8 +11,12 @@ const links = [
 	{ href: '/schedule', label: 'Schedule' },
 	{ href: '/team', label: 'Team' },
 	{ href: '/research', label: 'Research' },
-	{ href: '/initiatives', label: 'Initiatives' }
+	{ href: '/initiatives', label: 'Initiatives', dropdown: true }
 ]
+
+const initiatives = (await getCollection('initiatives')).sort(
+	(a, b) => a.data.order - b.data.order
+)
 
 const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\//, '')
 
@@ -19,6 +24,9 @@ const isActive = (href: string) => {
 	const full = prefixed(href)
 	return href === '/' ? currentPath === full : currentPath.startsWith(full)
 }
+
+const initiativeHref = (data: { external_url?: string }, id: string) =>
+	data.external_url ?? prefixed(`/initiatives/${id}`)
 ---
 
 <nav>
@@ -27,11 +35,29 @@ const isActive = (href: string) => {
 	</a>
 	<ul>
 		{
-			links.map(({ href, label }) => (
-				<li>
+			links.map(({ href, label, dropdown }) => (
+				<li class:list={[{ 'has-dropdown': dropdown }]}>
 					<a href={prefixed(href)} class:list={[{ active: isActive(href) }]}>
 						{label}
 					</a>
+					{dropdown && (
+						<ul class="submenu">
+							{initiatives.map((init) => (
+								<li>
+									<a
+										href={initiativeHref(init.data, init.id)}
+										target={init.data.external_url ? '_blank' : undefined}
+										rel={init.data.external_url ? 'noopener' : undefined}
+									>
+										{init.data.name}
+									</a>
+								</li>
+							))}
+							<li class="separator">
+								<a href={prefixed('/initiatives')}>All initiatives</a>
+							</li>
+						</ul>
+					)}
 				</li>
 			))
 		}
@@ -68,6 +94,7 @@ const isActive = (href: string) => {
 		display: flex;
 		gap: 0.5rem;
 		list-style: none;
+		padding: 0;
 	}
 
 	ul li {
@@ -87,5 +114,61 @@ const isActive = (href: string) => {
 	ul a.active {
 		background: var(--accent-light);
 		border: 1px solid var(--border-accent-light);
+	}
+
+	.has-dropdown {
+		position: relative;
+	}
+
+	.submenu {
+		position: absolute;
+		top: calc(100% + 0.5rem);
+		left: 0;
+		min-width: 14rem;
+		flex-direction: column;
+		gap: 0.25rem;
+		padding: 0.5rem;
+		background: var(--bg);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		box-shadow: 0 8px 24px hsl(260 40% 20% / 0.12);
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(-0.25rem);
+		transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
+		z-index: 10;
+	}
+
+	.has-dropdown:hover .submenu,
+	.has-dropdown:focus-within .submenu {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+		display: flex;
+	}
+
+	.submenu li {
+		margin: 0;
+	}
+
+	.submenu a {
+		display: block;
+		padding: 0.5rem 0.75rem;
+		background: transparent;
+		border: 1px solid transparent;
+		border-radius: calc(var(--radius) - 0.5rem);
+		font-size: 0.95rem;
+		white-space: nowrap;
+	}
+
+	.submenu a:hover {
+		background: var(--accent-light);
+		border-color: var(--border-accent-light);
+	}
+
+	.submenu .separator {
+		border-top: 1px solid var(--border);
+		margin-top: 0.25rem;
+		padding-top: 0.25rem;
 	}
 </style>

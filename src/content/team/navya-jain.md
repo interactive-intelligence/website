@@ -2,7 +2,7 @@
 name: Navya Jain
 role: Officer
 active: true
-image: navya_j.png
+image: ./navya_j.png
 email: najain@uw.edu
 tags: ["Administrative"]
 ---

@@ -2,7 +2,7 @@
 name: Elizabeth Bui
 role: Alumni
 active: false
-image: elizabeth.png
+image: ./elizabeth.png
 email: kaitebui@uw.edu
 website: https://www.linkedin.com/in/k-elizabeth-bui-acms
 tags: ["ACMS"]

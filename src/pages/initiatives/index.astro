@@ -1,31 +1,115 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-const base = import.meta.env.BASE_URL;
+import { Image } from 'astro:assets'
+import { getCollection } from 'astro:content'
+import Layout from '../../layouts/Layout.astro'
+
+const base = import.meta.env.BASE_URL
+
+const initiatives = (await getCollection('initiatives')).sort((a, b) => a.data.order - b.data.order)
+
+const learnMoreHref = (data: { external_url?: string }, id: string) =>
+	data.external_url ?? `${base}initiatives/${id}`
 ---
 
 <Layout title="Initiatives - i2">
-  <h1>Initiatives</h1>
+	<header class="page-header">
+		<h1>Initiatives</h1>
+		<p class="lede">
+			Programs and communities at i2, spanning intro-level coursework, project teams,
+			research, and our speaker series.
+		</p>
+	</header>
 
-  <ul>
-    <li>
-      <a href={`${base}initiatives/intro-course`}>Intro Course</a>
-      <p>Introductory course on NeuroAI.</p>
-    </li>
-    <li>
-      <a href={`${base}initiatives/dsi`}>Data Science Initiative</a>
-      <p>Quarterly data science projects.</p>
-    </li>
-    <li>
-      <a href={`${base}initiatives/fellows`}>Fellows</a>
-      <p>Research fellowship program.</p>
-    </li>
-    <li>
-      <a href={`${base}initiatives/research-room`}>Research Room</a>
-      <p>Collaborative research space.</p>
-    </li>
-    <li>
-      <a href={`${base}initiatives/talks`}>Talks</a>
-      <p>Speaker series and presentations.</p>
-    </li>
-  </ul>
+	<div class="grid">
+		{
+			initiatives.map((item) => (
+				<article class="card">
+					<a href={learnMoreHref(item.data, item.id)} class="photo">
+						<Image
+							src={item.data.photo}
+							alt={item.data.name}
+							widths={[400, 800, 1200]}
+							sizes="(max-width: 48rem) 100vw, 32rem"
+						/>
+					</a>
+					<div class="body">
+						<h2>{item.data.name}</h2>
+						<p>{item.data.long_description}</p>
+						<div class="actions">
+							<a href={learnMoreHref(item.data, item.id)} class="btn btn-accent">
+								Learn More
+							</a>
+							{item.data.form_url && (
+								<a href={item.data.form_url} class="btn btn-primary">
+									{item.data.form_label}
+								</a>
+							)}
+						</div>
+					</div>
+				</article>
+			))
+		}
+	</div>
 </Layout>
+
+<style>
+	.page-header {
+		margin-bottom: 2.5rem;
+	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr));
+		gap: 1.5rem;
+	}
+
+	.card {
+		display: flex;
+		flex-direction: column;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+	}
+
+	.photo {
+		display: block;
+		aspect-ratio: 16 / 9;
+		overflow: hidden;
+	}
+
+	.photo :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.3s ease;
+	}
+
+	.photo:hover :global(img) {
+		transform: scale(1.03);
+	}
+
+	.body {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		padding: 1.5rem;
+	}
+
+	.body h2 {
+		font-size: 1.5rem;
+		margin: 0;
+	}
+
+	.body p {
+		margin: 0;
+		flex: 1;
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: 0.5rem;
+	}
+</style>

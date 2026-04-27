@@ -2,7 +2,7 @@
 name: Nash Rickert
 role: Alumni
 active: false
-image: nash.jpg
+image: ./nash.jpg
 email: nashr2@uw.edu
 website: https://www.instagram.com/nashrickert/?hl=en
 tags: ["CS"]

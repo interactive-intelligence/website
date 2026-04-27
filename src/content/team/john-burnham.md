@@ -2,7 +2,7 @@
 name: John Burnham
 role: Alumni
 active: false
-image: john_burnham.jpg
+image: ./john_burnham.jpg
 email: johnburn@uw.edu
 tags: ["i2 Talks", "Research"]
 ---

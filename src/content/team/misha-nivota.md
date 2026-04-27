@@ -2,7 +2,7 @@
 name: Misha Nivota
 role: President
 active: true
-image: misha_nivota.jpg
+image: ./misha_nivota.jpg
 email: mnivota@uw.edu
 tags: ["Administrative", "Education"]
 ---

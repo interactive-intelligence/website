@@ -2,7 +2,7 @@
 name: Aditya Deepak Setty
 role: Alumni
 active: false
-image: aditya.jpg
+image: ./aditya.jpg
 email: ads1103@uw.edu
 website: https://www.instagram.com/aditya_deepak_setty/
 tags: ["Neuroscience", "RL"]

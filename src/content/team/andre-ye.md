@@ -2,7 +2,7 @@
 name: Andre Ye
 role: Alumni
 active: false
-image: andre.jpg
+image: ./andre.jpg
 email: andreye@uw.edu
 website: https://andre-ye.github.io
 tags: ["ML Lead", "Founding Member", "Philosophy", "CS"]
