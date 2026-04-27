@@ -4,6 +4,7 @@ role: Officer
 active: true
 image: /images/team/yifan_w.png
 email: yifanw64@uw.edu
+website: https://refact0r.dev
 tags: ["Technical Team"]
 ---
 
