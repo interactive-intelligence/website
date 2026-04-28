@@ -1,0 +1,222 @@
+---
+interface InitiativeItem {
+	id: string
+	data: {
+		name: string
+		short_description: string
+		external_url?: string
+		form_url?: string
+		form_label?: string
+	}
+}
+
+interface Props {
+	items: InitiativeItem[]
+}
+
+const { items } = Astro.props
+const base = import.meta.env.BASE_URL
+
+const learnMoreHref = (item: InitiativeItem) =>
+	item.data.external_url ?? `${base}initiatives/${item.id}`
+---
+
+<div class="accordion">
+	{
+		items.map((item, i) => (
+			<details open={i === 0}>
+				<summary>
+					<span class="num">{String(i + 1).padStart(2, '0')}</span>
+					<h3 class="title">{item.data.name}</h3>
+					<span class="indicator" aria-hidden="true" />
+				</summary>
+				<div class="panel">
+					<div class="body">
+						<p>{item.data.short_description}</p>
+						<div class="actions">
+							<a href={learnMoreHref(item)} class="btn btn-accent">
+								Learn More
+							</a>
+							{item.data.form_url && item.data.form_label && (
+								<a href={item.data.form_url} class="btn btn-primary">
+									{item.data.form_label}
+								</a>
+							)}
+						</div>
+					</div>
+				</div>
+			</details>
+		))
+	}
+</div>
+
+<script>
+	const accordions = document.querySelectorAll('.accordion')
+
+	const setExpandedState = (item, panel, expanded) => {
+		item.dataset.expanded = String(expanded)
+		panel.style.height = expanded ? 'auto' : '0px'
+	}
+
+	const animatePanel = (item, panel, expand) => {
+		item.dataset.animating = 'true'
+		panel.style.height = `${panel.offsetHeight}px`
+		panel.offsetHeight
+
+		if (expand) {
+			item.open = true
+			item.dataset.expanded = 'true'
+		}
+
+		requestAnimationFrame(() => {
+			panel.style.height = expand ? `${panel.scrollHeight}px` : '0px'
+		})
+
+		const onTransitionEnd = (event) => {
+			if (event.propertyName !== 'height') return
+
+			panel.removeEventListener('transitionend', onTransitionEnd)
+			item.dataset.animating = 'false'
+
+			if (expand) {
+				panel.style.height = 'auto'
+			} else {
+				item.dataset.expanded = 'false'
+				item.open = false
+			}
+		}
+
+		panel.addEventListener('transitionend', onTransitionEnd)
+	}
+
+	for (const accordion of accordions) {
+		for (const item of accordion.querySelectorAll('details')) {
+			const summary = item.querySelector('summary')
+			const panel = item.querySelector('.panel')
+
+			if (!summary || !panel) continue
+
+			setExpandedState(item, panel, item.open)
+
+			summary.addEventListener('click', (event) => {
+				event.preventDefault()
+
+				if (item.dataset.animating === 'true') return
+
+				animatePanel(item, panel, !item.open)
+			})
+		}
+	}
+</script>
+
+<style>
+	.accordion details {
+		border-top: 1px solid var(--rule);
+	}
+
+	.accordion details:last-of-type {
+		border-bottom: 1px solid var(--rule);
+	}
+
+	.accordion summary {
+		display: grid;
+		grid-template-columns: 1.75rem 1fr auto;
+		align-items: center;
+		gap: 2rem;
+		padding: 1rem 0;
+		cursor: pointer;
+		list-style: none;
+	}
+
+	.accordion summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.accordion .num {
+		color: var(--text-accent);
+		letter-spacing: -0.02em;
+	}
+
+	.accordion .title {
+		font-size: 1.5rem;
+		font-weight: 600;
+		line-height: 1.5;
+		margin: 0;
+	}
+
+	.accordion .indicator {
+		position: relative;
+		width: 1rem;
+		height: 1rem;
+	}
+
+	.accordion .indicator::before,
+	.accordion .indicator::after {
+		content: '';
+		position: absolute;
+		background: var(--text);
+		top: 50%;
+		left: 50%;
+	}
+
+	.accordion .indicator::before {
+		width: 100%;
+		height: 2px;
+		transform: translate(-50%, -50%);
+	}
+
+	.accordion .indicator::after {
+		width: 2px;
+		height: 100%;
+		transform: translate(-50%, -50%) scaleY(1);
+		transform-origin: center;
+		transition: transform 220ms ease;
+	}
+
+	.accordion details[open] .indicator::after,
+	.accordion details[data-expanded='true'] .indicator::after {
+		transform: translate(-50%, -50%) scaleY(0);
+	}
+
+	.accordion .panel {
+		height: 0;
+		overflow: hidden;
+		opacity: 0;
+		transition:
+			height 280ms ease,
+			opacity 200ms ease;
+	}
+
+	.accordion details[open] .panel,
+	.accordion details[data-expanded='true'] .panel {
+		opacity: 1;
+	}
+
+	.accordion .body {
+		display: grid;
+		grid-template-columns: 1.75rem 1fr;
+		column-gap: 2rem;
+		padding-bottom: 1.5rem;
+	}
+
+	.accordion .body > * {
+		grid-column: 2;
+	}
+
+	.accordion .body p {
+		margin-bottom: 1rem;
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.accordion .indicator::after,
+		.accordion .panel {
+			transition: none;
+		}
+	}
+</style>
