@@ -59,4 +59,9 @@ const initiatives = defineCollection({
     }),
 });
 
-export const collections = { team, projects, talks, publications, initiatives };
+const constitution = defineCollection({
+  loader: glob({ pattern: "constitution.md", base: "./src/content" }),
+  schema: z.object({}),
+});
+
+export const collections = { team, projects, talks, publications, initiatives, constitution };

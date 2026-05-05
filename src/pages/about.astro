@@ -1,13 +1,21 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Layout from '../layouts/Layout.astro'
+import { getEntry, render } from 'astro:content'
+
+const constitutionEntry = await getEntry('constitution', 'constitution')
+const { Content } = await render(constitutionEntry)
 ---
 
 <Layout title="About - i2">
-  <h1>About</h1>
-  <p>interactive intelligence (i2) is UW's student-led NeuroAI education and research organization.</p>
-
-  <section>
-    <h2>Constitution</h2>
-    <p>Constitution content goes here.</p>
-  </section>
+	<h1>About</h1>
+	<p>
+		Interactive Intelligence is a team of students at the University of Washington working to
+		make computation resemble what humans describe as intelligence. We are uniquely
+		interdisciplinary, blending ideas from neuroscience to inform the structure of our
+		algorithms and computations. We explore the many different approaches of engineered
+		intelligence, from neuromorphic hardware to meta-cognitive machine learning algorithms.
+	</p>
+	<section class="prose">
+		<Content />
+	</section>
 </Layout>
