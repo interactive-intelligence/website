@@ -23,6 +23,17 @@ const sorted = [...members].sort((a, b) => {
 const active = sorted.filter((m) => m.data.active)
 const alumni = sorted.filter((m) => !m.data.active)
 
+function websiteLabel(url: string): string {
+	try {
+		const host = new URL(url).hostname.replace(/^www\./, '')
+		if (host.includes('linkedin.com')) return 'linkedin'
+		if (host.includes('instagram.com')) return 'instagram'
+		if (host.includes('github.com')) return 'github'
+		if (host === 'twitter.com' || host === 'x.com') return 'twitter'
+	} catch {}
+	return 'website'
+}
+
 const activeWithBody = await Promise.all(
 	active.map(async (m) => {
 		const { Content } = await render(m)
@@ -77,7 +88,7 @@ const activeWithBody = await Promise.all(
 									)}
 									{data.website && (
 										<a href={data.website} target="_blank" rel="noopener">
-											website
+											{websiteLabel(data.website)}
 										</a>
 									)}
 								</div>
@@ -121,7 +132,7 @@ const activeWithBody = await Promise.all(
 									)}
 									{data.website && (
 										<a href={data.website} target="_blank" rel="noopener">
-											website
+											{websiteLabel(data.website)}
 										</a>
 									)}
 								</div>
@@ -288,7 +299,7 @@ const activeWithBody = await Promise.all(
 	}
 
 	.alum-info h3 {
-		font-size: 0.95rem;
+		font-size: 1rem;
 		margin: 0 0 0.25rem;
 		font-weight: 600;
 	}
