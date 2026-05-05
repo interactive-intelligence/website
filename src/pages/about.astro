@@ -3,17 +3,22 @@ import Layout from '../layouts/Layout.astro'
 import { getEntry, render } from 'astro:content'
 
 const constitutionEntry = await getEntry('constitution', 'constitution')
+if (!constitutionEntry) {
+	throw new Error('Missing constitution entry')
+}
+
 const { Content } = await render(constitutionEntry)
 ---
 
 <Layout title="About - i2">
 	<h1>About</h1>
 	<p>
-		Interactive Intelligence is a team of students at the University of Washington working to
-		make computation resemble what humans describe as intelligence. We are uniquely
-		interdisciplinary, blending ideas from neuroscience to inform the structure of our
-		algorithms and computations. We explore the many different approaches of engineered
-		intelligence, from neuromorphic hardware to meta-cognitive machine learning algorithms.
+		interactive intelligence (i2) is the University of Washington's student-led NeuroAI
+		education and research organization. We're a community of students learning, building, and
+		researching at the intersection of artificial intelligence and neuroscience. Across our
+		programs, members work on topics spanning deep learning, computational neuroscience,
+		mechanistic interpretability, and the broader question of what intelligence is and how to
+		build it.
 	</p>
 	<section class="prose">
 		<Content />
