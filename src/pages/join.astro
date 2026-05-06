@@ -1,13 +1,22 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import { Icon } from 'astro-icon/components'
 
 const discordUrl = 'https://discord.gg/QeGDNYVh'
 
 const socials = [
-	{ href: 'https://www.instagram.com/uw_i2/', label: 'Instagram' },
-	{ href: 'https://www.youtube.com/channel/UCnOSBig3HbEHFUi2HBA7EtA', label: 'YouTube' },
-	{ href: 'https://twitter.com/InteractiveInt9', label: 'Twitter' },
-	{ href: 'https://github.com/interactive-intelligence', label: 'GitHub' }
+	{ href: 'https://www.instagram.com/uw_i2/', label: 'Instagram', icon: 'ph:instagram-logo' },
+	{
+		href: 'https://www.youtube.com/channel/UCnOSBig3HbEHFUi2HBA7EtA',
+		label: 'YouTube',
+		icon: 'ph:youtube-logo'
+	},
+	{ href: 'https://twitter.com/InteractiveInt9', label: 'Twitter', icon: 'ph:x-logo' },
+	{
+		href: 'https://github.com/interactive-intelligence',
+		label: 'GitHub',
+		icon: 'ph:github-logo'
+	}
 ]
 ---
 
@@ -24,6 +33,7 @@ const socials = [
 			</p>
 		</div>
 		<a href={discordUrl} target="_blank" rel="noopener" class="btn btn-primary cta-btn">
+			<Icon name="ph:discord-logo" />
 			Join Discord
 		</a>
 	</section>
@@ -32,8 +42,9 @@ const socials = [
 		<h2>Find us elsewhere</h2>
 		<div class="socials">
 			{
-				socials.map(({ href, label }) => (
+				socials.map(({ href, label, icon }) => (
 					<a href={href} target="_blank" rel="noopener noreferrer" class="social-card">
+						<Icon name={icon} />
 						{label}
 					</a>
 				))
@@ -78,11 +89,26 @@ const socials = [
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		padding: 1.5rem;
+		gap: 0.5rem;
+		padding: 1rem;
 		background: var(--surface);
 		border: 1px solid var(--border);
 		border-radius: var(--radius);
 		font-weight: 500;
+
+		[data-icon] {
+			font-size: 1.25rem;
+		}
+	}
+
+	.cta-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+
+		[data-icon] {
+			font-size: 1.25rem;
+		}
 	}
 
 	.social-card:hover {
