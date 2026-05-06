@@ -1,0 +1,92 @@
+---
+import Layout from '../layouts/Layout.astro'
+
+const discordUrl = 'https://discord.gg/QeGDNYVh'
+
+const socials = [
+	{ href: 'https://www.instagram.com/uw_i2/', label: 'Instagram' },
+	{ href: 'https://www.youtube.com/channel/UCnOSBig3HbEHFUi2HBA7EtA', label: 'YouTube' },
+	{ href: 'https://twitter.com/InteractiveInt9', label: 'Twitter' },
+	{ href: 'https://github.com/interactive-intelligence', label: 'GitHub' }
+]
+---
+
+<Layout title="Join Us - i2">
+	<h1>Join us</h1>
+
+	<section class="hero-cta">
+		<div class="cta-text">
+			<h2>Join the Discord</h2>
+			<p>
+				i2 runs on Discord. It's where we announce events, share resources, organize
+				initiatives, and chat day-to-day. Open to all UW students interested in NeuroAI,
+				regardless of background or major.
+			</p>
+		</div>
+		<a href={discordUrl} target="_blank" rel="noopener" class="btn btn-primary cta-btn">
+			Join Discord
+		</a>
+	</section>
+
+	<section>
+		<h2>Find us elsewhere</h2>
+		<div class="socials">
+			{
+				socials.map(({ href, label }) => (
+					<a href={href} target="_blank" rel="noopener noreferrer" class="social-card">
+						{label}
+					</a>
+				))
+			}
+		</div>
+	</section>
+
+	{/* When an interest form or signup is active, link it here as a secondary CTA. */}
+</Layout>
+
+<style>
+	.hero-cta {
+		margin-top: 1rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		padding: 1.5rem;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-lg);
+
+		h2 {
+			font-size: 1.5rem;
+		}
+		p {
+			margin: 0;
+		}
+		.btn {
+			flex-shrink: 0;
+		}
+	}
+
+	.socials {
+		margin-top: 1rem;
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 1rem;
+	}
+
+	.social-card {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1.5rem;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		font-weight: 500;
+	}
+
+	.social-card:hover {
+		background: var(--accent-light);
+		border-color: var(--border-accent-light);
+	}
+</style>
