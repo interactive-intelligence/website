@@ -106,7 +106,7 @@ const activeWithBody = await Promise.all(
 	{
 		alumni.length > 0 && (
 			<section class="alumni">
-				<h2>Alumni</h2>
+				<h2 id="alumni">Alumni<a class="heading-anchor" href="#alumni" aria-label="Link to section">#</a></h2>
 				<div class="alumni-grid">
 					{alumni.map(({ data }) => (
 						<article class="alum">

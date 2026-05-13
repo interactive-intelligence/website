@@ -28,5 +28,12 @@ const { title = "interactive intelligence" } = Astro.props;
       <slot />
     </main>
     <Footer />
+    <script>
+      document.addEventListener('click', (e) => {
+        const link = (e.target as HTMLElement).closest<HTMLAnchorElement>('.heading-anchor')
+        if (!link) return
+        navigator.clipboard?.writeText(new URL(link.href, location.href).toString())
+      })
+    </script>
   </body>
 </html>

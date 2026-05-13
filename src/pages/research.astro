@@ -11,7 +11,7 @@ const publications = await getCollection("publications");
   <p>Publications and projects produced by i2.</p>
 
   <section>
-    <h2>Publications</h2>
+    <h2 id="publications">Publications<a class="heading-anchor" href="#publications" aria-label="Link to section">#</a></h2>
     <ul>
       {publications.map((pub) => (
         <li>
@@ -27,7 +27,7 @@ const publications = await getCollection("publications");
   </section>
 
   <section>
-    <h2>Related Programs</h2>
+    <h2 id="related-programs">Related Programs<a class="heading-anchor" href="#related-programs" aria-label="Link to section">#</a></h2>
     <ul>
       <li><a href={`${base}initiatives/research-room`}>Research Room</a></li>
       <li><a href={`${base}initiatives/fellows`}>Fellows</a></li>

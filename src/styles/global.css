@@ -72,6 +72,30 @@ h4 {
 	font-weight: 700;
 	text-wrap: balance;
 	margin-bottom: 0.75rem;
+	scroll-margin-top: 2rem;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+.heading-anchor {
+	margin-left: 0.25em;
+	color: var(--text-accent);
+	font-weight: 400;
+	text-decoration: none;
+	opacity: 0;
+	transition: opacity 0.15s;
+}
+
+:is(h1, h2, h3, h4):hover > .heading-anchor,
+.heading-anchor:focus-visible {
+	opacity: 1;
+}
+
+.heading-anchor:hover {
+	opacity: 1;
+	text-decoration: underline;
 }
 
 h1 {
