@@ -70,7 +70,8 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 									</a>
 								</li>
 							))}
-							<li class="separator">
+							<li class="separator" role="separator" aria-hidden="true" />
+							<li>
 								<a href={prefixed('/initiatives')}>All initiatives</a>
 							</li>
 						</ul>
@@ -188,7 +189,8 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 	}
 
 	.submenu .separator {
-		border-top: 1px solid var(--border);
-		padding-top: 0.25rem;
+		height: 1px;
+		background: var(--border);
+		margin: 0.25rem 0.25rem;
 	}
 </style>
