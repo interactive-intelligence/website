@@ -1,9 +1,9 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import { Image } from 'astro:assets'
-import { getCollection, render } from 'astro:content'
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
 
-const members = await getCollection('team')
+const members = await getCollection('team');
 
 const roleOrder: Record<string, number> = {
 	President: 0,
@@ -11,51 +11,51 @@ const roleOrder: Record<string, number> = {
 	Advisor: 2,
 	Officer: 3,
 	Alumni: 4
-}
+};
 
 const sorted = [...members].sort((a, b) => {
-	const ra = roleOrder[a.data.role] ?? 99
-	const rb = roleOrder[b.data.role] ?? 99
-	if (ra !== rb) return ra - rb
-	return a.data.name.localeCompare(b.data.name)
-})
+	const ra = roleOrder[a.data.role] ?? 99;
+	const rb = roleOrder[b.data.role] ?? 99;
+	if (ra !== rb) return ra - rb;
+	return a.data.name.localeCompare(b.data.name);
+});
 
 const isFoundingMember = (m: (typeof sorted)[number]) =>
-	m.data.role === 'Founder' || (m.data.tags ?? []).includes('Founding Member')
+	m.data.role === 'Founder' || (m.data.tags ?? []).includes('Founding Member');
 
-const active = sorted.filter((m) => m.data.active)
+const active = sorted.filter((m) => m.data.active);
 const alumni = sorted
 	.filter((m) => !m.data.active)
 	.sort((a, b) => {
-		const fa = isFoundingMember(a) ? 0 : 1
-		const fb = isFoundingMember(b) ? 0 : 1
-		if (fa !== fb) return fa - fb
-		return a.data.name.localeCompare(b.data.name)
-	})
+		const fa = isFoundingMember(a) ? 0 : 1;
+		const fb = isFoundingMember(b) ? 0 : 1;
+		if (fa !== fb) return fa - fb;
+		return a.data.name.localeCompare(b.data.name);
+	});
 
 function websiteLabel(url: string): string {
 	try {
-		const host = new URL(url).hostname.replace(/^www\./, '')
-		if (host.includes('linkedin.com')) return 'linkedin'
-		if (host.includes('instagram.com')) return 'instagram'
-		if (host.includes('github.com')) return 'github'
-		if (host === 'twitter.com' || host === 'x.com') return 'twitter'
+		const host = new URL(url).hostname.replace(/^www\./, '');
+		if (host.includes('linkedin.com')) return 'linkedin';
+		if (host.includes('instagram.com')) return 'instagram';
+		if (host.includes('github.com')) return 'github';
+		if (host === 'twitter.com' || host === 'x.com') return 'twitter';
 	} catch {}
-	return 'website'
+	return 'website';
 }
 
 const activeWithBody = await Promise.all(
 	active.map(async (m) => {
-		const { Content } = await render(m)
-		return { ...m, Content }
+		const { Content } = await render(m);
+		return { ...m, Content };
 	})
-)
+);
 ---
 
 <Layout title="Team - i2">
 	<header class="page-header">
 		<h1>Team</h1>
-		<p class="lede">i2 is built by a diverse community of students, faculty, and alumni.</p>
+		<p class="lede">i2 is run by a diverse community of students, faculty, and alumni.</p>
 	</header>
 
 	<section class="active">
@@ -116,7 +116,12 @@ const activeWithBody = await Promise.all(
 	{
 		alumni.length > 0 && (
 			<section class="alumni">
-				<h2 id="alumni">Alumni<a class="heading-anchor" href="#alumni" aria-label="Link to section">#</a></h2>
+				<h2 id="alumni">
+					Alumni
+					<a class="heading-anchor" href="#alumni" aria-label="Link to section">
+						#
+					</a>
+				</h2>
 				<div class="alumni-grid">
 					{alumni.map(({ data }) => (
 						<article class="alum">

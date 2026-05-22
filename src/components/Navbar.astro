@@ -1,9 +1,9 @@
 ---
-import { getCollection } from 'astro:content'
-import logoRaw from '../assets/i2logo.svg?raw'
+import { getCollection } from 'astro:content';
+import logoRaw from '../assets/i2logo.svg?raw';
 
-const base = import.meta.env.BASE_URL
-const currentPath = Astro.url.pathname
+const base = import.meta.env.BASE_URL;
+const currentPath = Astro.url.pathname;
 
 const links = [
 	{ href: '/', label: 'Home' },
@@ -12,26 +12,29 @@ const links = [
 		label: 'About',
 		items: [
 			{ href: '/about', label: 'About' },
-			{ href: '/team', label: 'Team' }
+			{ href: '/team', label: 'Team' },
+			{ href: '/constitution', label: 'Constitution' }
 		]
 	},
 	{ href: '/schedule', label: 'Schedule' },
 	{ href: '/announcements', label: 'Announcements' },
 	{ href: '/research', label: 'Research' },
 	{ href: '/initiatives', label: 'Initiatives', dropdown: true }
-]
+];
 
-const initiatives = (await getCollection('initiatives')).sort((a, b) => a.data.order - b.data.order)
+const initiatives = (await getCollection('initiatives')).sort(
+	(a, b) => a.data.order - b.data.order
+);
 
-const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\//, '')
+const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\//, '');
 
 const isActive = (href: string) => {
-	const full = prefixed(href)
-	return href === '/' ? currentPath === full : currentPath.startsWith(full)
-}
+	const full = prefixed(href);
+	return href === '/' ? currentPath === full : currentPath.startsWith(full);
+};
 
 const initiativeHref = (data: { external_url?: string }, id: string) =>
-	data.external_url ?? prefixed(`/initiatives/${id}`)
+	data.external_url ?? prefixed(`/initiatives/${id}`);
 ---
 
 <nav>
@@ -138,18 +141,18 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 	.submenu {
 		position: absolute;
 		top: calc(100% + 0.5rem);
-		left: 0;
-		min-width: 14rem;
+		left: 50%;
+		transform: translateX(-50%) translateY(-0.25rem);
+		min-width: 12.5rem;
 		flex-direction: column;
 		gap: 0.25rem;
 		padding: 0.5rem;
 		background: var(--bg);
 		border: 1px solid var(--border);
-		border-radius: var(--radius);
+		border-radius: calc(var(--radius-lg) - 0.25rem);
 		box-shadow: 0 8px 24px hsl(260 40% 20% / 0.12);
 		opacity: 0;
 		visibility: hidden;
-		transform: translateY(-0.25rem);
 		transition:
 			opacity 0.15s,
 			transform 0.15s,
@@ -161,7 +164,7 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 	.has-dropdown:focus-within .submenu {
 		opacity: 1;
 		visibility: visible;
-		transform: translateY(0);
+		transform: translateX(-50%) translateY(0);
 		display: flex;
 	}
 
@@ -174,7 +177,7 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 		padding: 0.5rem 0.75rem;
 		background: transparent;
 		border: 1px solid transparent;
-		border-radius: calc(var(--radius) - 0.5rem);
+		border-radius: calc(var(--radius));
 		font-size: 0.875rem;
 		white-space: nowrap;
 	}
