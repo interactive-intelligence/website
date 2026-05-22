@@ -16,7 +16,7 @@ const publications = await getCollection("publications");
       {publications.map((pub) => (
         <li>
           {pub.data.url ? (
-            <a href={pub.data.url}>{pub.data.title}</a>
+            <a href={pub.data.url} class="text-link">{pub.data.title}</a>
           ) : (
             <span>{pub.data.title}</span>
           )}
@@ -29,8 +29,8 @@ const publications = await getCollection("publications");
   <section>
     <h2 id="related-programs">Related Programs<a class="heading-anchor" href="#related-programs" aria-label="Link to section">#</a></h2>
     <ul>
-      <li><a href={`${base}initiatives/research-room`}>Research Room</a></li>
-      <li><a href={`${base}initiatives/fellows`}>Fellows</a></li>
+      <li><a href={`${base}initiatives/research-room`} class="text-link">Research Room</a></li>
+      <li><a href={`${base}initiatives/fellows`} class="text-link">Fellows</a></li>
     </ul>
   </section>
 </Layout>

@@ -54,6 +54,11 @@ a {
 	color: inherit;
 	text-decoration: none;
 }
+a.text-link {
+	color: var(--text-accent);
+	text-decoration: underline;
+	font-weight: 500;
+}
 
 button {
 	font: inherit;
@@ -123,6 +128,11 @@ h4 {
 	}
 	h4 {
 		margin-top: 1rem;
+	}
+	a {
+		color: var(--text-accent);
+		text-decoration: underline;
+		font-weight: 500;
 	}
 }
 

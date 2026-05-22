@@ -1,24 +1,41 @@
 ---
-import { Image } from 'astro:assets'
-import { getCollection } from 'astro:content'
-import InitiativesAccordion from '../components/InitiativesAccordion.astro'
-import Layout from '../layouts/Layout.astro'
-import hero1 from '../assets/hero-1.jpg'
-import hero2 from '../assets/hero-2.jpg'
-import hero3 from '../assets/hero-3.jpg'
-import allenLogo from '../assets/allen-school-logo.svg'
-import cntLogo from '../assets/cnt-logo.png'
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import InitiativesAccordion from '../components/InitiativesAccordion.astro';
+import Layout from '../layouts/Layout.astro';
+import hero1 from '../assets/hero-1.jpg';
+import hero2 from '../assets/hero-2.jpg';
+import hero3 from '../assets/hero-3.jpg';
+import allenLogo from '../assets/allen-school-logo.svg';
+import cntLogo from '../assets/cnt-logo.png';
 
-const initiatives = (await getCollection('initiatives')).sort((a, b) => a.data.order - b.data.order)
+const base = import.meta.env.BASE_URL;
+
+const initiatives = (await getCollection('initiatives')).sort(
+	(a, b) => a.data.order - b.data.order
+);
+
+const recentAnnouncements = (await getCollection('announcements'))
+	.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+	.slice(0, 3);
+
+const announcementDateFmt = new Intl.DateTimeFormat('en-US', {
+	month: 'short',
+	day: 'numeric',
+	year: 'numeric'
+});
+
+const announcementHasBody = (entry: (typeof recentAnnouncements)[number]) =>
+	entry.body && entry.body.trim().length > 0;
 
 const stats = [
 	{ value: '180', plus: true, label: 'Intro Course graduates since 2023' },
 	{ value: '140', plus: true, label: 'Active members across 5 initiatives' },
 	{ value: '7', label: 'Research Room teams' },
 	{ value: '11', label: 'Talks hosted with researchers' }
-]
+];
 
-const heroImages = [hero1, hero2, hero3]
+const heroImages = [hero1, hero2, hero3];
 ---
 
 <Layout title="i2 - interactive intelligence">
@@ -39,12 +56,24 @@ const heroImages = [hero1, hero2, hero3]
 	</p>
 
 	<section class="initiatives">
-		<h2 id="initiatives">Our initiatives<a class="heading-anchor" href="#initiatives" aria-label="Link to section">#</a></h2>
+		<h2 id="initiatives">
+			Our initiatives<a
+				class="heading-anchor"
+				href="#initiatives"
+				aria-label="Link to section">#</a
+			>
+		</h2>
 		<InitiativesAccordion items={initiatives} />
 	</section>
 
 	<section class="numbers">
-		<h2 id="by-the-numbers">By the numbers<a class="heading-anchor" href="#by-the-numbers" aria-label="Link to section">#</a></h2>
+		<h2 id="by-the-numbers">
+			By the numbers<a
+				class="heading-anchor"
+				href="#by-the-numbers"
+				aria-label="Link to section">#</a
+			>
+		</h2>
 		<div class="stats">
 			{
 				stats.map((s) => (
@@ -61,18 +90,66 @@ const heroImages = [hero1, hero2, hero3]
 	</section>
 
 	{
-		/* <section class="announcements">
-		<h2 id="announcements">Announcements</h2>
-		<div class="cards">
-			<div></div>
-			<div></div>
-			<div></div>
-		</div>
-	</section> */
+		recentAnnouncements.length > 0 && (
+			<section class="announcements">
+				<header class="announcements-header">
+					<h2 id="announcements">
+						Announcements
+						<a
+							class="heading-anchor"
+							href="#announcements"
+							aria-label="Link to section"
+						>
+							#
+						</a>
+					</h2>
+					<a href={`${base}announcements`} class="see-all">
+						See all &rarr;
+					</a>
+				</header>
+				<ul class="announcement-cards">
+					{recentAnnouncements.map((entry) => {
+						const hasBody = announcementHasBody(entry);
+						const detailHref = `${base}announcements/${entry.id}`;
+						return (
+							<li class="announcement-card">
+								<time datetime={entry.data.date.toISOString()}>
+									{announcementDateFmt.format(entry.data.date)}
+								</time>
+								<h3>
+									{hasBody ? (
+										<a href={detailHref}>{entry.data.title}</a>
+									) : (
+										entry.data.title
+									)}
+								</h3>
+								{entry.data.summary && <p>{entry.data.summary}</p>}
+								<div class="card-actions">
+									{hasBody && <a href={detailHref}>Read more &rarr;</a>}
+									{entry.data.link_url && (
+										<a
+											href={entry.data.link_url}
+											target="_blank"
+											rel="noopener"
+										>
+											{entry.data.link_label ?? 'Learn more'} &rarr;
+										</a>
+									)}
+								</div>
+							</li>
+						);
+					})}
+				</ul>
+			</section>
+		)
 	}
 
 	<section class="affiliations">
-		<h2 id="affiliations">Affiliations<a class="heading-anchor" href="#affiliations" aria-label="Link to section">#</a></h2>
+		<h2 id="affiliations">
+			Affiliations<a class="heading-anchor" href="#affiliations" aria-label="Link to section"
+				>#</a
+			>
+		</h2>
 		<div class="affil-cards">
 			<a
 				href="https://www.cs.washington.edu"
@@ -152,22 +229,92 @@ const heroImages = [hero1, hero2, hero3]
 		margin-bottom: 1rem;
 	}
 
-	.stats,
-	.cards {
+	.stats {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
 		gap: 1rem;
 	}
 
-	.cards {
-		grid-template-columns: repeat(3, 1fr);
-	}
-
-	.stat,
-	.cards > div {
+	.stat {
 		background: var(--surface);
 		border-radius: var(--radius);
 		border: 1px solid var(--border);
+	}
+
+	.announcements-header {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	.announcements-header h2 {
+		margin: 0;
+	}
+
+	.see-all {
+		font-weight: 500;
+		color: var(--text-accent);
+	}
+
+	.see-all:hover {
+		text-decoration: underline;
+	}
+
+	.announcement-cards {
+		list-style: none;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1rem;
+	}
+
+	.announcement-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		padding: 1.25rem;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+	}
+
+	.announcement-card time {
+		font-size: 0.875rem;
+		color: var(--text-accent);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.announcement-card h3 {
+		margin: 0;
+	}
+
+	.announcement-card h3 a:hover {
+		text-decoration: underline;
+	}
+
+	.announcement-card p {
+		margin: 0;
+		font-size: 0.875rem;
+	}
+
+	.card-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.875rem;
+		margin-top: auto;
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: var(--text-accent);
+	}
+
+	.card-actions:empty {
+		display: none;
+	}
+
+	.card-actions a:hover {
+		text-decoration: underline;
 	}
 
 	.affil-cards {
@@ -249,7 +396,7 @@ const heroImages = [hero1, hero2, hero3]
 			grid-template-columns: repeat(2, 1fr);
 		}
 
-		.cards {
+		.announcement-cards {
 			grid-template-columns: 1fr;
 		}
 

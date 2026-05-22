@@ -1,17 +1,18 @@
 ---
-import logoRaw from '../assets/i2logo.svg?raw'
+import logoRaw from '../assets/i2logo.svg?raw';
 
-const base = import.meta.env.BASE_URL
-const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\//, '')
+const base = import.meta.env.BASE_URL;
+const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\//, '');
 
 const links = [
 	{ href: '/about', label: 'About' },
-	{ href: '/schedule', label: 'Schedule' },
 	{ href: '/team', label: 'Team' },
+	{ href: '/schedule', label: 'Schedule' },
+	{ href: '/announcements', label: 'Announcements' },
 	{ href: '/research', label: 'Research' },
 	{ href: '/initiatives', label: 'Initiatives' },
 	{ href: '/join', label: 'Join Us' }
-]
+];
 
 const socials = [
 	{ href: 'https://discord.gg/QeGDNYVh', label: 'Discord' },
@@ -19,7 +20,7 @@ const socials = [
 	{ href: 'https://www.youtube.com/channel/UCnOSBig3HbEHFUi2HBA7EtA', label: 'YouTube' },
 	{ href: 'https://twitter.com/InteractiveInt9', label: 'Twitter' },
 	{ href: 'https://github.com/interactive-intelligence', label: 'GitHub' }
-]
+];
 ---
 
 <footer>

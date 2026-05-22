@@ -7,9 +7,16 @@ const currentPath = Astro.url.pathname
 
 const links = [
 	{ href: '/', label: 'Home' },
-	{ href: '/about', label: 'About' },
+	{
+		href: '/about',
+		label: 'About',
+		items: [
+			{ href: '/about', label: 'About' },
+			{ href: '/team', label: 'Team' }
+		]
+	},
 	{ href: '/schedule', label: 'Schedule' },
-	{ href: '/team', label: 'Team' },
+	{ href: '/announcements', label: 'Announcements' },
 	{ href: '/research', label: 'Research' },
 	{ href: '/initiatives', label: 'Initiatives', dropdown: true }
 ]
@@ -33,11 +40,20 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 	</a>
 	<ul>
 		{
-			links.map(({ href, label, dropdown }) => (
-				<li class:list={[{ 'has-dropdown': dropdown }]}>
+			links.map(({ href, label, dropdown, items }) => (
+				<li class:list={[{ 'has-dropdown': dropdown || items }]}>
 					<a href={prefixed(href)} class:list={[{ active: isActive(href) }]}>
 						{label}
 					</a>
+					{items && (
+						<ul class="submenu">
+							{items.map((item) => (
+								<li>
+									<a href={prefixed(item.href)}>{item.label}</a>
+								</li>
+							))}
+						</ul>
+					)}
 					{dropdown && (
 						<ul class="submenu">
 							{initiatives.map((init) => (

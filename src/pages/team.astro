@@ -20,8 +20,18 @@ const sorted = [...members].sort((a, b) => {
 	return a.data.name.localeCompare(b.data.name)
 })
 
+const isFoundingMember = (m: (typeof sorted)[number]) =>
+	m.data.role === 'Founder' || (m.data.tags ?? []).includes('Founding Member')
+
 const active = sorted.filter((m) => m.data.active)
-const alumni = sorted.filter((m) => !m.data.active)
+const alumni = sorted
+	.filter((m) => !m.data.active)
+	.sort((a, b) => {
+		const fa = isFoundingMember(a) ? 0 : 1
+		const fb = isFoundingMember(b) ? 0 : 1
+		if (fa !== fb) return fa - fb
+		return a.data.name.localeCompare(b.data.name)
+	})
 
 function websiteLabel(url: string): string {
 	try {
@@ -94,7 +104,7 @@ const activeWithBody = await Promise.all(
 								</div>
 							</div>
 						</div>
-						<div class="bio">
+						<div class="bio prose">
 							<Content />
 						</div>
 					</article>

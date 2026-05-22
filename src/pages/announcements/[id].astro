@@ -1,0 +1,91 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const base = import.meta.env.BASE_URL;
+
+export async function getStaticPaths() {
+	const announcements = await getCollection('announcements');
+	return announcements
+		.filter((entry) => entry.body && entry.body.trim().length > 0)
+		.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const fmt = new Intl.DateTimeFormat('en-US', {
+	month: 'long',
+	day: 'numeric',
+	year: 'numeric'
+});
+---
+
+<Layout title={`${entry.data.title} - i2`}>
+	<p class="back">
+		<a href={`${base}announcements`}>&larr; All announcements</a>
+	</p>
+
+	<header class="page-header">
+		<time datetime={entry.data.date.toISOString()}>{fmt.format(entry.data.date)}</time>
+		<h1>{entry.data.title}</h1>
+		{entry.data.summary && <p class="lede">{entry.data.summary}</p>}
+		{
+			entry.data.link_url && (
+				<div class="actions">
+					<a
+						href={entry.data.link_url}
+						class="btn btn-primary"
+						target="_blank"
+						rel="noopener"
+					>
+						{entry.data.link_label ?? 'Learn more'}
+					</a>
+				</div>
+			)
+		}
+	</header>
+
+	<section class="prose">
+		<Content />
+	</section>
+</Layout>
+
+<style>
+	.back {
+		margin-bottom: 1.5rem;
+	}
+
+	.back a {
+		color: var(--text-accent);
+	}
+
+	.back a:hover {
+		text-decoration: underline;
+	}
+
+	.page-header {
+		margin-bottom: 2.5rem;
+	}
+
+	.page-header time {
+		display: block;
+		font-size: 0.875rem;
+		color: var(--text-accent);
+		margin-bottom: 0.5rem;
+	}
+
+	.page-header h1 {
+		margin: 0 0 1rem;
+	}
+
+	.lede {
+		font-size: 1.125rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem
+</style>

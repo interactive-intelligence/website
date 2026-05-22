@@ -64,4 +64,33 @@ const constitution = defineCollection({
   schema: z.object({}),
 });
 
-export const collections = { team, projects, talks, publications, initiatives, constitution };
+const schedule = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/schedule" }),
+  schema: z.object({
+    year: z.string(),
+    quarters: z
+      .array(
+        z.object({
+          name: z.string(),
+          start: z.coerce.date(),
+          end: z.coerce.date(),
+          initiatives: z.array(z.string()),
+          note: z.string().optional(),
+        }),
+      )
+      .length(3),
+  }),
+});
+
+const announcements = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/announcements" }),
+  schema: z.object({
+    title: z.string(),
+    date: z.coerce.date(),
+    summary: z.string().optional(),
+    link_url: z.string().url().optional(),
+    link_label: z.string().optional(),
+  }),
+});
+
+export const collections = { team, projects, talks, publications, initiatives, constitution, schedule, announcements };
