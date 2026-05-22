@@ -1,0 +1,17 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { getEntry, render } from 'astro:content'
+
+const constitutionEntry = await getEntry('constitution', 'constitution')
+if (!constitutionEntry) {
+	throw new Error('Missing constitution entry')
+}
+
+const { Content } = await render(constitutionEntry)
+---
+
+<Layout title="Constitution - i2">
+	<div class="prose">
+		<Content />
+	</div>
+</Layout>
