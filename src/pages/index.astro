@@ -113,34 +113,22 @@ const heroImages = [hero1, hero2, hero3];
 						const hasBody = announcementHasBody(entry);
 						const detailHref = `${base}announcements/${entry.id}`;
 						return (
-							<li class="announcement-card">
+							<li class={`announcement-card${hasBody ? ' is-linked' : ''}`}>
 								<time datetime={entry.data.date.toISOString()}>
 									{announcementDateFmt.format(entry.data.date)}
 								</time>
-								<h3>
-									{hasBody ? (
-										<a href={detailHref}>{entry.data.title}</a>
-									) : (
-										entry.data.title
-									)}
-								</h3>
-								{entry.data.summary && <p>{entry.data.summary}</p>}
-								<div class="card-actions">
-									{hasBody && (
-										<a href={detailHref}>
-											Read more <Icon name="mingcute:arrow-right-line" />
-										</a>
-									)}
-									{entry.data.link_url && (
-										<a
-											href={entry.data.link_url}
-											target="_blank"
-											rel="noopener"
-										>
-											{entry.data.link_label ?? 'Learn more'}{' '}
-											<Icon name="mingcute:arrow-right-line" />
-										</a>
-									)}
+								<div class="announcement-body">
+									<h3>
+										{hasBody ? (
+											<a href={detailHref}>
+												{entry.data.title}
+												<Icon name="mingcute:arrow-right-line" />
+											</a>
+										) : (
+											entry.data.title
+										)}
+									</h3>
+									{entry.data.summary && <p>{entry.data.summary}</p>}
 								</div>
 							</li>
 						);
@@ -271,56 +259,65 @@ const heroImages = [hero1, hero2, hero3];
 	.announcement-cards {
 		list-style: none;
 		padding: 0;
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 1rem;
+		margin: 0;
+		border-top: 1px solid var(--rule);
 	}
 
 	.announcement-card {
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-		padding: 1.25rem;
-		background: var(--surface);
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
+		position: relative;
+		display: grid;
+		grid-template-columns: 7rem minmax(0, 1fr);
+		gap: 2rem;
+		margin-top: 0;
+		padding: 1.25rem 0;
+		border-bottom: 1px solid var(--rule);
 	}
 
 	.announcement-card time {
 		font-size: 0.875rem;
 		color: var(--text-accent);
 		font-variant-numeric: tabular-nums;
+		transition: color 0.15s ease;
 	}
 
 	.announcement-card h3 {
 		margin: 0;
 	}
 
-	.announcement-card h3 a:hover {
-		text-decoration: underline;
+	.announcement-card h3 a {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		transition: color 0.15s ease;
+	}
+
+	.announcement-card h3 a::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+	}
+
+	.announcement-card h3 a [data-icon] {
+		font-size: 0.875em;
+		color: var(--text-accent);
+		transition: transform 0.15s ease;
+	}
+
+	.announcement-card.is-linked:hover h3 a {
+		color: var(--accent-dark);
+	}
+
+	.announcement-card.is-linked:hover time {
+		color: var(--accent-dark);
+	}
+
+	.announcement-card.is-linked:hover h3 a [data-icon] {
+		transform: translateX(4px);
 	}
 
 	.announcement-card p {
-		margin: 0;
+		margin: 0.5rem 0 0;
 		font-size: 0.875rem;
-	}
-
-	.card-actions {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.875rem;
-		margin-top: auto;
-		font-size: 0.875rem;
-		font-weight: 500;
-		color: var(--text-accent);
-	}
-
-	.card-actions:empty {
-		display: none;
-	}
-
-	.card-actions a:hover {
-		text-decoration: underline;
 	}
 
 	.affil-cards {
@@ -402,8 +399,9 @@ const heroImages = [hero1, hero2, hero3];
 			grid-template-columns: repeat(2, 1fr);
 		}
 
-		.announcement-cards {
+		.announcement-card {
 			grid-template-columns: 1fr;
+			gap: 0.25rem;
 		}
 
 		.affil-cards {
