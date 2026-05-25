@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, Picture } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import InitiativesAccordion from '../components/InitiativesAccordion.astro';
 import Layout from '../layouts/Layout.astro';
@@ -45,7 +45,7 @@ const heroImages = [hero1, hero2, hero3];
 	</h1>
 
 	<div class="hero-images">
-		{heroImages.map((img) => <Image src={img} alt="" widths={[400, 800]} />)}
+		{heroImages.map((img) => <Picture src={img} formats={['avif', 'webp']} alt="" />)}
 	</div>
 
 	<p class="lede">

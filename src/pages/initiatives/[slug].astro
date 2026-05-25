@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets'
+import { Picture } from 'astro:assets'
 import { getCollection, render } from 'astro:content'
 import Layout from '../../layouts/Layout.astro'
 
@@ -23,10 +23,10 @@ const { Content } = await render(entry)
 
 	<header class="page-header">
 		<div class="hero-photo">
-			<Image
+			<Picture
 				src={entry.data.photo}
+				formats={['avif', 'webp']}
 				alt={entry.data.name}
-				widths={[600, 1200, 1800]}
 				sizes="(max-width: 70rem) 100vw, 70rem"
 			/>
 		</div>

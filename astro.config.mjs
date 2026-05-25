@@ -9,6 +9,10 @@ export default defineConfig({
 	site: 'https://interactive-intelligence.github.io',
 	base: '/website/',
 	integrations: [icon()],
+	image: {
+		layout: 'constrained',
+		responsiveStyles: true,
+	},
 	markdown: {
 		rehypePlugins: [
 			rehypeSlug,
