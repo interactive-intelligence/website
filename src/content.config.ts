@@ -28,8 +28,11 @@ const talks = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/talks" }),
   schema: z.object({
     title: z.string(),
+    speaker: z.string(),
     date: z.coerce.date(),
-    description: z.string(),
+    posted: z.coerce.date(),
+    location: z.string().optional(),
+    summary: z.string().optional(),
     youtubeUrl: z.string().optional(),
   }),
 });
@@ -74,7 +77,12 @@ const schedule = defineCollection({
           name: z.string(),
           start: z.coerce.date(),
           end: z.coerce.date(),
-          initiatives: z.array(z.string()),
+          initiatives: z.array(
+            z.object({
+              id: z.string(),
+              time: z.string().optional(),
+            }),
+          ),
           note: z.string().optional(),
         }),
       )

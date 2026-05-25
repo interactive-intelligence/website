@@ -5,14 +5,34 @@ import { Icon } from 'astro-icon/components';
 
 const base = import.meta.env.BASE_URL;
 
-const [initiatives, schedules] = await Promise.all([
+const [initiatives, schedules, talksCollection] = await Promise.all([
 	getCollection('initiatives'),
-	getCollection('schedule')
+	getCollection('schedule'),
+	getCollection('talks')
 ]);
 
 const initiativesById = new Map(initiatives.map((i) => [i.id, i]));
+const talksInitiative = initiativesById.get('talks');
 
 const today = new Date();
+
+const upcomingTalks = talksCollection
+	.filter((t) => t.data.date.getTime() >= today.getTime())
+	.sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
+	.slice(0, 2);
+
+const talkDateFmt = new Intl.DateTimeFormat('en-US', {
+	weekday: 'short',
+	month: 'short',
+	day: 'numeric',
+	timeZone: 'America/Los_Angeles'
+});
+
+const talkTimeFmt = new Intl.DateTimeFormat('en-US', {
+	hour: 'numeric',
+	minute: '2-digit',
+	timeZone: 'America/Los_Angeles'
+});
 
 const status = (start: Date, end: Date) => {
 	if (today < start) return 'upcoming';
@@ -22,31 +42,34 @@ const status = (start: Date, end: Date) => {
 
 const years = [...schedules]
 	.sort((a, b) => a.data.year.localeCompare(b.data.year))
-	.map((entry) => ({
-		year: entry.data.year,
-		quarters: entry.data.quarters.map((q) => ({
-			...q,
-			status: status(q.start, q.end),
-			items: q.initiatives
-				.map((id) => initiativesById.get(id))
-				.filter((i): i is NonNullable<typeof i> => Boolean(i))
-		}))
-	}));
+	.map((entry) => {
+		const quarters = entry.data.quarters.map((q) => {
+			const items = new Map<string, { time?: string }>();
+			for (const i of q.initiatives) {
+				if (i.id === 'talks') continue;
+				if (!initiativesById.has(i.id)) continue;
+				items.set(i.id, { time: i.time });
+			}
+			return { ...q, status: status(q.start, q.end), items };
+		});
 
-const defaultIndex = Math.max(
-	0,
-	years.findIndex((y) => y.quarters.some((q) => q.status === 'current'))
-);
+		const ids = new Set<string>();
+		quarters.forEach((q) => q.items.forEach((_, id) => ids.add(id)));
+		const rows = [...ids]
+			.map((id) => initiativesById.get(id)!)
+			.sort((a, b) => a.data.order - b.data.order);
+
+		return { year: entry.data.year, quarters, rows };
+	});
+
+const defaultIndex = years.findIndex((y) => y.quarters.some((q) => q.status === 'current'));
 const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 ---
 
 <Layout title="Schedule - i2">
 	<h1>Schedule</h1>
 	<div class="lede-row">
-		<p class="lede">
-			What's running each quarter. Switch between academic years to see past programming or
-			what's coming up.
-		</p>
+		<p class="lede">What programs are running each quarter.</p>
 		<div
 			class="year-switcher"
 			data-year-switcher
@@ -73,37 +96,52 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 			{
 				years.map((y, idx) => (
 					<div
-						class="quarters"
+						class="matrix"
 						data-year-panel
 						data-year={y.year}
 						hidden={idx !== initialIndex}
 					>
+						<div class="m-cell" aria-hidden="true" />
 						{y.quarters.map((q) => (
-							<article class="quarter" data-status={q.status}>
-								<header class="quarter-header">
-									<h3>{q.name}</h3>
-									{q.status === 'current' && <span class="badge">Now</span>}
-									{q.status === 'upcoming' && (
-										<span class="badge badge-upcoming">Upcoming</span>
-									)}
-								</header>
-								<ul class="initiative-list">
-									{q.items.map((item) => (
-										<li>
-											<a
-												href={
-													item.data.external_url ??
-													`${base}initiatives/${item.id}`
-												}
-												class="initiative-chip"
-											>
-												{item.data.name}
-											</a>
-										</li>
-									))}
-								</ul>
-								{q.note && <p class="quarter-note">{q.note}</p>}
-							</article>
+							<div class="m-cell m-head" data-status={q.status}>
+								<span class="m-head-name">{q.name}</span>
+								{q.status === 'current' && <span class="badge">Now</span>}
+								{q.status === 'upcoming' && (
+									<span class="badge badge-upcoming">Upcoming</span>
+								)}
+							</div>
+						))}
+
+						{y.rows.map((row) => (
+							<>
+								<div class="m-cell m-label">
+									<a
+										href={
+											row.data.external_url ?? `${base}initiatives/${row.id}`
+										}
+									>
+										{row.data.name}
+									</a>
+								</div>
+								{y.quarters.map((q) => {
+									const entry = q.items.get(row.id);
+									return (
+										<div
+											class="m-cell m-data"
+											data-status={q.status}
+											data-active={entry ? 'true' : 'false'}
+										>
+											{entry ? (
+												<span class="m-time">{entry.time ?? 'TBD'}</span>
+											) : (
+												<span class="m-empty" aria-label="Not running">
+													—
+												</span>
+											)}
+										</div>
+									);
+								})}
+							</>
 						))}
 					</div>
 				))
@@ -112,8 +150,55 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 	</section>
 
 	<section>
-		<h2 id="events">
-			Events<a class="heading-anchor" href="#events" aria-label="Link to section">#</a>
+		<div class="talks-widget-head">
+			<h2>Upcoming talks</h2>
+			<a class="link-arrow" href={`${base}initiatives/talks`}>
+				<span>All talks</span>
+				<Icon name="mingcute:arrow-right-line" />
+			</a>
+		</div>
+		{
+			upcomingTalks.length > 0 ? (
+				<ul class="talks-list">
+					{upcomingTalks.map((t) => (
+						<li>
+							<a class="btn btn-surface talk-card" href={`${base}talks/${t.id}`}>
+								<span class="talk-body">
+									<span class="talk-title">
+										{t.data.speaker}: {t.data.title}
+									</span>
+									<span class="talk-meta">
+										<time datetime={t.data.date.toISOString()}>
+											{talkDateFmt.format(t.data.date)} ·{' '}
+											{talkTimeFmt.format(t.data.date)}
+										</time>
+										{t.data.location && (
+											<>
+												<span class="dot" aria-hidden="true">
+													·
+												</span>
+												<span class="talk-location">{t.data.location}</span>
+											</>
+										)}
+									</span>
+								</span>
+								<Icon name="mingcute:arrow-right-line" class="talk-arrow" />
+							</a>
+						</li>
+					))}
+				</ul>
+			) : (
+				<p class="talks-empty">
+					No talks currently scheduled. More information will be available as new speakers
+					are confirmed.
+				</p>
+			)
+		}
+	</section>
+
+	<section>
+		<h2 id="calendar">
+			Calendar<a class="heading-anchor" href="#calendar" aria-label="Link to section">#</a>
 		</h2>
 		<p>All meetings and events are on our public Google Calendar.</p>
 		<div class="calendar-embed">
@@ -221,8 +306,183 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 		margin-top: 1rem;
 	}
 
-	.lede {
-		margin-bottom: 2.5rem;
+	.years {
+		position: relative;
+	}
+
+	.matrix {
+		display: grid;
+		grid-template-columns: minmax(0, 0.85fr) repeat(3, minmax(0, 1fr));
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		overflow: hidden;
+	}
+
+	.matrix[hidden] {
+		display: grid;
+		position: absolute;
+		inset: 0;
+		visibility: hidden;
+		pointer-events: none;
+	}
+
+	.m-cell {
+		padding: 1rem;
+		border-bottom: 1px solid var(--border);
+		border-right: 1px solid var(--border);
+		min-width: 0;
+	}
+
+	.m-cell:nth-child(4n) {
+		border-right: 0;
+	}
+
+	.matrix > .m-cell:nth-last-child(-n + 4) {
+		border-bottom: 0;
+	}
+
+	.m-head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+	}
+
+	.m-head[data-status='past'] {
+		opacity: 0.6;
+	}
+
+	.m-head[data-status='current'] {
+		background: var(--accent-light);
+	}
+
+	.m-head-name {
+		font-weight: 500;
+	}
+
+	.badge {
+		font-size: 0.75rem;
+		font-weight: 500;
+		padding: 0.125rem 0.5rem;
+		border-radius: 999px;
+		background: var(--accent-dark);
+		color: white;
+	}
+
+	.badge-upcoming {
+		background: transparent;
+		color: var(--text-accent);
+		border: 1px solid var(--rule);
+	}
+
+	.m-label {
+		display: flex;
+		align-items: center;
+		font-weight: 500;
+	}
+
+	.m-label a {
+		color: var(--text);
+		text-decoration: none;
+		font-weight: 500;
+		transition: color var(--duration-fast) var(--ease);
+	}
+
+	.m-label a:hover {
+		color: var(--text-accent);
+	}
+
+	.m-data {
+		display: flex;
+		align-items: center;
+		font-size: 0.875rem;
+		color: var(--text-accent);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.m-data[data-status='past'] {
+		opacity: 0.55;
+	}
+
+	.m-data[data-status='current'] {
+		background: var(--accent-light);
+	}
+
+	.m-data[data-active='true'] {
+		color: var(--text);
+	}
+
+	.m-empty {
+		color: var(--text-accent);
+		opacity: 0.4;
+	}
+
+	.talks-widget-head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.talks-widget-head h2 {
+		margin: 0;
+	}
+
+	.talks-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.talk-card {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding: 1rem;
+	}
+
+	.talk-body {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		min-width: 0;
+		flex: 1;
+	}
+
+	.talk-title {
+		font-weight: 500;
+		font-size: 1.125rem;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.talk-meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.875rem;
+		color: var(--text-accent);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.talk-arrow {
+		color: var(--text-accent);
+		font-size: 1.25em;
+		margin-left: auto;
+		flex-shrink: 0;
+	}
+
+	@media (max-width: 32rem) {
+		.talk-title {
+			white-space: normal;
+		}
 	}
 
 	.calendar-embed {
@@ -238,113 +498,5 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 		width: 100%;
 		height: 36rem;
 		border: 0;
-	}
-
-	.years {
-		position: relative;
-	}
-
-	.quarters {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 1rem;
-	}
-
-	.quarters[hidden] {
-		display: grid;
-		position: absolute;
-		inset: 0;
-		visibility: hidden;
-		pointer-events: none;
-	}
-
-	.quarter {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		padding: 1.25rem;
-		background: var(--surface);
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
-		transition: opacity var(--duration-fast) var(--ease);
-	}
-
-	.quarter[data-status='past'] {
-		opacity: 0.5;
-	}
-
-	.quarter[data-status='current'] {
-		background: var(--accent-light);
-		border-color: var(--border-accent-light);
-	}
-
-	.quarter-header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 0.5rem;
-	}
-
-	.quarter-header h3 {
-		margin: 0;
-		font-size: 1.125rem;
-	}
-
-	.badge {
-		font-size: 0.75rem;
-		font-weight: 600;
-		padding: 0.125rem 0.5rem;
-		border-radius: 999px;
-		background: var(--accent-dark);
-		color: white;
-		letter-spacing: 0.02em;
-	}
-
-	.badge-upcoming {
-		background: transparent;
-		color: var(--text-accent);
-		border: 1px solid var(--rule);
-	}
-
-	.initiative-list {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		display: flex;
-		flex-direction: column;
-		gap: 0.375rem;
-	}
-
-	.initiative-list li {
-		margin: 0;
-	}
-
-	.initiative-chip {
-		display: block;
-		padding: 0.5rem 0.75rem;
-		background: var(--bg);
-		border: 1px solid var(--border);
-		border-radius: calc(var(--radius) / 2);
-		font-size: 0.9375rem;
-		transition:
-			border-color var(--duration-fast) var(--ease),
-			transform var(--duration) var(--ease);
-	}
-
-	.initiative-chip:hover {
-		border-color: var(--rule);
-		transform: translateX(2px);
-	}
-
-	.quarter-note {
-		margin: 0;
-		font-size: 0.875rem;
-		color: var(--text-accent);
-	}
-
-	@media (max-width: 48rem) {
-		.quarters {
-			grid-template-columns: 1fr;
-		}
 	}
 </style>

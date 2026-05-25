@@ -5,8 +5,37 @@ import { Icon } from 'astro-icon/components';
 
 const base = import.meta.env.BASE_URL;
 
-const announcements = (await getCollection('announcements')).sort(
-	(a, b) => b.data.date.getTime() - a.data.date.getTime()
+const [announcements, talks] = await Promise.all([
+	getCollection('announcements'),
+	getCollection('talks')
+]);
+
+type FeedItem = {
+	date: Date;
+	title: string;
+	summary?: string;
+	href: string;
+	linked: boolean;
+};
+
+const annItems: FeedItem[] = announcements.map((entry) => ({
+	date: entry.data.date,
+	title: entry.data.title,
+	summary: entry.data.summary,
+	href: `${base}announcements/${entry.id}`,
+	linked: Boolean(entry.body && entry.body.trim().length > 0)
+}));
+
+const talkItems: FeedItem[] = talks.map((entry) => ({
+	date: entry.data.posted,
+	title: `i2 Talk: ${entry.data.title}`,
+	summary: entry.data.summary,
+	href: `${base}talks/${entry.id}`,
+	linked: true
+}));
+
+const items = [...annItems, ...talkItems].sort(
+	(a, b) => b.date.getTime() - a.date.getTime()
 );
 
 const fmt = new Intl.DateTimeFormat('en-US', {
@@ -14,9 +43,6 @@ const fmt = new Intl.DateTimeFormat('en-US', {
 	day: 'numeric',
 	year: 'numeric'
 });
-
-const hasBody = (entry: (typeof announcements)[number]) =>
-	entry.body && entry.body.trim().length > 0;
 ---
 
 <Layout title="Announcements - i2">
@@ -30,30 +56,24 @@ const hasBody = (entry: (typeof announcements)[number]) =>
 
 	<ul class="announcement-cards">
 		{
-			announcements.map((entry) => {
-				const linked = hasBody(entry);
-				const detailHref = `${base}announcements/${entry.id}`;
-				return (
-					<li class={`announcement-card${linked ? ' is-linked' : ''}`}>
-						<time datetime={entry.data.date.toISOString()}>
-							{fmt.format(entry.data.date)}
-						</time>
-						<div class="announcement-body">
-							<h2>
-								{linked ? (
-									<a href={detailHref}>
-										{entry.data.title}
-										<Icon name="mingcute:arrow-right-line" />
-									</a>
-								) : (
-									entry.data.title
-								)}
-							</h2>
-							{entry.data.summary && <p>{entry.data.summary}</p>}
-						</div>
-					</li>
-				);
-			})
+			items.map((item) => (
+				<li class={`announcement-card${item.linked ? ' is-linked' : ''}`}>
+					<time datetime={item.date.toISOString()}>{fmt.format(item.date)}</time>
+					<div class="announcement-body">
+						<h2>
+							{item.linked ? (
+								<a href={item.href}>
+									{item.title}
+									<Icon name="mingcute:arrow-right-line" />
+								</a>
+							) : (
+								item.title
+							)}
+						</h2>
+						{item.summary && <p>{item.summary}</p>}
+					</div>
+				</li>
+			))
 		}
 	</ul>
 </Layout>
