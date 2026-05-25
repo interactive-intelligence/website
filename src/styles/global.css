@@ -4,10 +4,12 @@
 	--border: hsl(260, 50%, 87%);
 	--rule: hsl(260, 30%, 75%);
 	--text: hsl(260, 30%, 10%);
-	--text-accent: hsl(260, 40%, 40%);
-	--accent-dark: hsl(260, 45%, 40%);
+	--text-accent: hsl(260, 40%, 45%);
+	--accent-dark: hsl(260, 45%, 45%);
+	--accent-dark-hover: hsl(260, 45%, 32%);
 	--border-accent-dark: hsl(260, 45%, 35%);
 	--accent-light: hsl(260, 70%, 80%);
+	--accent-light-hover: hsl(260, 70%, 72%);
 	--border-accent-light: hsl(260, 70%, 75%);
 	--logo-bg: hsl(221, 48%, 67%);
 	--border-logo-bg: hsl(221, 48%, 62%);
@@ -15,6 +17,10 @@
 	--container: 70rem;
 	--radius: 1.5rem;
 	--radius-lg: 2rem;
+
+	--ease: cubic-bezier(0.4, 0, 0.2, 1);
+	--duration-fast: 120ms;
+	--duration: 200ms;
 }
 
 *,
@@ -54,10 +60,47 @@ a {
 	color: inherit;
 	text-decoration: none;
 }
-a.text-link {
+
+/* Underlined prose-style links: underline is always visible, animates on hover. */
+a.text-link,
+.prose a {
 	color: var(--text-accent);
-	text-decoration: underline;
 	font-weight: 500;
+	text-decoration: underline;
+	text-decoration-color: var(--rule);
+	text-underline-offset: 2px;
+	transition: text-decoration-color var(--duration-fast) var(--ease);
+}
+
+a.text-link:hover,
+.prose a:hover {
+	text-decoration-color: var(--text-accent);
+}
+
+/*
+ * Inline link with a trailing/leading icon. The icon nudges in its arrow
+ * direction on hover; color stays put (already accented).
+ */
+.link-arrow,
+.link-arrow-back {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	color: var(--text-accent);
+	font-weight: 500;
+}
+
+.link-arrow [data-icon],
+.link-arrow-back [data-icon] {
+	transition: transform var(--duration) var(--ease);
+}
+
+.link-arrow:hover [data-icon] {
+	transform: translateX(3px);
+}
+
+.link-arrow-back:hover [data-icon] {
+	transform: translateX(-3px);
 }
 
 button {
@@ -90,7 +133,7 @@ html {
 	font-weight: 400;
 	text-decoration: none;
 	opacity: 0;
-	transition: opacity 0.15s;
+	transition: opacity var(--duration-fast) var(--ease);
 }
 
 :is(h1, h2, h3, h4):hover > .heading-anchor,
@@ -128,11 +171,6 @@ h4 {
 	}
 	h4 {
 		margin-top: 1rem;
-	}
-	a {
-		color: var(--text-accent);
-		text-decoration: underline;
-		font-weight: 500;
 	}
 }
 
@@ -178,15 +216,24 @@ table {
 }
 
 .btn {
-	display: inline-block;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
 	padding: 0.5rem 1rem;
 	border-radius: var(--radius);
 	font-weight: 500;
-	transition: opacity 0.15s;
+	transition:
+		background var(--duration-fast) var(--ease),
+		border-color var(--duration-fast) var(--ease),
+		transform var(--duration-fast) var(--ease);
 }
 
 .btn:hover {
-	opacity: 0.85;
+	transform: scale(1.05);
+}
+
+.btn:active {
+	transform: scale(0.98);
 }
 
 .btn-primary {
@@ -195,10 +242,46 @@ table {
 	border: 1px solid var(--border-accent-dark);
 }
 
+.btn-primary:hover {
+	background: var(--accent-dark-hover);
+	border-color: var(--accent-dark-hover);
+}
+
 .btn-accent {
 	background: var(--accent-light);
 	color: var(--text);
 	border: 1px solid var(--border-accent-light);
+}
+
+.btn-accent:hover {
+	background: var(--accent-light-hover);
+	border-color: var(--accent-light-hover);
+}
+
+/*
+ * Quieter button variant used for nav links and surface-style "click me" cards.
+ * Sits at rest on --surface; flashes to --accent-light on hover or when marked
+ * .active (e.g. the current-page nav link). Uses a gentler scale than primary
+ * /accent buttons since these elements are often larger or in tight rows.
+ */
+.btn-surface {
+	background: var(--surface);
+	color: inherit;
+	border: 1px solid var(--border);
+}
+
+.btn-surface:hover,
+.btn-surface.active {
+	background: var(--accent-light);
+	border-color: var(--border-accent-light);
+}
+
+.btn-surface:hover {
+	transform: scale(1.02);
+}
+
+.btn-surface:active {
+	transform: scale(0.98);
 }
 
 [data-icon] {

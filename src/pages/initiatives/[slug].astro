@@ -19,7 +19,9 @@ const { Content } = await render(entry)
 
 <Layout title={`${entry.data.name} - i2`}>
 	<p class="back">
-		<a href={`${base}initiatives`}><Icon name="mingcute:arrow-left-line" /> All initiatives</a>
+		<a href={`${base}initiatives`} class="link-arrow-back">
+			<Icon name="mingcute:arrow-left-line" /> All initiatives
+		</a>
 	</p>
 
 	<header class="page-header">
@@ -53,14 +55,6 @@ const { Content } = await render(entry)
 	.back {
 		font-size: 0.875rem;
 		margin-bottom: 1.5rem;
-	}
-
-	.back a {
-		color: var(--text-accent);
-	}
-
-	.back a:hover {
-		text-decoration: underline;
 	}
 
 	.page-header {

@@ -50,7 +50,12 @@ const socials = [
 	<div class="socials">
 		{
 			socials.map(({ href, label, icon }) => (
-				<a href={href} target="_blank" rel="noopener noreferrer" class="social-card">
+				<a
+					href={href}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="btn btn-surface social-card"
+				>
 					<Icon name={icon} />
 					{label}
 				</a>
@@ -92,33 +97,15 @@ const socials = [
 	}
 
 	.social-card {
-		display: flex;
-		align-items: center;
 		justify-content: center;
-		gap: 0.5rem;
 		padding: 1rem;
-		background: var(--surface);
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
-		font-weight: 500;
 
 		[data-icon] {
 			font-size: 1.5rem;
 		}
 	}
 
-	.cta-btn {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-
-		[data-icon] {
-			font-size: 1.5rem;
-		}
-	}
-
-	.social-card:hover {
-		background: var(--accent-light);
-		border-color: var(--border-accent-light);
+	.cta-btn [data-icon] {
+		font-size: 1.5rem;
 	}
 </style>

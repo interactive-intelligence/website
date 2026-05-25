@@ -45,10 +45,17 @@ const hasBody = (entry: (typeof announcements)[number]) =>
 					{entry.data.summary && <p class="summary">{entry.data.summary}</p>}
 					<div class="actions">
 						{hasBody(entry) && (
-							<a href={`${base}announcements/${entry.id}`}>Read more <Icon name="mingcute:arrow-right-line" /></a>
+							<a href={`${base}announcements/${entry.id}`} class="link-arrow">
+								Read more <Icon name="mingcute:arrow-right-line" />
+							</a>
 						)}
 						{entry.data.link_url && (
-							<a href={entry.data.link_url} target="_blank" rel="noopener">
+							<a
+								href={entry.data.link_url}
+								target="_blank"
+								rel="noopener"
+								class="link-arrow"
+							>
 								{entry.data.link_label ?? 'Learn more'} <Icon name="mingcute:arrow-right-line" />
 							</a>
 						)}
@@ -88,8 +95,12 @@ const hasBody = (entry: (typeof announcements)[number]) =>
 		font-size: 1.25rem;
 	}
 
+	.entry h2 a {
+		transition: color var(--duration-fast) var(--ease);
+	}
+
 	.entry h2 a:hover {
-		text-decoration: underline;
+		color: var(--text-accent);
 	}
 
 	.summary {
@@ -101,15 +112,9 @@ const hasBody = (entry: (typeof announcements)[number]) =>
 		flex-wrap: wrap;
 		gap: 1.25rem;
 		margin-top: 0.5rem;
-		font-weight: 500;
-		color: var(--text-accent);
 	}
 
 	.actions:empty {
 		display: none;
-	}
-
-	.actions a:hover {
-		text-decoration: underline;
 	}
 </style>

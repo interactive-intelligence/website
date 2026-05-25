@@ -135,7 +135,6 @@ const learnMoreHref = (item: InitiativeItem) =>
 	.accordion .num {
 		color: var(--text-accent);
 		letter-spacing: -0.02em;
-		transition: color 0.15s ease;
 	}
 
 	.accordion .title {
@@ -143,17 +142,16 @@ const learnMoreHref = (item: InitiativeItem) =>
 		font-weight: 600;
 		line-height: 1.5;
 		margin: 0;
-		transition: color 0.15s ease;
+		transition: color var(--duration-fast) var(--ease);
 	}
 
-	.accordion summary:hover .title,
-	.accordion summary:hover .num {
-		color: var(--accent-dark);
+	.accordion summary:hover .title {
+		color: var(--text-accent);
 	}
 
 	.accordion summary:hover .indicator::before,
 	.accordion summary:hover .indicator::after {
-		background: var(--accent-dark);
+		background: var(--text-accent);
 	}
 
 	.accordion .indicator {
@@ -170,6 +168,7 @@ const learnMoreHref = (item: InitiativeItem) =>
 		border-radius: 999px;
 		top: 50%;
 		left: 50%;
+		transition: background var(--duration-fast) var(--ease);
 	}
 
 	.accordion .indicator::before {
@@ -185,7 +184,7 @@ const learnMoreHref = (item: InitiativeItem) =>
 		min-width: 1px;
 		transform: translate(-50%, -50%) scaleY(1);
 		transform-origin: center;
-		transition: transform 220ms ease;
+		transition: transform var(--duration) ease;
 	}
 
 	.accordion details[open] .indicator::after,
@@ -196,15 +195,7 @@ const learnMoreHref = (item: InitiativeItem) =>
 	.accordion .panel {
 		height: 0;
 		overflow: hidden;
-		opacity: 0;
-		transition:
-			height 280ms ease,
-			opacity 200ms ease;
-	}
-
-	.accordion details[open] .panel,
-	.accordion details[data-expanded='true'] .panel {
-		opacity: 1;
+		transition: height var(--duration) ease;
 	}
 
 	.accordion .body {

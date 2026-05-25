@@ -104,7 +104,7 @@ const heroImages = [hero1, hero2, hero3];
 							#
 						</a>
 					</h2>
-					<a href={`${base}announcements`} class="see-all">
+					<a href={`${base}announcements`} class="link-arrow">
 						See all <Icon name="mingcute:arrow-right-line" />
 					</a>
 				</header>
@@ -229,12 +229,6 @@ const heroImages = [hero1, hero2, hero3];
 		gap: 1rem;
 	}
 
-	.stat {
-		background: var(--surface);
-		border-radius: var(--radius);
-		border: 1px solid var(--border);
-	}
-
 	.announcements-header {
 		display: flex;
 		align-items: baseline;
@@ -245,15 +239,6 @@ const heroImages = [hero1, hero2, hero3];
 
 	.announcements-header h2 {
 		margin: 0;
-	}
-
-	.see-all {
-		font-weight: 500;
-		color: var(--text-accent);
-	}
-
-	.see-all:hover {
-		text-decoration: underline;
 	}
 
 	.announcement-cards {
@@ -277,7 +262,6 @@ const heroImages = [hero1, hero2, hero3];
 		font-size: 0.875rem;
 		color: var(--text-accent);
 		font-variant-numeric: tabular-nums;
-		transition: color 0.15s ease;
 	}
 
 	.announcement-card h3 {
@@ -288,7 +272,7 @@ const heroImages = [hero1, hero2, hero3];
 		display: inline-flex;
 		align-items: center;
 		gap: 0.375rem;
-		transition: color 0.15s ease;
+		transition: color var(--duration-fast) var(--ease);
 	}
 
 	.announcement-card h3 a::after {
@@ -300,15 +284,11 @@ const heroImages = [hero1, hero2, hero3];
 	.announcement-card h3 a [data-icon] {
 		font-size: 0.875em;
 		color: var(--text-accent);
-		transition: transform 0.15s ease;
+		transition: transform var(--duration) var(--ease);
 	}
 
 	.announcement-card.is-linked:hover h3 a {
-		color: var(--accent-dark);
-	}
-
-	.announcement-card.is-linked:hover time {
-		color: var(--accent-dark);
+		color: var(--text-accent);
 	}
 
 	.announcement-card.is-linked:hover h3 a [data-icon] {
@@ -332,10 +312,18 @@ const heroImages = [hero1, hero2, hero3];
 		justify-content: center;
 		padding: 1rem 2rem;
 		border-radius: var(--radius);
+		transition:
+			opacity var(--duration-fast) var(--ease),
+			transform var(--duration-fast) var(--ease);
 	}
 
 	.affil-card:hover {
-		opacity: 0.8;
+		opacity: 0.85;
+		transform: scale(1.02);
+	}
+
+	.affil-card:active {
+		transform: scale(0.98);
 	}
 
 	.affil-allen {
@@ -355,8 +343,11 @@ const heroImages = [hero1, hero2, hero3];
 	.stat {
 		display: flex;
 		flex-direction: column;
-		padding: 1.5rem;
 		gap: 0.5rem;
+		padding: 1.5rem;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
 	}
 
 	.stat .value {

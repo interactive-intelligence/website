@@ -248,7 +248,7 @@ const activeWithBody = await Promise.all(
 		background: var(--accent-light);
 		border: 1px solid var(--border-accent-light);
 		border-radius: 999px;
-		color: var(--accent-dark);
+		color: var(--text-accent);
 	}
 
 	.bio {
@@ -280,6 +280,7 @@ const activeWithBody = await Promise.all(
 		text-decoration: underline;
 		text-decoration-color: var(--rule);
 		text-underline-offset: 2px;
+		transition: text-decoration-color var(--duration-fast) var(--ease);
 	}
 
 	.links a:hover {
@@ -335,6 +336,7 @@ const activeWithBody = await Promise.all(
 		text-decoration: underline;
 		text-decoration-color: var(--rule);
 		text-underline-offset: 2px;
+		transition: text-decoration-color var(--duration-fast) var(--ease);
 	}
 
 	.alum-links a:hover {

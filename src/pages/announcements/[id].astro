@@ -24,7 +24,9 @@ const fmt = new Intl.DateTimeFormat('en-US', {
 
 <Layout title={`${entry.data.title} - i2`}>
 	<p class="back">
-		<a href={`${base}announcements`}><Icon name="mingcute:arrow-left-line" /> All announcements</a>
+		<a href={`${base}announcements`} class="link-arrow-back">
+			<Icon name="mingcute:arrow-left-line" /> All announcements
+		</a>
 	</p>
 
 	<header class="page-header">
@@ -55,14 +57,6 @@ const fmt = new Intl.DateTimeFormat('en-US', {
 <style>
 	.back {
 		margin-bottom: 1.5rem;
-	}
-
-	.back a {
-		color: var(--text-accent);
-	}
-
-	.back a:hover {
-		text-decoration: underline;
 	}
 
 	.page-header {

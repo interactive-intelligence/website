@@ -45,7 +45,10 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 		{
 			links.map(({ href, label, dropdown, items }) => (
 				<li class:list={[{ 'has-dropdown': dropdown || items }]}>
-					<a href={prefixed(href)} class:list={[{ active: isActive(href) }]}>
+					<a
+						href={prefixed(href)}
+						class:list={['btn btn-surface', { active: isActive(href) }]}
+					>
 						{label}
 					</a>
 					{items && (
@@ -120,21 +123,6 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 		margin-top: 0;
 	}
 
-	ul a {
-		display: inline-block;
-		padding: 0.5rem 1rem;
-		border-radius: var(--radius);
-		font-weight: 500;
-		background: var(--surface);
-		border: 1px solid var(--border);
-	}
-
-	ul a:hover,
-	ul a.active {
-		background: var(--accent-light);
-		border: 1px solid var(--border-accent-light);
-	}
-
 	.has-dropdown {
 		position: relative;
 	}
@@ -155,9 +143,9 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 		opacity: 0;
 		visibility: hidden;
 		transition:
-			opacity 0.15s,
-			transform 0.15s,
-			visibility 0.15s;
+			opacity var(--duration-fast) var(--ease),
+			transform var(--duration-fast) var(--ease),
+			visibility var(--duration-fast) var(--ease);
 		z-index: 10;
 	}
 
@@ -178,14 +166,23 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 		padding: 0.5rem 0.75rem;
 		background: transparent;
 		border: 1px solid transparent;
-		border-radius: calc(var(--radius));
+		border-radius: var(--radius);
 		font-size: 0.875rem;
 		white-space: nowrap;
+		transition:
+			background var(--duration-fast) var(--ease),
+			border-color var(--duration-fast) var(--ease),
+			transform var(--duration-fast) var(--ease);
 	}
 
 	.submenu a:hover {
 		background: var(--accent-light);
 		border-color: var(--border-accent-light);
+		transform: scale(1.02);
+	}
+
+	.submenu a:active {
+		transform: scale(0.98);
 	}
 
 	.submenu .separator {

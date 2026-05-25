@@ -142,12 +142,20 @@ const socials = [
 	}
 
 	.email {
+		color: var(--text-accent);
+		font-weight: 500;
 		text-decoration: underline;
+		text-decoration-color: var(--rule);
+		text-underline-offset: 2px;
+		transition: text-decoration-color var(--duration-fast) var(--ease);
+	}
+
+	.email:hover {
+		text-decoration-color: var(--text-accent);
 	}
 
 	.tag {
 		font-size: 1rem;
-		color: var(--text-accent);
 		margin: 0;
 		line-height: 1.5;
 	}
@@ -173,6 +181,17 @@ const socials = [
 	.col a {
 		display: inline-block;
 		font-weight: 500;
+		text-decoration: underline;
+		text-decoration-color: transparent;
+		text-underline-offset: 3px;
+		transition:
+			text-decoration-color var(--duration-fast) var(--ease),
+			color var(--duration-fast) var(--ease);
+	}
+
+	.col a:hover {
+		color: var(--text-accent);
+		text-decoration-color: var(--text-accent);
 	}
 
 	.bigname {

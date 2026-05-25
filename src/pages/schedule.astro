@@ -202,12 +202,14 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 		font-size: 1rem;
 		line-height: 1;
 		transition:
-			background 0.15s,
-			opacity 0.15s;
+			background var(--duration-fast) var(--ease),
+			border-color var(--duration-fast) var(--ease),
+			opacity var(--duration-fast) var(--ease);
 	}
 
 	.year-nav:hover:not(:disabled) {
 		background: var(--accent-light);
+		border-color: var(--border-accent-light);
 	}
 
 	.year-nav:disabled {
@@ -264,7 +266,7 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 		background: var(--surface);
 		border: 1px solid var(--border);
 		border-radius: var(--radius);
-		transition: opacity 0.2s;
+		transition: opacity var(--duration-fast) var(--ease);
 	}
 
 	.quarter[data-status='past'] {
@@ -325,8 +327,8 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 		border-radius: calc(var(--radius) / 2);
 		font-size: 0.9375rem;
 		transition:
-			border-color 0.15s,
-			transform 0.15s;
+			border-color var(--duration-fast) var(--ease),
+			transform var(--duration) var(--ease);
 	}
 
 	.initiative-chip:hover {
