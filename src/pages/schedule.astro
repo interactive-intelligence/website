@@ -169,17 +169,9 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 									</span>
 									<span class="talk-meta">
 										<time datetime={t.data.date.toISOString()}>
-											{talkDateFmt.format(t.data.date)} ·{' '}
-											{talkTimeFmt.format(t.data.date)}
+											{talkDateFmt.format(t.data.date)} · 
+											{talkTimeFmt.format(t.data.date)} · {t.data.location}
 										</time>
-										{t.data.location && (
-											<>
-												<span class="dot" aria-hidden="true">
-													·
-												</span>
-												<span class="talk-location">{t.data.location}</span>
-											</>
-										)}
 									</span>
 								</span>
 								<Icon name="mingcute:arrow-right-line" class="talk-arrow" />

@@ -1,0 +1,177 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+
+const base = import.meta.env.BASE_URL;
+
+export async function getStaticPaths() {
+	const talks = await getCollection('talks');
+	return talks.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const dateFmt = new Intl.DateTimeFormat('en-US', {
+	weekday: 'long',
+	month: 'long',
+	day: 'numeric',
+	year: 'numeric',
+	hour: 'numeric',
+	minute: '2-digit',
+	timeZoneName: 'short',
+	timeZone: 'America/Los_Angeles'
+});
+
+const isPast = entry.data.date.getTime() < Date.now();
+
+const youtubeEmbed = (url: string | undefined): string | null => {
+	if (!url) return null;
+	try {
+		const u = new URL(url);
+		let id: string | null = null;
+		if (u.hostname.endsWith('youtu.be')) {
+			id = u.pathname.slice(1);
+		} else if (u.searchParams.has('v')) {
+			id = u.searchParams.get('v');
+		} else if (u.pathname.startsWith('/embed/')) {
+			id = u.pathname.slice('/embed/'.length);
+		}
+		return id ? `https://www.youtube.com/embed/${id}` : null;
+	} catch {
+		return null;
+	}
+};
+
+const embedSrc = youtubeEmbed(entry.data.youtubeUrl);
+---
+
+<Layout title={`${entry.data.title} - i2`}>
+	<p class="back">
+		<a href={`${base}announcements`} class="link-arrow-back">
+			<Icon name="mingcute:arrow-left-line" /> All announcements
+		</a>
+	</p>
+
+	<header class="page-header">
+		<p class="eyebrow">i2 Talk{isPast ? ' · Past' : ' · Upcoming'}</p>
+		<h1>{entry.data.title}</h1>
+		<dl class="meta">
+			<div>
+				<dt>Speaker</dt>
+				<dd>{entry.data.speaker}</dd>
+			</div>
+			<div>
+				<dt>{isPast ? 'Held on' : 'When'}</dt>
+				<dd>
+					<time datetime={entry.data.date.toISOString()}>
+						{dateFmt.format(entry.data.date)}
+					</time>
+				</dd>
+			</div>
+			{
+				entry.data.location && (
+					<div>
+						<dt>Where</dt>
+						<dd>{entry.data.location}</dd>
+					</div>
+				)
+			}
+		</dl>
+		{entry.data.summary && <p class="lede">{entry.data.summary}</p>}
+	</header>
+
+	{
+		embedSrc && (
+			<div class="video">
+				<iframe
+					src={embedSrc}
+					title={`${entry.data.title} — recording`}
+					loading="lazy"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+					allowfullscreen
+				/>
+			</div>
+		)
+	}
+
+	<section class="prose">
+		<Content />
+	</section>
+</Layout>
+
+<style>
+	.back {
+		margin-bottom: 1.5rem;
+	}
+
+	.page-header {
+		margin-bottom: 2rem;
+	}
+
+	.eyebrow {
+		margin: 0 0 0.5rem;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--text-accent);
+	}
+
+	.page-header h1 {
+		margin: 0 0 1.25rem;
+	}
+
+	.meta {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+		gap: 0.75rem 1.5rem;
+		margin: 0 0 1.5rem;
+		padding: 0.875rem 1rem;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+	}
+
+	.meta div {
+		min-width: 0;
+	}
+
+	.meta dt {
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--text-accent);
+		margin: 0 0 0.125rem;
+	}
+
+	.meta dd {
+		margin: 0;
+		font-size: 0.9375rem;
+	}
+
+	.lede {
+		font-size: 1.125rem;
+		margin: 0;
+	}
+
+	.video {
+		margin: 0 0 2rem;
+		position: relative;
+		aspect-ratio: 16 / 9;
+		border-radius: var(--radius);
+		overflow: hidden;
+		border: 1px solid var(--border);
+		background: black;
+	}
+
+	.video iframe {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+</style>
