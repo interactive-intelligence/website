@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
 
 const base = import.meta.env.BASE_URL;
 
@@ -58,11 +59,11 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 				data-dir="-1"
 				aria-label="Previous academic year"
 			>
-				&larr;
+				<Icon name="mingcute:arrow-left-line" />
 			</button>
 			<span class="year-label" data-year-label>{years[initialIndex].year}</span>
 			<button type="button" class="year-nav" data-dir="1" aria-label="Next academic year">
-				&rarr;
+				<Icon name="mingcute:arrow-right-line" />
 			</button>
 		</div>
 	</div>

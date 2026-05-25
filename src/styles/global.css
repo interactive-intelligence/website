@@ -200,3 +200,7 @@ table {
 	color: var(--text);
 	border: 1px solid var(--border-accent-light);
 }
+
+[data-icon] {
+	vertical-align: -0.13em;
+}

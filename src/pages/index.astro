@@ -3,6 +3,7 @@ import { Image, Picture } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import InitiativesAccordion from '../components/InitiativesAccordion.astro';
 import Layout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
 import hero1 from '../assets/hero-1.jpg';
 import hero2 from '../assets/hero-2.jpg';
 import hero3 from '../assets/hero-3.jpg';
@@ -104,7 +105,7 @@ const heroImages = [hero1, hero2, hero3];
 						</a>
 					</h2>
 					<a href={`${base}announcements`} class="see-all">
-						See all &rarr;
+						See all <Icon name="mingcute:arrow-right-line" />
 					</a>
 				</header>
 				<ul class="announcement-cards">
@@ -125,14 +126,19 @@ const heroImages = [hero1, hero2, hero3];
 								</h3>
 								{entry.data.summary && <p>{entry.data.summary}</p>}
 								<div class="card-actions">
-									{hasBody && <a href={detailHref}>Read more &rarr;</a>}
+									{hasBody && (
+										<a href={detailHref}>
+											Read more <Icon name="mingcute:arrow-right-line" />
+										</a>
+									)}
 									{entry.data.link_url && (
 										<a
 											href={entry.data.link_url}
 											target="_blank"
 											rel="noopener"
 										>
-											{entry.data.link_label ?? 'Learn more'} &rarr;
+											{entry.data.link_label ?? 'Learn more'}{' '}
+											<Icon name="mingcute:arrow-right-line" />
 										</a>
 									)}
 								</div>

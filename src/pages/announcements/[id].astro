@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
 
 const base = import.meta.env.BASE_URL;
 
@@ -23,7 +24,7 @@ const fmt = new Intl.DateTimeFormat('en-US', {
 
 <Layout title={`${entry.data.title} - i2`}>
 	<p class="back">
-		<a href={`${base}announcements`}>&larr; All announcements</a>
+		<a href={`${base}announcements`}><Icon name="mingcute:arrow-left-line" /> All announcements</a>
 	</p>
 
 	<header class="page-header">

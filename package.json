@@ -12,7 +12,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@iconify-json/ph": "^1.2.2",
+    "@iconify-json/mingcute": "^1.2.7",
     "astro": "^6.3.7",
     "astro-icon": "^1.1.5",
     "rehype-autolink-headings": "^7.1.0",

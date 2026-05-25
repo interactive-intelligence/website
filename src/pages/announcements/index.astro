@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
 
 const base = import.meta.env.BASE_URL;
 
@@ -44,11 +45,11 @@ const hasBody = (entry: (typeof announcements)[number]) =>
 					{entry.data.summary && <p class="summary">{entry.data.summary}</p>}
 					<div class="actions">
 						{hasBody(entry) && (
-							<a href={`${base}announcements/${entry.id}`}>Read more &rarr;</a>
+							<a href={`${base}announcements/${entry.id}`}>Read more <Icon name="mingcute:arrow-right-line" /></a>
 						)}
 						{entry.data.link_url && (
 							<a href={entry.data.link_url} target="_blank" rel="noopener">
-								{entry.data.link_label ?? 'Learn more'} &rarr;
+								{entry.data.link_label ?? 'Learn more'} <Icon name="mingcute:arrow-right-line" />
 							</a>
 						)}
 					</div>
