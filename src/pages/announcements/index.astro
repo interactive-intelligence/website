@@ -28,93 +28,101 @@ const hasBody = (entry: (typeof announcements)[number]) =>
 		>.
 	</p>
 
-	<ul class="feed">
+	<ul class="announcement-cards">
 		{
-			announcements.map((entry) => (
-				<li class="entry">
-					<time datetime={entry.data.date.toISOString()}>
-						{fmt.format(entry.data.date)}
-					</time>
-					<h2>
-						{hasBody(entry) ? (
-							<a href={`${base}announcements/${entry.id}`}>{entry.data.title}</a>
-						) : (
-							entry.data.title
-						)}
-					</h2>
-					{entry.data.summary && <p class="summary">{entry.data.summary}</p>}
-					<div class="actions">
-						{hasBody(entry) && (
-							<a href={`${base}announcements/${entry.id}`} class="link-arrow">
-								Read more <Icon name="mingcute:arrow-right-line" />
-							</a>
-						)}
-						{entry.data.link_url && (
-							<a
-								href={entry.data.link_url}
-								target="_blank"
-								rel="noopener"
-								class="link-arrow"
-							>
-								{entry.data.link_label ?? 'Learn more'} <Icon name="mingcute:arrow-right-line" />
-							</a>
-						)}
-					</div>
-				</li>
-			))
+			announcements.map((entry) => {
+				const linked = hasBody(entry);
+				const detailHref = `${base}announcements/${entry.id}`;
+				return (
+					<li class={`announcement-card${linked ? ' is-linked' : ''}`}>
+						<time datetime={entry.data.date.toISOString()}>
+							{fmt.format(entry.data.date)}
+						</time>
+						<div class="announcement-body">
+							<h2>
+								{linked ? (
+									<a href={detailHref}>
+										{entry.data.title}
+										<Icon name="mingcute:arrow-right-line" />
+									</a>
+								) : (
+									entry.data.title
+								)}
+							</h2>
+							{entry.data.summary && <p>{entry.data.summary}</p>}
+						</div>
+					</li>
+				);
+			})
 		}
 	</ul>
 </Layout>
 
 <style>
-	.feed {
+	.announcement-cards {
 		list-style: none;
 		padding: 0;
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
+		margin: 2rem 0 0;
+		border-top: 1px solid var(--rule);
 	}
 
-	.entry {
-		padding: 1.5rem 1.5rem;
-		background: var(--surface);
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
+	.announcement-card {
+		position: relative;
+		display: grid;
+		grid-template-columns: 9rem minmax(0, 1fr);
+		gap: 2rem;
+		padding: 1.25rem 0;
+		border-bottom: 1px solid var(--rule);
 	}
 
-	.entry time {
-		display: block;
+	.announcement-card time {
 		font-size: 0.875rem;
 		color: var(--text-accent);
 		font-variant-numeric: tabular-nums;
-		margin-bottom: 0.5rem;
+		white-space: nowrap;
 	}
 
-	.entry h2 {
-		margin: 0 0 0.5rem;
+	.announcement-card h2 {
+		margin: 0;
 		font-size: 1.25rem;
 	}
 
-	.entry h2 a {
+	.announcement-card h2 a {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
 		transition: color var(--duration-fast) var(--ease);
 	}
 
-	.entry h2 a:hover {
+	.announcement-card h2 a::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+	}
+
+	.announcement-card h2 a [data-icon] {
+		font-size: 0.875em;
+		color: var(--text-accent);
+		transition: transform var(--duration) var(--ease);
+	}
+
+	.announcement-card.is-linked:hover h2 a {
 		color: var(--text-accent);
 	}
 
-	.summary {
-		margin: 0;
+	.announcement-card.is-linked:hover h2 a [data-icon] {
+		transform: translateX(4px);
 	}
 
-	.actions {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 1.25rem;
-		margin-top: 0.5rem;
+	.announcement-card p {
+		margin: 0.5rem 0 0;
+		font-size: 0.875rem;
 	}
 
-	.actions:empty {
-		display: none;
+	@media (max-width: 48rem) {
+		.announcement-card {
+			grid-template-columns: 1fr;
+			gap: 0.25rem;
+		}
 	}
 </style>

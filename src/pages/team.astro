@@ -20,28 +20,31 @@ const sorted = [...members].sort((a, b) => {
 	return a.data.name.localeCompare(b.data.name);
 });
 
-const isFoundingMember = (m: (typeof sorted)[number]) =>
-	m.data.role === 'Founder' || (m.data.tags ?? []).includes('Founding Member');
+const alumniTier = (m: (typeof sorted)[number]) => {
+	if (m.data.role === 'Founder') return 0;
+	if ((m.data.tags ?? []).includes('Founding Member')) return 1;
+	return 2;
+};
 
 const active = sorted.filter((m) => m.data.active);
 const alumni = sorted
 	.filter((m) => !m.data.active)
 	.sort((a, b) => {
-		const fa = isFoundingMember(a) ? 0 : 1;
-		const fb = isFoundingMember(b) ? 0 : 1;
-		if (fa !== fb) return fa - fb;
+		const ta = alumniTier(a);
+		const tb = alumniTier(b);
+		if (ta !== tb) return ta - tb;
 		return a.data.name.localeCompare(b.data.name);
 	});
 
 function websiteLabel(url: string): string {
 	try {
 		const host = new URL(url).hostname.replace(/^www\./, '');
-		if (host.includes('linkedin.com')) return 'linkedin';
-		if (host.includes('instagram.com')) return 'instagram';
-		if (host.includes('github.com')) return 'github';
-		if (host === 'twitter.com' || host === 'x.com') return 'twitter';
+		if (host.includes('linkedin.com')) return 'Linkedin';
+		if (host.includes('instagram.com')) return 'Instagram';
+		if (host.includes('github.com')) return 'Github';
+		if (host === 'twitter.com' || host === 'x.com') return 'Twitter';
 	} catch {}
-	return 'website';
+	return 'Website';
 }
 
 const activeWithBody = await Promise.all(

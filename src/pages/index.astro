@@ -4,8 +4,8 @@ import { getCollection } from 'astro:content';
 import InitiativesAccordion from '../components/InitiativesAccordion.astro';
 import Layout from '../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
-import hero1 from '../assets/hero-1.jpg';
-import hero2 from '../assets/hero-2.jpg';
+import hero1 from '../assets/hero-2.jpg';
+import hero2 from '../assets/IMG_3286.jpg';
 import hero3 from '../assets/hero-3.jpg';
 import allenLogo from '../assets/allen-school-logo.svg';
 import cntLogo from '../assets/cnt-logo.png';
@@ -251,7 +251,7 @@ const heroImages = [hero1, hero2, hero3];
 	.announcement-card {
 		position: relative;
 		display: grid;
-		grid-template-columns: 7rem minmax(0, 1fr);
+		grid-template-columns: 9rem minmax(0, 1fr);
 		gap: 2rem;
 		margin-top: 0;
 		padding: 1.25rem 0;
@@ -262,6 +262,7 @@ const heroImages = [hero1, hero2, hero3];
 		font-size: 0.875rem;
 		color: var(--text-accent);
 		font-variant-numeric: tabular-nums;
+		white-space: nowrap;
 	}
 
 	.announcement-card h3 {
