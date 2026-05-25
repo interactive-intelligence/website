@@ -184,7 +184,7 @@ const learnMoreHref = (item: InitiativeItem) =>
 		min-width: 1px;
 		transform: translate(-50%, -50%) scaleY(1);
 		transform-origin: center;
-		transition: transform var(--duration) ease;
+		transition: transform var(--duration) var(--ease);
 	}
 
 	.accordion details[open] .indicator::after,
@@ -195,7 +195,7 @@ const learnMoreHref = (item: InitiativeItem) =>
 	.accordion .panel {
 		height: 0;
 		overflow: hidden;
-		transition: height var(--duration) ease;
+		transition: height var(--duration-slow) var(--ease);
 	}
 
 	.accordion .body {

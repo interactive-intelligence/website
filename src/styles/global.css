@@ -4,9 +4,9 @@
 	--border: hsl(260, 50%, 87%);
 	--rule: hsl(260, 30%, 75%);
 	--text: hsl(260, 30%, 10%);
-	--text-accent: hsl(260, 40%, 45%);
+	--text-accent: hsl(260, 45%, 42%);
 	--accent-dark: hsl(260, 45%, 45%);
-	--accent-dark-hover: hsl(260, 45%, 32%);
+	--accent-dark-hover: hsl(260, 45%, 38%);
 	--border-accent-dark: hsl(260, 45%, 35%);
 	--accent-light: hsl(260, 70%, 80%);
 	--accent-light-hover: hsl(260, 70%, 72%);
@@ -21,6 +21,7 @@
 	--ease: cubic-bezier(0.4, 0, 0.2, 1);
 	--duration-fast: 120ms;
 	--duration: 200ms;
+	--duration-slow: 280ms;
 }
 
 *,
