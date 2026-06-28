@@ -4,9 +4,10 @@ import { getCollection } from 'astro:content';
 import InitiativesAccordion from '../components/InitiativesAccordion.astro';
 import Layout from '../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
-import hero1 from '../assets/hero-2.jpg';
-import hero2 from '../assets/IMG_3286.jpg';
-import hero3 from '../assets/hero-3.jpg';
+import heroLarge from '../assets/IMG_3286.jpg';
+import heroWide from '../assets/hero-1.jpg';
+import heroSmallA from '../assets/hero-2.jpg';
+import heroSmallB from '../assets/hero-3.jpg';
 import allenLogo from '../assets/allen-school-logo.svg';
 import cntLogo from '../assets/cnt-logo.png';
 
@@ -26,6 +27,8 @@ const announcementDateFmt = new Intl.DateTimeFormat('en-US', {
 	year: 'numeric'
 });
 
+const heroFormats = ['avif', 'webp'] as const;
+
 const announcementHasBody = (entry: (typeof recentAnnouncements)[number]) =>
 	entry.body && entry.body.trim().length > 0;
 
@@ -35,8 +38,6 @@ const stats = [
 	{ value: '7', label: 'Research Room teams' },
 	{ value: '11', label: 'Talks hosted with researchers' }
 ];
-
-const heroImages = [hero1, hero2, hero3];
 ---
 
 <Layout title="i2 - interactive intelligence">
@@ -46,7 +47,10 @@ const heroImages = [hero1, hero2, hero3];
 	</h1>
 
 	<div class="hero-images">
-		{heroImages.map((img) => <Picture src={img} formats={['avif', 'webp']} alt="" />)}
+		<div class="cell cell-large"><Picture src={heroLarge} formats={heroFormats} alt="" /></div>
+		<div class="cell cell-wide"><Picture src={heroSmallA} formats={heroFormats} alt="" /></div>
+		<div class="cell"><Picture src={heroWide} formats={heroFormats} alt="" /></div>
+		<div class="cell"><Picture src={heroSmallB} formats={heroFormats} alt="" /></div>
 	</div>
 
 	<p class="lede">
@@ -180,19 +184,35 @@ const heroImages = [hero1, hero2, hero3];
 	}
 
 	.hero-images {
-		display: flex;
-		height: 18rem;
+		display: grid;
+		grid-template-columns: 2fr 1fr 1fr;
+		grid-template-rows: repeat(2, 9rem);
+		gap: 0.5rem;
 		margin-top: 1rem;
-		border-radius: var(--radius-lg);
-		overflow: hidden;
 	}
 
-	.hero-images :global(img) {
-		flex: 1;
-		min-width: 0;
+	.cell {
+		overflow: hidden;
+		border-radius: var(--radius);
+	}
+
+	.cell-large {
+		grid-row: span 2;
+	}
+
+	.cell-wide {
+		grid-column: span 2;
+	}
+
+	.cell :global(img) {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+		transition: transform var(--duration-slow) var(--ease);
+	}
+
+	.cell:hover :global(img) {
+		transform: scale(1.06);
 	}
 
 	.lede {
