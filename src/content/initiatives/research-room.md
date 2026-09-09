@@ -1,9 +1,9 @@
 ---
 name: Research Room
-short_description: A collaborative space where small teams tackle open research questions in NeuroAI.
-long_description: A collaborative space where small teams tackle open research questions in NeuroAI. Each team is paired with a faculty advisor and works toward publishable results, with the goal of contributing to the broader scientific community.
+short_description: Where i2's original research happens. Small teams of experienced members work on open NeuroAI questions and aim for publishable results.
+long_description: Where i2's original research happens. Small teams of experienced members work on open NeuroAI questions and aim for publishable results. Many members come through Fellows first.
 photo: ./photos/research-room.jpg
 order: 4
 ---
 
-Research Room teams work on open NeuroAI questions guided by a faculty advisor. The goal is to produce publishable research over the course of an academic year, with regular check-ins and a presentation at the end of each quarter.
+Research Room is i2's most advanced program. Small teams pick an open question in NeuroAI and work on it over the academic year, with regular check-ins along the way. The aim is work that's ready to share beyond i2, whether as a paper, a preprint, or a talk. Many members come through Fellows first, and projects often grow out of the interests they found there.

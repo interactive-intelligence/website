@@ -1,9 +1,9 @@
 ---
 name: Talks
-short_description: A speaker series featuring researchers, industry experts, and students presenting their work in AI, neuroscience, and adjacent fields.
-long_description: A speaker series featuring researchers, industry experts, and students presenting their work in AI, neuroscience, and adjacent fields. Talks are open to all and include time for discussion afterward.
+short_description: A speaker series with researchers, industry practitioners, and students sharing their work in AI, neuroscience, and nearby fields.
+long_description: A speaker series with researchers, industry practitioners, and students sharing their work in AI, neuroscience, and nearby fields. Talks are open to everyone and leave time for discussion afterward.
 photo: ./photos/talks.jpg
 order: 5
 ---
 
-Our talks series brings researchers, industry practitioners, and students to share work spanning AI, neuroscience, and the connections between them. Sessions are open to anyone and include time for discussion afterward.
+Our talks series brings in researchers, industry experts, and students to share work spanning AI, neuroscience, and the connections between them. Sessions are open to anyone, no membership required, and leave time for questions and discussion afterward.
