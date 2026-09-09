@@ -2,7 +2,7 @@
 	--bg: hsl(260, 50%, 95%);
 	--surface: hsl(260, 50%, 92%);
 	--border: hsl(260, 50%, 87%);
-	--rule: hsl(260, 30%, 75%);
+	--rule: hsl(260, 30%, 80%);
 	--text: hsl(260, 30%, 10%);
 	--text-accent: hsl(260, 45%, 42%);
 	--accent-dark: hsl(260, 45%, 45%);
@@ -13,6 +13,9 @@
 	--border-accent-light: hsl(260, 70%, 75%);
 	--logo-bg: hsl(221, 48%, 67%);
 	--border-logo-bg: hsl(221, 48%, 62%);
+	--text-inverse: hsl(0, 0%, 100%);
+	--black: hsl(0, 0%, 0%);
+	--shadow: 0 8px 24px hsl(260 40% 20% / 0.12);
 
 	--container: 70rem;
 	--radius: 1.5rem;
@@ -51,9 +54,7 @@ main {
 	margin: 0 auto;
 	padding: 2.5rem 1.5rem 4rem;
 	container-type: inline-size;
-	/* on short pages, push the footer so only its top ~7rem peeks above the fold
-	   (100dvh minus navbar 6rem, footer margin-top 4rem, and the 7rem peek) */
-	min-height: calc(100dvh - 17rem);
+	min-height: calc(100dvh - 26rem);
 }
 
 @media (max-width: 56rem) {
@@ -243,7 +244,7 @@ table {
 
 .btn-primary {
 	background: var(--accent-dark);
-	color: white;
+	color: var(--text-inverse);
 	border: 1px solid var(--border-accent-dark);
 }
 

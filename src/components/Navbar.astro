@@ -39,67 +39,71 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 	<a href={base} class="logo" aria-label="Home">
 		<Fragment set:html={logoRaw} />
 	</a>
-	<ul id="menu">
-		{
-			links.map(({ href, label, dropdown, items }) => (
-				<li class:list={[{ 'has-dropdown': dropdown || items }]}>
-					<a
-						href={prefixed(href)}
-						class:list={['btn btn-surface', { active: isActive(href) }]}
-					>
-						{label}
-					</a>
-					{items && (
-						<ul class="submenu">
-							{items.map((item) => (
-								<li>
-									<a href={prefixed(item.href)}>{item.label}</a>
+	<div class="drawer" id="menu">
+		<ul>
+			{
+				links.map(({ href, label, dropdown, items }) => (
+					<li class:list={[{ 'has-dropdown': dropdown || items }]}>
+						<a
+							href={prefixed(href)}
+							class:list={['btn btn-surface', { active: isActive(href) }]}
+						>
+							{label}
+						</a>
+						{items && (
+							<ul class="submenu">
+								{items.map((item) => (
+									<li class:list={[{ duplicate: item.href === href }]}>
+										<a href={prefixed(item.href)}>{item.label}</a>
+									</li>
+								))}
+							</ul>
+						)}
+						{dropdown && (
+							<ul class="submenu">
+								{initiatives.map((init) => (
+									<li>
+										<a
+											href={initiativeHref(init.data, init.id)}
+											target={init.data.external_url ? '_blank' : undefined}
+											rel={init.data.external_url ? 'noopener' : undefined}
+										>
+											{init.data.name}
+										</a>
+									</li>
+								))}
+								<li
+									class="separator duplicate"
+									role="separator"
+									aria-hidden="true"
+								/>
+								<li class="duplicate">
+									<a href={prefixed('/initiatives')}>All initiatives</a>
 								</li>
-							))}
-						</ul>
-					)}
-					{dropdown && (
-						<ul class="submenu">
-							{initiatives.map((init) => (
-								<li>
-									<a
-										href={initiativeHref(init.data, init.id)}
-										target={init.data.external_url ? '_blank' : undefined}
-										rel={init.data.external_url ? 'noopener' : undefined}
-									>
-										{init.data.name}
-									</a>
-								</li>
-							))}
-							<li class="separator" role="separator" aria-hidden="true" />
-							<li>
-								<a href={prefixed('/initiatives')}>All initiatives</a>
-							</li>
-						</ul>
-					)}
-				</li>
-			))
-		}
-	</ul>
-	<a href={prefixed('/join')} class="btn btn-primary join">Join Us</a>
+							</ul>
+						)}
+					</li>
+				))
+			}
+		</ul>
+		<a href={prefixed('/join')} class="btn btn-primary">Join Us</a>
+	</div>
 	<button
 		class="btn btn-surface menu-toggle"
 		aria-label="Menu"
 		aria-controls="menu"
 		aria-expanded="false"
 	>
-		<Icon name="mingcute:menu-line" />
-		<Icon name="mingcute:close-line" />
+		<Icon name="mingcute:menu-line" class="icon-open" />
+		<Icon name="mingcute:close-line" class="icon-close" />
 	</button>
 </nav>
 
 <script>
 	const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle')!
 	toggle.addEventListener('click', () => {
-		toggle.setAttribute(
-			'aria-expanded',
-			String(toggle.getAttribute('aria-expanded') !== 'true')
-		)
+		const open = document.body.classList.toggle('menu-open')
+		toggle.setAttribute('aria-expanded', String(open))
 	})
 </script>
 
@@ -113,6 +117,10 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 		align-items: center;
 		justify-content: space-between;
 		gap: 1rem;
+	}
+
+	.drawer {
+		display: contents;
 	}
 
 	.logo {
@@ -146,19 +154,24 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 		position: relative;
 	}
 
-	.submenu {
-		position: absolute;
-		top: calc(100% + 0.5rem);
-		left: 50%;
-		transform: translateX(-50%) translateY(-0.25rem);
-		min-width: 12.5rem;
+	/* Floating menu card, shared by desktop dropdowns and the mobile drawer. */
+	.submenu,
+	.drawer {
 		flex-direction: column;
 		gap: 0.25rem;
 		padding: 0.5rem;
 		background: var(--bg);
 		border: 1px solid var(--border);
 		border-radius: calc(var(--radius-lg) - 0.25rem);
-		box-shadow: 0 8px 24px hsl(260 40% 20% / 0.12);
+		box-shadow: var(--shadow);
+	}
+
+	.submenu {
+		position: absolute;
+		top: calc(100% + 0.5rem);
+		left: 50%;
+		transform: translateX(-50%) translateY(-0.25rem);
+		min-width: 12.5rem;
 		opacity: 0;
 		visibility: hidden;
 		transition:
@@ -217,46 +230,102 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 		font-size: 1.5rem;
 	}
 
-	.menu-toggle[aria-expanded='true'] [data-icon]:first-child,
-	.menu-toggle[aria-expanded='false'] [data-icon]:last-child {
+	.icon-close,
+	:global(.menu-open) .icon-open {
 		display: none;
 	}
 
-	/* Collapse the link row into a toggled, stacked menu below the header. */
+	:global(.menu-open) .icon-close {
+		display: block;
+	}
+
+	/* Collapse the links into a dropdown card under the toggle. */
 	@media (max-width: 56rem) {
 		.menu-toggle {
 			display: inline-flex;
 		}
 
-		#menu,
-		.join {
-			display: none;
-			order: 1;
-			flex-basis: 100%;
+		.drawer {
+			display: flex;
+			position: fixed;
+			top: 6rem;
+			right: 1.5rem;
+			left: 1.5rem;
+			z-index: 10;
+			max-height: calc(100dvh - 8rem);
+			padding: 0.75rem;
+			overflow-y: auto;
+			opacity: 0;
+			visibility: hidden;
+			translate: 0 -0.25rem;
+			transition:
+				opacity var(--duration-fast) var(--ease),
+				visibility var(--duration-fast) var(--ease),
+				translate var(--duration-fast) var(--ease);
 		}
 
-		#menu {
+		:global(.menu-open) .drawer {
+			opacity: 1;
+			visibility: visible;
+			translate: 0;
+		}
+
+		:global(body.menu-open) {
+			overflow: hidden;
+		}
+
+		.drawer ul {
 			flex-direction: column;
+			gap: 0.25rem;
 		}
 
-		nav:has(.menu-toggle[aria-expanded='true']) :is(#menu, .join) {
+		/* Top-level links drop their button chrome to match submenu items. */
+		.drawer > ul > li > a {
 			display: flex;
+			padding: 0.5rem 1rem;
+			background: none;
+			border-color: transparent;
 		}
 
-		#menu > li > a {
-			display: flex;
+		.drawer > ul > li > a:hover,
+		.drawer > ul > li > a.active {
+			background: var(--accent-light);
+			border-color: var(--border-accent-light);
 		}
 
 		/* Submenus become always-visible indented lists; hover popovers don't work on touch. */
-		#menu .submenu {
+		.drawer .has-dropdown .submenu {
 			position: static;
 			transform: none;
 			opacity: 1;
 			visibility: visible;
 			padding: 0.25rem 0 0.25rem 1rem;
-			background: none;
 			border: none;
 			box-shadow: none;
+			transition: none;
+		}
+
+		/* No hover motion inside the drawer. */
+		.drawer a {
+			transition: none;
+		}
+
+		.drawer a:hover {
+			transform: none;
+		}
+
+		.drawer .submenu a {
+			padding: 0.5rem 1rem;
+			font-size: 1rem;
+		}
+
+		.duplicate {
+			display: none;
+		}
+
+		.drawer > .btn-primary {
+			justify-content: center;
+			margin-top: 0.25rem;
 		}
 	}
 </style>

@@ -290,7 +290,7 @@ const carImages = Array.from({ length: 5 }, () => imgs).flat();
 		margin-inline: -2.5rem;
 		border-radius: var(--radius);
 		overflow: hidden;
-		box-shadow: 0 0.75rem 2rem hsl(260 40% 20% / 0.18);
+		box-shadow: var(--shadow);
 		transform: rotate(calc((var(--i) - 1.5) * 4deg)) translateY(calc(var(--i) * -0.25rem));
 		transition: transform var(--duration-slow) var(--ease);
 	}
