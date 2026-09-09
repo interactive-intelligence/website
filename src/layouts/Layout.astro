@@ -2,14 +2,14 @@
 import { getImage } from 'astro:assets'
 import Navbar from '../components/Navbar.astro'
 import Footer from '../components/Footer.astro'
-import defaultSocialImage from '../assets/presentation.jpg'
+import logoCard from '../assets/social-logo.png'
 import '../styles/fonts.css'
 import '../styles/global.css'
 
 interface Props {
 	title?: string
 	description?: string
-	/** Social preview image. Defaults to a site-wide photo. */
+	/** Wide social preview photo. Without one, links show the logo as a small thumbnail. */
 	image?: ImageMetadata
 	/** Open Graph type. Use "article" for dated posts. */
 	type?: 'website' | 'article'
@@ -19,14 +19,17 @@ const siteName = 'interactive intelligence'
 const {
 	title = siteName,
 	description = "interactive intelligence (i2) is the University of Washington's student-led NeuroAI education and research organization.",
-	image = defaultSocialImage,
+	image,
 	type = 'website'
 } = Astro.props
 
 const base = import.meta.env.BASE_URL
 const canonical = new URL(Astro.url.pathname, Astro.site)
-const social = await getImage({ src: image, width: 1200, height: 630, fit: 'cover', format: 'jpg' })
+const social = image
+	? await getImage({ src: image, width: 1200, height: 630, fit: 'cover', format: 'jpg' })
+	: await getImage({ src: logoCard, width: 1200, height: 1200, format: 'png' })
 const socialImage = new URL(social.src, Astro.site)
+const twitterCard = image ? 'summary_large_image' : 'summary'
 ---
 
 <!doctype html>
@@ -50,10 +53,10 @@ const socialImage = new URL(social.src, Astro.site)
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonical} />
 		<meta property="og:image" content={socialImage} />
-		<meta property="og:image:width" content="1200" />
-		<meta property="og:image:height" content="630" />
+		<meta property="og:image:width" content={social.attributes.width} />
+		<meta property="og:image:height" content={social.attributes.height} />
 		<meta property="og:locale" content="en_US" />
-		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:card" content={twitterCard} />
 		<meta name="twitter:site" content="@InteractiveInt9" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
