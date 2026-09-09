@@ -51,6 +51,9 @@ main {
 	margin: 0 auto;
 	padding: 2.5rem 1.5rem 4rem;
 	container-type: inline-size;
+	/* on short pages, push the footer so only its top ~7rem peeks above the fold
+	   (100dvh minus navbar 6rem, footer margin-top 4rem, and the 7rem peek) */
+	min-height: calc(100dvh - 17rem);
 }
 
 @media (max-width: 56rem) {

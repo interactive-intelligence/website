@@ -1,43 +1,41 @@
 ---
-import { Image, Picture } from 'astro:assets';
-import { getCollection } from 'astro:content';
-import InitiativesAccordion from '../components/InitiativesAccordion.astro';
-import Layout from '../layouts/Layout.astro';
-import { Icon } from 'astro-icon/components';
-import heroLarge from '../assets/IMG_3286.jpg';
-import heroWide from '../assets/hero-1.jpg';
-import heroSmallA from '../assets/hero-2.jpg';
-import heroSmallB from '../assets/hero-3.jpg';
-import allenLogo from '../assets/allen-school-logo.svg';
-import cntLogo from '../assets/cnt-logo.png';
+import { Image, Picture } from 'astro:assets'
+import { getCollection } from 'astro:content'
+import InitiativesAccordion from '../components/InitiativesAccordion.astro'
+import Layout from '../layouts/Layout.astro'
+import { Icon } from 'astro-icon/components'
+import heroLarge from '../assets/IMG_3286.jpg'
+import heroWide from '../assets/hero-1.jpg'
+import heroSmallA from '../assets/hero-2.jpg'
+import heroSmallB from '../assets/hero-3.jpg'
+import allenLogo from '../assets/allen-school-logo.svg'
+import cntLogo from '../assets/cnt-logo.png'
 
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL
 
-const initiatives = (await getCollection('initiatives')).sort(
-	(a, b) => a.data.order - b.data.order
-);
+const initiatives = (await getCollection('initiatives')).sort((a, b) => a.data.order - b.data.order)
 
 const recentAnnouncements = (await getCollection('announcements'))
 	.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-	.slice(0, 3);
+	.slice(0, 3)
 
 const announcementDateFmt = new Intl.DateTimeFormat('en-US', {
 	month: 'short',
 	day: 'numeric',
 	year: 'numeric'
-});
+})
 
-const heroFormats = ['avif', 'webp'] as const;
+const heroFormats = ['avif', 'webp'] as const
 
 const announcementHasBody = (entry: (typeof recentAnnouncements)[number]) =>
-	entry.body && entry.body.trim().length > 0;
+	entry.body && entry.body.trim().length > 0
 
 const stats = [
 	{ value: '180', plus: true, label: 'Intro Course graduates since 2023' },
 	{ value: '140', plus: true, label: 'Active members across 5 initiatives' },
 	{ value: '7', label: 'Research Room teams' },
 	{ value: '11', label: 'Talks hosted with researchers' }
-];
+]
 ---
 
 <Layout title="i2 - interactive intelligence">
@@ -114,8 +112,8 @@ const stats = [
 				</header>
 				<ul class="announcement-cards">
 					{recentAnnouncements.map((entry) => {
-						const hasBody = announcementHasBody(entry);
-						const detailHref = `${base}announcements/${entry.id}`;
+						const hasBody = announcementHasBody(entry)
+						const detailHref = `${base}announcements/${entry.id}`
 						return (
 							<li class={`announcement-card${hasBody ? ' is-linked' : ''}`}>
 								<time datetime={entry.data.date.toISOString()}>
@@ -135,7 +133,7 @@ const stats = [
 									{entry.data.summary && <p>{entry.data.summary}</p>}
 								</div>
 							</li>
-						);
+						)
 					})}
 				</ul>
 			</section>
@@ -178,10 +176,15 @@ const stats = [
 		justify-content: space-between;
 		align-items: baseline;
 		gap: 2rem;
-		/* 10.5 ≈ width of "interactive intelligence" in em; keeps it on one line until the 2.5rem floor. */
 		font-size: clamp(2.5rem, 100cqi / 10.5, 4rem);
 		line-height: 1;
 		letter-spacing: -0.04em;
+	}
+
+	@container (width <= 26.25rem) {
+		.hero {
+			font-size: 3.25rem;
+		}
 	}
 
 	.hero-images {
@@ -410,7 +413,7 @@ const stats = [
 
 		.announcement-card {
 			grid-template-columns: 1fr;
-			gap: 0.25rem;
+			gap: 0.5rem;
 		}
 	}
 </style>
