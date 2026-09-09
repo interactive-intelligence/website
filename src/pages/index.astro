@@ -4,10 +4,10 @@ import { getCollection } from 'astro:content'
 import InitiativesAccordion from '../components/InitiativesAccordion.astro'
 import Layout from '../layouts/Layout.astro'
 import { Icon } from 'astro-icon/components'
-import heroLarge from '../assets/IMG_3286.jpg'
-import heroWide from '../assets/hero-1.jpg'
-import heroSmallA from '../assets/hero-2.jpg'
-import heroSmallB from '../assets/hero-3.jpg'
+import heroLarge from '../assets/presentation.jpg'
+import heroWide from '../assets/introcourse.jpg'
+import heroSmallA from '../assets/clubfair.jpg'
+import heroSmallB from '../assets/selfie.jpg'
 import allenLogo from '../assets/allen-school-logo.svg'
 import cntLogo from '../assets/cnt-logo.png'
 
@@ -46,8 +46,8 @@ const stats = [
 
 	<div class="hero-images">
 		<div class="cell cell-large"><Picture src={heroLarge} formats={heroFormats} alt="" /></div>
-		<div class="cell cell-wide"><Picture src={heroSmallA} formats={heroFormats} alt="" /></div>
-		<div class="cell"><Picture src={heroWide} formats={heroFormats} alt="" /></div>
+		<div class="cell cell-wide"><Picture src={heroWide} formats={heroFormats} alt="" /></div>
+		<div class="cell"><Picture src={heroSmallA} formats={heroFormats} alt="" /></div>
 		<div class="cell"><Picture src={heroSmallB} formats={heroFormats} alt="" /></div>
 	</div>
 
