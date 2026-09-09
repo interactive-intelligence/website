@@ -71,7 +71,11 @@ const pastTalks = talks
 	.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
 ---
 
-<Layout title={`${entry.data.name} - i2`}>
+<Layout
+	title={`${entry.data.name} - i2`}
+	description={entry.data.short_description}
+	image={entry.data.photo}
+>
 	<BackButton href={`${base}initiatives`} label="All initiatives" />
 
 	<header class="hero">

@@ -27,6 +27,26 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
 
 const isPast = entry.data.date.getTime() < Date.now();
 
+const description =
+	entry.data.summary ?? `${entry.data.speaker} gives an i2 Talk at the University of Washington.`;
+
+const eventSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Event',
+	name: entry.data.title,
+	description,
+	startDate: entry.data.date.toISOString(),
+	eventStatus: 'https://schema.org/EventScheduled',
+	eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+	...(entry.data.location && {
+		location: { '@type': 'Place', name: entry.data.location, address: 'University of Washington, Seattle, WA' }
+	}),
+	performer: { '@type': 'Person', name: entry.data.speaker },
+	organizer: { '@type': 'Organization', name: 'interactive intelligence', url: new URL(base, Astro.site).toString() },
+	isAccessibleForFree: true,
+	...(entry.data.youtubeUrl && { recordedIn: { '@type': 'VideoObject', name: `${entry.data.title} — recording`, url: entry.data.youtubeUrl } })
+};
+
 const youtubeEmbed = (url: string | undefined): string | null => {
 	if (!url) return null;
 	try {
@@ -48,7 +68,11 @@ const youtubeEmbed = (url: string | undefined): string | null => {
 const embedSrc = youtubeEmbed(entry.data.youtubeUrl);
 ---
 
-<Layout title={`${entry.data.title} - i2`}>
+<Layout title={`${entry.data.title} - i2`} description={description} type="article">
+	<Fragment slot="head">
+		<meta property="article:published_time" content={entry.data.posted.toISOString()} />
+		<script type="application/ld+json" set:html={JSON.stringify(eventSchema)} />
+	</Fragment>
 	<BackButton href={`${base}announcements`} label="All announcements" />
 
 	<header class="page-header">

@@ -23,7 +23,10 @@ const fmt = new Intl.DateTimeFormat('en-US', {
 });
 ---
 
-<Layout title={`${entry.data.title} - i2`}>
+<Layout title={`${entry.data.title} - i2`} description={entry.data.summary} type="article">
+	<Fragment slot="head">
+		<meta property="article:published_time" content={entry.data.date.toISOString()} />
+	</Fragment>
 	<BackButton href={`${base}announcements`} label="All announcements" />
 
 	<header class="page-header">

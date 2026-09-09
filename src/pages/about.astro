@@ -1,12 +1,15 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Icon } from 'astro-icon/components';
+import Layout from '../layouts/Layout.astro'
+import { Icon } from 'astro-icon/components'
 
-const base = import.meta.env.BASE_URL;
-const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\//, '');
+const base = import.meta.env.BASE_URL
+const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\//, '')
 ---
 
-<Layout title="About - i2">
+<Layout
+	title="About - i2"
+	description="Learn about interactive intelligence (i2), the University of Washington's student-led NeuroAI education and research organization, its team, and its constitution."
+>
 	<h1>About</h1>
 	<p>
 		interactive intelligence (i2) is the University of Washington's student-led NeuroAI
@@ -23,7 +26,9 @@ const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\/
 			<p>
 				i2 is run by a diverse team of student officers and supported by faculty advisors.
 			</p>
-			<a class="btn btn-accent" href={prefixed('/team')}>Meet the team <Icon name="mingcute:arrow-right-line" /></a>
+			<a class="btn btn-accent" href={prefixed('/team')}
+				>Meet the team <Icon name="mingcute:arrow-right-line" /></a
+			>
 		</section>
 
 		<section>
@@ -32,7 +37,9 @@ const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\/
 				Our governance structure, membership policies, and officer roles are documented in
 				our constitution.
 			</p>
-			<a class="btn btn-accent" href={prefixed('/constitution')}>Read the constitution <Icon name="mingcute:arrow-right-line" /></a>
+			<a class="btn btn-accent" href={prefixed('/constitution')}
+				>Read the constitution <Icon name="mingcute:arrow-right-line" /></a
+			>
 		</section>
 	</div>
 </Layout>
@@ -57,9 +64,10 @@ const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\/
 		margin: 0;
 	}
 
-	@media (max-width: 640px) {
+	@media (max-width: 48rem) {
 		.cards {
 			grid-template-columns: 1fr;
+			gap: 3rem;
 		}
 	}
 </style>

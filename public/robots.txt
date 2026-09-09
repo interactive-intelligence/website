@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://interactive-intelligence.github.io/website/sitemap-index.xml

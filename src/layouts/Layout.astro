@@ -1,39 +1,85 @@
 ---
-import Navbar from "../components/Navbar.astro";
-import Footer from "../components/Footer.astro";
-import "../styles/fonts.css";
-import "../styles/global.css";
+import { getImage } from 'astro:assets'
+import Navbar from '../components/Navbar.astro'
+import Footer from '../components/Footer.astro'
+import defaultSocialImage from '../assets/presentation.jpg'
+import '../styles/fonts.css'
+import '../styles/global.css'
 
 interface Props {
-  title?: string;
+	title?: string
+	description?: string
+	/** Social preview image. Defaults to a site-wide photo. */
+	image?: ImageMetadata
+	/** Open Graph type. Use "article" for dated posts. */
+	type?: 'website' | 'article'
 }
 
-const { title = "interactive intelligence" } = Astro.props;
+const siteName = 'interactive intelligence'
+const {
+	title = siteName,
+	description = "interactive intelligence (i2) is the University of Washington's student-led NeuroAI education and research organization.",
+	image = defaultSocialImage,
+	type = 'website'
+} = Astro.props
+
+const base = import.meta.env.BASE_URL
+const canonical = new URL(Astro.url.pathname, Astro.site)
+const social = await getImage({ src: image, width: 1200, height: 630, fit: 'cover', format: 'jpg' })
+const socialImage = new URL(social.src, Astro.site)
 ---
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
-    <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.ico`} />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
-    <style>html,body{background:hsl(260,50%,95%)}</style>
-  </head>
-  <body>
-    <Navbar />
-    <main>
-      <slot />
-    </main>
-    <Footer />
-    <script>
-      document.addEventListener('click', (e) => {
-        const link = (e.target as HTMLElement).closest<HTMLAnchorElement>('.heading-anchor')
-        if (!link) return
-        navigator.clipboard?.writeText(new URL(link.href, location.href).toString())
-      })
-    </script>
-  </body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="generator" content={Astro.generator} />
+
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonical} />
+		<link rel="sitemap" href={`${base}sitemap-index.xml`} />
+
+		<link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+		<link rel="icon" href={`${base}favicon.ico`} />
+
+		<meta property="og:site_name" content={siteName} />
+		<meta property="og:type" content={type} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={socialImage} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:locale" content="en_US" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:site" content="@InteractiveInt9" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={socialImage} />
+
+		<slot name="head" />
+
+		<style>
+			html,
+			body {
+				background: hsl(260, 50%, 95%);
+			}
+		</style>
+	</head>
+	<body>
+		<Navbar />
+		<main>
+			<slot />
+		</main>
+		<Footer />
+		<script>
+			document.addEventListener('click', (e) => {
+				const link = (e.target as HTMLElement).closest<HTMLAnchorElement>('.heading-anchor')
+				if (!link) return
+				navigator.clipboard?.writeText(new URL(link.href, location.href).toString())
+			})
+		</script>
+	</body>
 </html>

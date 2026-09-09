@@ -56,7 +56,10 @@ const defaultIndex = years.findIndex((y) => y.quarters.some((q) => q.status === 
 const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 ---
 
-<Layout title="Schedule - i2">
+<Layout
+	title="Schedule - i2"
+	description="Meeting times for every i2 initiative across the school year, plus upcoming events."
+>
 	<h1>Schedule</h1>
 	<div class="lede-row">
 		<p class="lede">What programs are running each quarter.</p>

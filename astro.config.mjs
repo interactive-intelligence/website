@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import icon from 'astro-icon';
+import sitemap from '@astrojs/sitemap';
 import { unified } from '@astrojs/markdown-remark';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -9,7 +10,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 export default defineConfig({
 	site: 'https://interactive-intelligence.github.io',
 	base: '/website/',
-	integrations: [icon()],
+	integrations: [icon(), sitemap()],
 	image: {
 		layout: 'constrained',
 		responsiveStyles: true,

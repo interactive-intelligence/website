@@ -14,6 +14,26 @@ import cntLogo from '../assets/cnt-logo.png'
 
 const base = import.meta.env.BASE_URL
 
+const description =
+	"interactive intelligence (i2) is the University of Washington's student-led NeuroAI education and research organization, exploring the intersection of AI, neuroscience, and philosophy."
+
+const organizationSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Organization',
+	name: 'interactive intelligence',
+	alternateName: 'i2',
+	url: new URL(base, Astro.site).toString(),
+	logo: new URL(`${base}favicon.svg`, Astro.site).toString(),
+	description,
+	parentOrganization: { '@type': 'CollegeOrUniversity', name: 'University of Washington' },
+	sameAs: [
+		'https://www.instagram.com/uw_i2/',
+		'https://www.youtube.com/channel/UCnOSBig3HbEHFUi2HBA7EtA',
+		'https://twitter.com/InteractiveInt9',
+		'https://github.com/interactive-intelligence'
+	]
+}
+
 const initiatives = (await getCollection('initiatives')).sort((a, b) => a.data.order - b.data.order)
 
 const recentAnnouncements = (await getAnnouncements())
@@ -36,15 +56,16 @@ const stats = [
 ]
 ---
 
-<Layout title="i2 - interactive intelligence">
+<Layout title="i2 - interactive intelligence" description={description}>
+	<script type="application/ld+json" slot="head" set:html={JSON.stringify(organizationSchema)} />
 	<h1 class="hero">
 		<span>interactive intelligence</span>
 		<span>(i2)</span>
 	</h1>
 
 	<div class="hero-images">
-		<div class="cell cell-large"><Picture src={heroLarge} formats={heroFormats} alt="" /></div>
-		<div class="cell cell-wide"><Picture src={heroWide} formats={heroFormats} alt="" /></div>
+		<div class="cell cell-large"><Picture src={heroLarge} formats={heroFormats} alt="" loading="eager" fetchpriority="high" /></div>
+		<div class="cell cell-wide"><Picture src={heroWide} formats={heroFormats} alt="" loading="eager" /></div>
 		<div class="cell"><Picture src={heroSmallA} formats={heroFormats} alt="" /></div>
 		<div class="cell"><Picture src={heroSmallB} formats={heroFormats} alt="" /></div>
 	</div>
