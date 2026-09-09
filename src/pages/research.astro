@@ -19,7 +19,7 @@ const publications = await getCollection("publications");
             <a href={pub.data.url} class="text-link">{pub.data.title}</a>
           ) : (
             <span>{pub.data.title}</span>
-          )}
+          )}{' '}
           — {pub.data.authors.join(", ")}
         </li>
       ))}
