@@ -13,3 +13,8 @@ This is an Astro project for the i2 website. i2 is UW's student-led NeuroAI educ
 
 - Write minimal, modern css.
 - Use global styles from `src/styles/global.css` before writing custom styles.
+
+## content guidelines
+
+- Announcements live in `src/content/announcements/`, talks in `src/content/talks/`. Each is a markdown file with frontmatter; the filename is the URL slug.
+- The `example-*.md` files in those folders document every field. They are kept `hidden: true` so they never render; copy one to add real content.

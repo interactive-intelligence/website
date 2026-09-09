@@ -1,6 +1,7 @@
 ---
 import { Image, Picture } from 'astro:assets'
 import { getCollection } from 'astro:content'
+import { getAnnouncements, hasBody } from '../lib/content'
 import InitiativesAccordion from '../components/InitiativesAccordion.astro'
 import Layout from '../layouts/Layout.astro'
 import { Icon } from 'astro-icon/components'
@@ -15,7 +16,7 @@ const base = import.meta.env.BASE_URL
 
 const initiatives = (await getCollection('initiatives')).sort((a, b) => a.data.order - b.data.order)
 
-const recentAnnouncements = (await getCollection('announcements'))
+const recentAnnouncements = (await getAnnouncements())
 	.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
 	.slice(0, 3)
 
@@ -26,9 +27,6 @@ const announcementDateFmt = new Intl.DateTimeFormat('en-US', {
 })
 
 const heroFormats = ['avif', 'webp'] as const
-
-const announcementHasBody = (entry: (typeof recentAnnouncements)[number]) =>
-	entry.body && entry.body.trim().length > 0
 
 const stats = [
 	{ value: '180', plus: true, label: 'Intro Course graduates since 2023' },
@@ -112,16 +110,16 @@ const stats = [
 				</header>
 				<ul class="announcement-cards">
 					{recentAnnouncements.map((entry) => {
-						const hasBody = announcementHasBody(entry)
+						const linked = hasBody(entry)
 						const detailHref = `${base}announcements/${entry.id}`
 						return (
-							<li class={`announcement-card${hasBody ? ' is-linked' : ''}`}>
+							<li class={`announcement-card${linked ? ' is-linked' : ''}`}>
 								<time datetime={entry.data.date.toISOString()}>
 									{announcementDateFmt.format(entry.data.date)}
 								</time>
 								<div class="announcement-body">
 									<h3>
-										{hasBody ? (
+										{linked ? (
 											<a href={detailHref}>
 												{entry.data.title}
 												<Icon name="mingcute:arrow-right-line" />

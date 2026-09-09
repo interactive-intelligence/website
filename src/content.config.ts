@@ -34,6 +34,7 @@ const talks = defineCollection({
     location: z.string().optional(),
     summary: z.string().optional(),
     youtubeUrl: z.string().optional(),
+    hidden: z.boolean().default(false),
   }),
 });
 
@@ -99,6 +100,7 @@ const announcements = defineCollection({
     link_url: z.string().url().optional(),
     link_label: z.string().optional(),
     initiatives: z.array(reference("initiatives")).optional(),
+    hidden: z.boolean().default(false),
   }),
 });
 
