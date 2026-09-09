@@ -4,6 +4,7 @@ date: 2026-05-08
 summary: Applications for the next Fellows cohort are open through June 7th. Fellows spend two quarters going deep on a research direction with a faculty mentor.
 link_url: https://forms.gle/example-fellows-2026
 link_label: Apply
+initiatives: [fellows]
 ---
 
 Fellows is i2's most intensive program — a two-quarter commitment to a single research direction, paired with a faculty mentor and a small cohort of peers working on adjacent questions.

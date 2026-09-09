@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import { Icon } from 'astro-icon/components';
+import BackButton from '../../components/BackButton.astro';
 
 const base = import.meta.env.BASE_URL;
 
@@ -23,11 +23,7 @@ const fmt = new Intl.DateTimeFormat('en-US', {
 ---
 
 <Layout title={`${entry.data.title} - i2`}>
-	<p class="back">
-		<a href={`${base}announcements`} class="link-arrow-back">
-			<Icon name="mingcute:arrow-left-line" /> All announcements
-		</a>
-	</p>
+	<BackButton href={`${base}announcements`} label="All announcements" />
 
 	<header class="page-header">
 		<time datetime={entry.data.date.toISOString()}>{fmt.format(entry.data.date)}</time>
@@ -55,10 +51,6 @@ const fmt = new Intl.DateTimeFormat('en-US', {
 </Layout>
 
 <style>
-	.back {
-		margin-bottom: 1.5rem;
-	}
-
 	.page-header {
 		margin-bottom: 2.5rem;
 	}

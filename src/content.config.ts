@@ -1,4 +1,4 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection, reference, z } from "astro:content";
 import { glob } from "astro/loaders";
 
 const team = defineCollection({
@@ -98,6 +98,7 @@ const announcements = defineCollection({
     summary: z.string().optional(),
     link_url: z.string().url().optional(),
     link_label: z.string().optional(),
+    initiatives: z.array(reference("initiatives")).optional(),
   }),
 });
 

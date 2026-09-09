@@ -2,6 +2,7 @@
 title: Introducing DSI — our new directed study initiative
 date: 2026-01-13
 summary: We've launched DSI (Directed Study Initiative), a structured self-study program for members who want to go deeper on a specific topic than the Intro Course allows.
+initiatives: [dsi]
 ---
 
 After two cycles of running it informally, we're making DSI an official i2 initiative starting Winter 2026.

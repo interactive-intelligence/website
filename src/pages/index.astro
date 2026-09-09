@@ -178,7 +178,8 @@ const stats = [
 		justify-content: space-between;
 		align-items: baseline;
 		gap: 2rem;
-		font-size: 4rem;
+		/* 10.5 ≈ width of "interactive intelligence" in em; keeps it on one line until the 2.5rem floor. */
+		font-size: clamp(2.5rem, 100cqi / 10.5, 4rem);
 		line-height: 1;
 		letter-spacing: -0.04em;
 	}
@@ -186,7 +187,7 @@ const stats = [
 	.hero-images {
 		display: grid;
 		grid-template-columns: 2fr 1fr 1fr;
-		grid-template-rows: repeat(2, 9rem);
+		grid-template-rows: repeat(2, clamp(5rem, 18vw, 9rem));
 		gap: 0.5rem;
 		margin-top: 1rem;
 	}
@@ -229,11 +230,10 @@ const stats = [
 		grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
 		gap: 4rem;
 		align-items: start;
-		margin-top: 5rem;
 	}
 
 	.initiatives h2 {
-		font-size: 2.25rem;
+		font-size: clamp(1.75rem, 1.25rem + 2vw, 2.25rem);
 		position: sticky;
 		margin: 0;
 		top: 2rem;
@@ -245,7 +245,7 @@ const stats = [
 
 	.stats {
 		display: grid;
-		grid-template-columns: repeat(4, 1fr);
+		grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
 		gap: 1rem;
 	}
 
@@ -323,7 +323,7 @@ const stats = [
 
 	.affil-cards {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
 		gap: 1rem;
 	}
 
@@ -374,13 +374,13 @@ const stats = [
 	.stat .value {
 		display: flex;
 		align-items: center;
-		font-size: 3.5rem;
+		font-size: clamp(2.5rem, 1.5rem + 4vw, 3.5rem);
 		font-weight: 600;
 		line-height: 1;
 	}
 
 	.stat .plus {
-		font-size: 2.5rem;
+		font-size: 0.7em;
 		margin-left: 0.125rem;
 		font-weight: 400;
 		color: var(--text-accent);
@@ -390,16 +390,13 @@ const stats = [
 		font-size: 0.75rem;
 	}
 
-	@media (prefers-reduced-motion: reduce) {
-		.accordion .indicator::after,
-		.accordion .panel {
-			transition: none;
+	@media (max-width: 56rem) {
+		.hero span:last-child {
+			display: none;
 		}
-	}
 
-	@media (max-width: 48rem) {
-		.hero {
-			font-size: 2.5rem;
+		section {
+			margin-top: 3.5rem;
 		}
 
 		.initiatives {
@@ -407,17 +404,13 @@ const stats = [
 			gap: 1.5rem;
 		}
 
-		.stats {
-			grid-template-columns: repeat(2, 1fr);
+		.initiatives h2 {
+			position: static;
 		}
 
 		.announcement-card {
 			grid-template-columns: 1fr;
 			gap: 0.25rem;
-		}
-
-		.affil-cards {
-			grid-template-columns: 1fr;
 		}
 	}
 </style>

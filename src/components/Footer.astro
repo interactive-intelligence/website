@@ -243,4 +243,15 @@ const resources = [{ href: 'https://grimoire.uw-i2.org/', label: 'Textbook' }]
 		font-size: 0.875rem;
 		color: var(--text-accent);
 	}
+
+	@media (max-width: 48rem) {
+		.inner {
+			grid-template-columns: 1fr 1fr;
+			gap: 2rem;
+		}
+
+		.brand {
+			grid-column: 1 / -1;
+		}
+	}
 </style>

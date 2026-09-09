@@ -1,8 +1,11 @@
 ---
 import { Picture } from 'astro:assets'
 import { getCollection, render } from 'astro:content'
-import Layout from '../../layouts/Layout.astro'
 import { Icon } from 'astro-icon/components'
+import Layout from '../../layouts/Layout.astro'
+import BackButton from '../../components/BackButton.astro'
+import TalkCard from '../../components/TalkCard.astro'
+import { discordUrl } from '../../lib/links'
 
 const base = import.meta.env.BASE_URL
 
@@ -15,57 +18,251 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props
 const { Content } = await render(entry)
+
+const [schedules, announcements, talks] = await Promise.all([
+	getCollection('schedule'),
+	getCollection('announcements'),
+	getCollection('talks')
+])
+
+const today = new Date()
+
+// Every quarter across all schedule years, annotated with whether this
+// initiative runs in it (and when it meets).
+const quarters = schedules
+	.flatMap((s) =>
+		s.data.quarters.map((q) => {
+			const slot = q.initiatives.find((i) => i.id === entry.id)
+			return { ...q, year: s.data.year, active: Boolean(slot), time: slot?.time }
+		})
+	)
+	.sort((a, b) => a.start.getTime() - b.start.getTime())
+
+const current = quarters.find((q) => today >= q.start && today <= q.end)
+const running = Boolean(current?.active)
+const next = quarters.find((q) => q.start > today && q.active)
+const focus = running ? current : next
+
+// Schedule dates are date-only (parsed as UTC midnight), so format them in UTC.
+const dateFmt = new Intl.DateTimeFormat('en-US', {
+	month: 'short',
+	day: 'numeric',
+	timeZone: 'UTC'
+})
+
+const updates = announcements
+	.filter((a) => a.data.initiatives?.some((ref) => ref.id === entry.id))
+	.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+	.slice(0, 4)
+
+const updateDateFmt = new Intl.DateTimeFormat('en-US', {
+	month: 'short',
+	day: 'numeric',
+	year: 'numeric'
+})
+
+const hasBody = (a: (typeof announcements)[number]) => Boolean(a.body?.trim())
+
+const isTalks = entry.id === 'talks'
+const upcomingTalks = talks
+	.filter((t) => t.data.date.getTime() >= today.getTime())
+	.sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
+const pastTalks = talks
+	.filter((t) => t.data.date.getTime() < today.getTime())
+	.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
 ---
 
 <Layout title={`${entry.data.name} - i2`}>
-	<p class="back">
-		<a href={`${base}initiatives`} class="link-arrow-back">
-			<Icon name="mingcute:arrow-left-line" /> All initiatives
-		</a>
-	</p>
+	<BackButton href={`${base}initiatives`} label="All initiatives" />
 
-	<header class="page-header">
+	<header class="hero">
+		<div class="hero-text">
+			<h1>{entry.data.name}</h1>
+			<p class="lede">{entry.data.long_description}</p>
+			{
+				entry.data.form_url && (
+					<div class="actions">
+						<a
+							href={entry.data.form_url}
+							class="btn btn-primary"
+							target="_blank"
+							rel="noopener"
+						>
+							{entry.data.form_label}
+						</a>
+					</div>
+				)
+			}
+		</div>
 		<div class="hero-photo">
 			<Picture
 				src={entry.data.photo}
 				formats={['avif', 'webp']}
 				alt={entry.data.name}
-				sizes="(max-width: 70rem) 100vw, 70rem"
+				sizes="(max-width: 48rem) 100vw, 35rem"
 			/>
 		</div>
-		<h1>{entry.data.name}</h1>
-		<p class="lede">{entry.data.long_description}</p>
-		{
-			entry.data.form_url && (
-				<div class="actions">
-					<a href={entry.data.form_url} class="btn btn-primary">
-						{entry.data.form_label}
-					</a>
-				</div>
-			)
-		}
 	</header>
+
+	{
+		focus && (
+			<dl class="meta">
+				<div>
+					<dt>{running ? 'This quarter' : 'Next session'}</dt>
+					<dd>
+						{focus.name}
+						{!running && <span class="muted">starts {dateFmt.format(focus.start)}</span>}
+					</dd>
+				</div>
+				<div>
+					<dt>Meets</dt>
+					<dd>{focus.time ?? 'TBD'}</dd>
+				</div>
+				<a href={`${base}schedule`} class="link-arrow meta-link">
+					Full schedule <Icon name="mingcute:arrow-right-line" />
+				</a>
+			</dl>
+		)
+	}
 
 	<section class="prose">
 		<Content />
 	</section>
+
+	{
+		isTalks && (
+			<section>
+				<h2>Upcoming talks</h2>
+				{upcomingTalks.length > 0 ? (
+					<ul class="talk-list">
+						{upcomingTalks.map((t) => (
+							<li>
+								<TalkCard talk={t} />
+							</li>
+						))}
+					</ul>
+				) : (
+					<p>No talks currently scheduled. Check back as new speakers are confirmed.</p>
+				)}
+				{pastTalks.length > 0 && (
+					<>
+						<h2 class="past-heading">Past talks</h2>
+						<ul class="talk-list">
+							{pastTalks.map((t) => (
+								<li>
+									<TalkCard talk={t} />
+								</li>
+							))}
+						</ul>
+					</>
+				)}
+			</section>
+		)
+	}
+
+	{
+		updates.length > 0 && (
+			<section>
+				<div class="section-head">
+					<h2>Updates</h2>
+					<a href={`${base}announcements`} class="link-arrow">
+						All announcements <Icon name="mingcute:arrow-right-line" />
+					</a>
+				</div>
+				<ul class="updates">
+					{updates.map((a) => (
+						<li class="update">
+							<time datetime={a.data.date.toISOString()}>
+								{updateDateFmt.format(a.data.date)}
+							</time>
+							<div>
+								<h3>
+									{hasBody(a) ? (
+										<a
+											href={`${base}announcements/${a.id}`}
+											class="update-link"
+										>
+											{a.data.title}
+											<Icon name="mingcute:arrow-right-line" />
+										</a>
+									) : (
+										a.data.title
+									)}
+								</h3>
+								{a.data.summary && <p>{a.data.summary}</p>}
+							</div>
+						</li>
+					))}
+				</ul>
+			</section>
+		)
+	}
+
+	<section class="cta">
+		<div class="cta-text">
+			<h2>Get involved</h2>
+			<p>
+				{
+					entry.data.form_url
+						? `Applications are open. Have questions? Ask us on Discord.`
+						: `Join our Discord for ${entry.data.name} announcements, meeting times, and how to take part.`
+				}
+			</p>
+		</div>
+		<div class="actions">
+			{
+				entry.data.form_url && (
+					<a
+						href={entry.data.form_url}
+						class="btn btn-primary"
+						target="_blank"
+						rel="noopener"
+					>
+						{entry.data.form_label}
+					</a>
+				)
+			}
+			<a
+				href={discordUrl}
+				class={`btn ${entry.data.form_url ? 'btn-surface' : 'btn-primary'}`}
+				target="_blank"
+				rel="noopener"
+			>
+				<Icon name="mingcute:discord-line" />
+				Join Discord
+			</a>
+		</div>
+	</section>
 </Layout>
 
 <style>
-	.back {
-		font-size: 0.875rem;
+	.hero {
+		display: grid;
+		grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+		gap: 3rem;
+		align-items: center;
+	}
+
+	.hero h1 {
+		font-size: 3rem;
+		margin-bottom: 1rem;
+	}
+
+	.lede {
+		font-size: 1.125rem;
 		margin-bottom: 1.5rem;
 	}
 
-	.page-header {
-		margin-bottom: 3rem;
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
 	}
 
 	.hero-photo {
-		aspect-ratio: 21 / 9;
+		aspect-ratio: 4 / 3;
 		border-radius: var(--radius-lg);
 		overflow: hidden;
-		margin-bottom: 2rem;
 	}
 
 	.hero-photo :global(img) {
@@ -74,13 +271,177 @@ const { Content } = await render(entry)
 		object-fit: cover;
 	}
 
-	.lede {
-		margin-bottom: 1.5rem;
-	}
-
-	.actions {
+	.meta {
 		display: flex;
 		flex-wrap: wrap;
+		gap: 1rem 3rem;
+		align-items: center;
+		margin-top: 2rem;
+		padding: 1.25rem 1.5rem;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+	}
+
+	.meta div {
+		min-width: 0;
+	}
+
+	.meta dt {
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--text-accent);
+		margin-bottom: 0.375rem;
+	}
+
+	.meta dd {
+		font-size: 0.9375rem;
+		font-weight: 500;
+	}
+
+	.muted {
+		display: block;
+		font-size: 0.875rem;
+		color: var(--text-accent);
+		font-weight: 400;
+	}
+
+	.meta-link {
+		margin-left: auto;
+		font-size: 0.875rem;
+	}
+
+	.prose {
+		max-width: 46rem;
+	}
+
+	.section-head {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	.talk-list {
+		list-style: none;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
 		gap: 0.5rem;
+	}
+
+	.talk-list li {
+		margin: 0;
+	}
+
+	.past-heading {
+		margin-top: 2rem;
+	}
+
+	.updates {
+		list-style: none;
+		padding: 0;
+		border-top: 1px solid var(--rule);
+	}
+
+	.update {
+		display: grid;
+		grid-template-columns: 9rem minmax(0, 1fr);
+		gap: 2rem;
+		margin: 0;
+		padding: 1.25rem 0;
+		border-bottom: 1px solid var(--rule);
+	}
+
+	.update time {
+		font-size: 0.875rem;
+		color: var(--text-accent);
+		font-variant-numeric: tabular-nums;
+		white-space: nowrap;
+	}
+
+	.update h3 {
+		margin: 0;
+	}
+
+	.update p {
+		margin: 0.5rem 0 0;
+		font-size: 0.875rem;
+	}
+
+	.update-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		transition: color var(--duration-fast) var(--ease);
+	}
+
+	.update-link [data-icon] {
+		font-size: 0.875em;
+		color: var(--text-accent);
+		transition: transform var(--duration) var(--ease);
+	}
+
+	.update-link:hover {
+		color: var(--text-accent);
+	}
+
+	.update-link:hover [data-icon] {
+		transform: translateX(4px);
+	}
+
+	.cta {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 3rem;
+		padding: 1.5rem;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-lg);
+	}
+
+	.cta h2 {
+		font-size: 1.5rem;
+	}
+
+	.cta p {
+		margin: 0;
+	}
+
+	.cta .actions {
+		flex-shrink: 0;
+	}
+
+	@media (max-width: 48rem) {
+		.hero {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
+
+		.hero h1 {
+			font-size: 2.5rem;
+		}
+
+		.hero-photo {
+			aspect-ratio: 16 / 9;
+		}
+
+		.meta-link {
+			margin-left: 0;
+		}
+
+		.update {
+			grid-template-columns: 1fr;
+			gap: 0.25rem;
+		}
+
+		.cta {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 1.25rem;
+		}
 	}
 </style>

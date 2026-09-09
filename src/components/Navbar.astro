@@ -1,9 +1,10 @@
 ---
-import { getCollection } from 'astro:content';
-import logoRaw from '../assets/i2logo.svg?raw';
+import { getCollection } from 'astro:content'
+import logoRaw from '../assets/i2logo.svg?raw'
+import { Icon } from 'astro-icon/components'
 
-const base = import.meta.env.BASE_URL;
-const currentPath = Astro.url.pathname;
+const base = import.meta.env.BASE_URL
+const currentPath = Astro.url.pathname
 
 const links = [
 	{ href: '/', label: 'Home' },
@@ -19,28 +20,26 @@ const links = [
 	{ href: '/schedule', label: 'Schedule' },
 	{ href: '/announcements', label: 'Announcements' },
 	{ href: '/initiatives', label: 'Initiatives', dropdown: true }
-];
+]
 
-const initiatives = (await getCollection('initiatives')).sort(
-	(a, b) => a.data.order - b.data.order
-);
+const initiatives = (await getCollection('initiatives')).sort((a, b) => a.data.order - b.data.order)
 
-const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\//, '');
+const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\//, '')
 
 const isActive = (href: string) => {
-	const full = prefixed(href);
-	return href === '/' ? currentPath === full : currentPath.startsWith(full);
-};
+	const full = prefixed(href)
+	return href === '/' ? currentPath === full : currentPath.startsWith(full)
+}
 
 const initiativeHref = (data: { external_url?: string }, id: string) =>
-	data.external_url ?? prefixed(`/initiatives/${id}`);
+	data.external_url ?? prefixed(`/initiatives/${id}`)
 ---
 
 <nav>
 	<a href={base} class="logo" aria-label="Home">
 		<Fragment set:html={logoRaw} />
 	</a>
-	<ul>
+	<ul id="menu">
 		{
 			links.map(({ href, label, dropdown, items }) => (
 				<li class:list={[{ 'has-dropdown': dropdown || items }]}>
@@ -82,8 +81,27 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 			))
 		}
 	</ul>
-	<a href={prefixed('/join')} class="btn btn-primary">Join Us</a>
+	<a href={prefixed('/join')} class="btn btn-primary join">Join Us</a>
+	<button
+		class="btn btn-surface menu-toggle"
+		aria-label="Menu"
+		aria-controls="menu"
+		aria-expanded="false"
+	>
+		<Icon name="mingcute:menu-line" />
+		<Icon name="mingcute:close-line" />
+	</button>
 </nav>
+
+<script>
+	const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle')!
+	toggle.addEventListener('click', () => {
+		toggle.setAttribute(
+			'aria-expanded',
+			String(toggle.getAttribute('aria-expanded') !== 'true')
+		)
+	})
+</script>
 
 <style>
 	nav {
@@ -91,12 +109,14 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 		margin: 0 auto;
 		padding: 1rem 1.5rem;
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-between;
 		gap: 1rem;
 	}
 
 	.logo {
+		flex-shrink: 0;
 		width: 4rem;
 		height: 4rem;
 		padding: 0.25rem;
@@ -189,5 +209,54 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 		height: 1px;
 		background: var(--border);
 		margin: 0.25rem 0.25rem;
+	}
+
+	.menu-toggle {
+		display: none;
+		padding: 0.5rem;
+		font-size: 1.5rem;
+	}
+
+	.menu-toggle[aria-expanded='true'] [data-icon]:first-child,
+	.menu-toggle[aria-expanded='false'] [data-icon]:last-child {
+		display: none;
+	}
+
+	/* Collapse the link row into a toggled, stacked menu below the header. */
+	@media (max-width: 56rem) {
+		.menu-toggle {
+			display: inline-flex;
+		}
+
+		#menu,
+		.join {
+			display: none;
+			order: 1;
+			flex-basis: 100%;
+		}
+
+		#menu {
+			flex-direction: column;
+		}
+
+		nav:has(.menu-toggle[aria-expanded='true']) :is(#menu, .join) {
+			display: flex;
+		}
+
+		#menu > li > a {
+			display: flex;
+		}
+
+		/* Submenus become always-visible indented lists; hover popovers don't work on touch. */
+		#menu .submenu {
+			position: static;
+			transform: none;
+			opacity: 1;
+			visibility: visible;
+			padding: 0.25rem 0 0.25rem 1rem;
+			background: none;
+			border: none;
+			box-shadow: none;
+		}
 	}
 </style>

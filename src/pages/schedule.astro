@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
+import TalkCard from '../components/TalkCard.astro';
 
 const base = import.meta.env.BASE_URL;
 
@@ -21,18 +22,6 @@ const upcomingTalks = talksCollection
 	.sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
 	.slice(0, 2);
 
-const talkDateFmt = new Intl.DateTimeFormat('en-US', {
-	weekday: 'short',
-	month: 'short',
-	day: 'numeric',
-	timeZone: 'America/Los_Angeles'
-});
-
-const talkTimeFmt = new Intl.DateTimeFormat('en-US', {
-	hour: 'numeric',
-	minute: '2-digit',
-	timeZone: 'America/Los_Angeles'
-});
 
 const status = (start: Date, end: Date) => {
 	if (today < start) return 'upcoming';
@@ -162,20 +151,7 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 				<ul class="talks-list">
 					{upcomingTalks.map((t) => (
 						<li>
-							<a class="btn btn-surface talk-card" href={`${base}talks/${t.id}`}>
-								<span class="talk-body">
-									<span class="talk-title">
-										{t.data.speaker}: {t.data.title}
-									</span>
-									<span class="talk-meta">
-										<time datetime={t.data.date.toISOString()}>
-											{talkDateFmt.format(t.data.date)} · {talkTimeFmt.format(t.data.date)} ·{' '}
-											{t.data.location}
-										</time>
-									</span>
-								</span>
-								<Icon name="mingcute:arrow-right-line" class="talk-arrow" />
-							</a>
+							<TalkCard talk={t} />
 						</li>
 					))}
 				</ul>
@@ -431,51 +407,6 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 		gap: 0.5rem;
 	}
 
-	.talk-card {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-		padding: 1rem;
-	}
-
-	.talk-body {
-		display: flex;
-		flex-direction: column;
-		gap: 0.25rem;
-		min-width: 0;
-		flex: 1;
-	}
-
-	.talk-title {
-		font-weight: 500;
-		font-size: 1.125rem;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-
-	.talk-meta {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 0.5rem;
-		font-size: 0.875rem;
-		color: var(--text-accent);
-		font-variant-numeric: tabular-nums;
-	}
-
-	.talk-arrow {
-		color: var(--text-accent);
-		font-size: 1.25em;
-		margin-left: auto;
-		flex-shrink: 0;
-	}
-
-	@media (max-width: 32rem) {
-		.talk-title {
-			white-space: normal;
-		}
-	}
 
 	.calendar-embed {
 		margin-top: 1rem;
