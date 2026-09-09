@@ -1,8 +1,8 @@
 ---
-import logoRaw from '../assets/i2logo.svg?raw';
+import logoRaw from '../assets/i2logo.svg?raw'
 
-const base = import.meta.env.BASE_URL;
-const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\//, '');
+const base = import.meta.env.BASE_URL
+const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\//, '')
 
 const links = [
 	{ href: '/about', label: 'About' },
@@ -12,17 +12,17 @@ const links = [
 	{ href: '/announcements', label: 'Announcements' },
 	{ href: '/initiatives', label: 'Initiatives' },
 	{ href: '/join', label: 'Join Us' }
-];
+]
 
 const socials = [
-	{ href: 'https://discord.gg/QeGDNYVh', label: 'Discord' },
+	{ href: 'https://discord.gg/Ph8njzHedC', label: 'Discord' },
 	{ href: 'https://www.instagram.com/uw_i2/', label: 'Instagram' },
 	{ href: 'https://www.youtube.com/channel/UCnOSBig3HbEHFUi2HBA7EtA', label: 'YouTube' },
 	{ href: 'https://x.com/InteractiveInt9', label: 'X (Twitter)' },
 	{ href: 'https://github.com/interactive-intelligence', label: 'GitHub' }
-];
+]
 
-const resources = [{ href: 'https://grimoire.uw-i2.org/', label: 'Textbook' }];
+const resources = [{ href: 'https://grimoire.uw-i2.org/', label: 'Textbook' }]
 ---
 
 <footer>
