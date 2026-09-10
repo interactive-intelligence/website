@@ -93,30 +93,27 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 						data-year-panel
 						data-year={y.year}
 						hidden={idx !== initialIndex}
+						style={`--rows: ${y.rows.length + 1}`}
 					>
-						<div class="m-cell" aria-hidden="true" />
-						{y.quarters.map((q) => (
-							<div class="m-cell m-head" data-status={q.status}>
-								<span class="m-head-name">{q.name}</span>
-								{q.status === 'current' && <span class="badge">Now</span>}
-								{q.status === 'upcoming' && (
-									<span class="badge badge-upcoming">Upcoming</span>
-								)}
+						<div class="m-cell m-corner" aria-hidden="true" />
+						{y.rows.map((row) => (
+							<div class="m-cell m-label">
+								<a href={row.data.external_url ?? `${base}initiatives/${row.id}`}>
+									{row.data.name}
+								</a>
 							</div>
 						))}
 
-						{y.rows.map((row) => (
+						{y.quarters.map((q) => (
 							<>
-								<div class="m-cell m-label">
-									<a
-										href={
-											row.data.external_url ?? `${base}initiatives/${row.id}`
-										}
-									>
-										{row.data.name}
-									</a>
+								<div class="m-cell m-head" data-status={q.status}>
+									<span class="m-head-name">{q.name}</span>
+									{q.status === 'current' && <span class="badge">Now</span>}
+									{q.status === 'upcoming' && (
+										<span class="badge badge-upcoming">Upcoming</span>
+									)}
 								</div>
-								{y.quarters.map((q) => {
+								{y.rows.map((row) => {
 									const entry = q.items.get(row.id);
 									return (
 										<div
@@ -124,6 +121,12 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 											data-status={q.status}
 											data-active={entry ? 'true' : 'false'}
 										>
+											<a
+												class="m-name"
+												href={row.data.external_url ?? `${base}initiatives/${row.id}`}
+											>
+												{row.data.name}
+											</a>
 											{entry ? (
 												<span class="m-time">{entry.time ?? 'TBD'}</span>
 											) : (
@@ -282,10 +285,14 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 		position: relative;
 	}
 
+	/* Cells are emitted column-major (labels, then each quarter); 1px gaps draw the grid lines. */
 	.matrix {
 		display: grid;
 		grid-template-columns: minmax(0, 0.85fr) repeat(3, minmax(0, 1fr));
-		background: var(--surface);
+		grid-template-rows: repeat(var(--rows), auto);
+		grid-auto-flow: column;
+		gap: 1px;
+		background: var(--border);
 		border: 1px solid var(--border);
 		border-radius: var(--radius);
 		overflow: hidden;
@@ -301,17 +308,8 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 
 	.m-cell {
 		padding: 1rem;
-		border-bottom: 1px solid var(--border);
-		border-right: 1px solid var(--border);
+		background: var(--surface);
 		min-width: 0;
-	}
-
-	.m-cell:nth-child(4n) {
-		border-right: 0;
-	}
-
-	.matrix > .m-cell:nth-last-child(-n + 4) {
-		border-bottom: 0;
 	}
 
 	.m-head {
@@ -354,14 +352,20 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 		font-weight: 500;
 	}
 
-	.m-label a {
+	.m-name {
+		display: none;
+	}
+
+	.m-label a,
+	.m-name {
 		color: var(--text);
 		text-decoration: none;
 		font-weight: 500;
 		transition: color var(--duration-fast) var(--ease);
 	}
 
-	.m-label a:hover {
+	.m-label a:hover,
+	.m-name:hover {
 		color: var(--text-accent);
 	}
 
@@ -425,5 +429,39 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 		width: 100%;
 		height: 36rem;
 		border: 0;
+	}
+
+	/* Stack into one card: each quarter header followed by the programs running that quarter. */
+	@media (max-width: 56rem) {
+		.lede-row {
+			flex-direction: column;
+			align-items: stretch;
+			gap: 1rem;
+		}
+
+		.year-switcher {
+			justify-content: space-between;
+		}
+
+		.matrix {
+			grid-template-columns: 1fr;
+			grid-template-rows: none;
+			grid-auto-flow: row;
+		}
+
+		.m-corner,
+		.m-label,
+		.m-data[data-active='false'] {
+			display: none;
+		}
+
+		.m-name {
+			display: block;
+		}
+
+		.m-data {
+			justify-content: space-between;
+			gap: 1rem;
+		}
 	}
 </style>
