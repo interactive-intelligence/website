@@ -64,8 +64,18 @@ const stats = [
 	</h1>
 
 	<div class="hero-images">
-		<div class="cell cell-large"><Picture src={heroLarge} formats={heroFormats} alt="" loading="eager" fetchpriority="high" /></div>
-		<div class="cell cell-wide"><Picture src={heroWide} formats={heroFormats} alt="" loading="eager" /></div>
+		<div class="cell cell-large">
+			<Picture
+				src={heroLarge}
+				formats={heroFormats}
+				alt=""
+				loading="eager"
+				fetchpriority="high"
+			/>
+		</div>
+		<div class="cell cell-wide">
+			<Picture src={heroWide} formats={heroFormats} alt="" loading="eager" />
+		</div>
 		<div class="cell"><Picture src={heroSmallA} formats={heroFormats} alt="" /></div>
 		<div class="cell"><Picture src={heroSmallB} formats={heroFormats} alt="" /></div>
 	</div>
@@ -353,6 +363,7 @@ const stats = [
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		aspect-ratio: 4 / 1;
 		padding: 1rem 2rem;
 		border-radius: var(--radius);
 		transition:
@@ -379,7 +390,7 @@ const stats = [
 
 	.affil-card :global(img) {
 		width: 100%;
-		height: auto;
+		height: 100%;
 		object-fit: contain;
 	}
 
@@ -423,7 +434,7 @@ const stats = [
 
 		.initiatives {
 			grid-template-columns: 1fr;
-			gap: 1.5rem;
+			gap: 1rem;
 		}
 
 		.initiatives h2 {

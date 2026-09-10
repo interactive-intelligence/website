@@ -276,12 +276,14 @@ const activeWithBody = await Promise.all(
 
 	.links {
 		display: flex;
+		flex-wrap: wrap;
 		gap: 0.75rem;
 		margin-top: 0.5rem;
 		font-size: 0.875rem;
 	}
 
 	.links a {
+		overflow-wrap: anywhere;
 		color: var(--text-accent);
 		text-decoration: underline;
 		text-decoration-color: var(--rule);
@@ -333,11 +335,13 @@ const activeWithBody = await Promise.all(
 
 	.alum-links {
 		display: flex;
+		flex-wrap: wrap;
 		gap: 0.5rem;
 		font-size: 0.75rem;
 	}
 
 	.alum-links a {
+		overflow-wrap: anywhere;
 		color: var(--text-accent);
 		text-decoration: underline;
 		text-decoration-color: var(--rule);
@@ -347,5 +351,22 @@ const activeWithBody = await Promise.all(
 
 	.alum-links a:hover {
 		text-decoration-color: var(--text-accent);
+	}
+
+	@media (max-width: 56rem) {
+		.alumni-grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+
+	@media (max-width: 30rem) {
+		.card-top {
+			grid-template-columns: 5rem minmax(0, 1fr);
+			gap: 1rem;
+		}
+
+		.alumni-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
 	}
 </style>
