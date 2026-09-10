@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # weekly run keeps the image cache from being evicted after 7 idle days
+  schedule:
+    - cron: '0 8 * * 1'
 
 permissions:
   contents: read
@@ -24,6 +27,12 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # must come after npm ci, which wipes node_modules
+      - uses: actions/cache@v4
+        with:
+          path: node_modules/.astro
+          key: astro-assets-${{ hashFiles('src/**/*.{jpg,jpeg,JPG,png,webp,avif}') }}
+          restore-keys: astro-assets-
       - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
