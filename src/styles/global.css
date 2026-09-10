@@ -58,6 +58,10 @@ main {
 	min-height: calc(100dvh - 26rem);
 }
 
+html {
+	scroll-behavior: smooth;
+}
+
 @media (max-width: 56rem) {
 	main {
 		padding-top: 1rem;
@@ -136,8 +140,21 @@ h4 {
 	scroll-margin-top: 2rem;
 }
 
-html {
-	scroll-behavior: smooth;
+h1 {
+	margin-bottom: 1rem;
+	font-size: clamp(2rem, 1.5rem + 2vw, 2.5rem);
+}
+
+h2 {
+	font-size: clamp(1.5rem, 1.25rem + 1vw, 1.75rem);
+}
+
+h3 {
+	font-size: 1.25rem;
+}
+
+h4 {
+	font-size: 1rem;
 }
 
 .heading-anchor {
@@ -157,22 +174,6 @@ html {
 .heading-anchor:hover {
 	opacity: 1;
 	text-decoration: underline;
-}
-
-h1 {
-	font-size: clamp(2rem, 1.5rem + 2vw, 2.5rem);
-}
-
-h2 {
-	font-size: clamp(1.5rem, 1.25rem + 1vw, 1.75rem);
-}
-
-h3 {
-	font-size: 1.25rem;
-}
-
-h4 {
-	font-size: 1rem;
 }
 
 .prose {
