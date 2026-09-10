@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro'
+
+const base = import.meta.env.BASE_URL
+---
+
+<Layout title="Page not found - i2" description="The page you're looking for doesn't exist.">
+	<section class="not-found">
+		<p class="code">404</p>
+		<h1>Page not found</h1>
+	</section>
+</Layout>
+
+<style>
+	:global(main) {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+
+	.not-found {
+		text-align: center;
+
+		p {
+			margin-inline: auto;
+		}
+	}
+
+	.code {
+		font-size: clamp(4rem, 10vw, 6rem);
+		font-weight: 700;
+		line-height: 1;
+		letter-spacing: -0.04em;
+		color: var(--accent-light);
+		margin-bottom: 0.5rem;
+	}
+</style>
