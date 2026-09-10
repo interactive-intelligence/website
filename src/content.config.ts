@@ -12,6 +12,7 @@ const team = defineCollection({
       tags: z.array(z.string()).optional(),
       website: z.string().url().optional(),
       email: z.string().email().optional(),
+      published: z.boolean().default(true),
     }),
 });
 
@@ -21,6 +22,7 @@ const projects = defineCollection({
     title: z.string(),
     description: z.string(),
     quarter: z.string(),
+    published: z.boolean().default(true),
   }),
 });
 
@@ -34,7 +36,7 @@ const talks = defineCollection({
     location: z.string().optional(),
     summary: z.string().optional(),
     youtubeUrl: z.string().optional(),
-    hidden: z.boolean().default(false),
+    published: z.boolean().default(true),
   }),
 });
 
@@ -45,6 +47,7 @@ const publications = defineCollection({
     authors: z.array(z.string()),
     date: z.coerce.date(),
     url: z.string().optional(),
+    published: z.boolean().default(true),
   }),
 });
 
@@ -60,6 +63,7 @@ const initiatives = defineCollection({
       form_url: z.string().url().optional(),
       form_label: z.string().optional(),
       order: z.number(),
+      published: z.boolean().default(true),
     }),
 });
 
@@ -88,6 +92,7 @@ const schedule = defineCollection({
         }),
       )
       .length(3),
+    published: z.boolean().default(true),
   }),
 });
 
@@ -100,7 +105,7 @@ const announcements = defineCollection({
     link_url: z.string().url().optional(),
     link_label: z.string().optional(),
     initiatives: z.array(reference("initiatives")).optional(),
-    hidden: z.boolean().default(false),
+    published: z.boolean().default(true),
   }),
 });
 

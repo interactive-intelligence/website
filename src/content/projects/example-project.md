@@ -1,4 +1,6 @@
 ---
+# Example project. Set `published: true` (or delete the line) to publish it.
+published: false
 title: EEG Signal Classification
 description: Classifying motor imagery from EEG signals using deep learning.
 quarter: Winter 2025

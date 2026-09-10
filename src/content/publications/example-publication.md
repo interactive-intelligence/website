@@ -1,4 +1,6 @@
 ---
+# Example publication. Set `published: true` (or delete the line) to publish it.
+published: false
 title: "Neural Decoding of Motor Intent"
 authors:
   - Jane Doe

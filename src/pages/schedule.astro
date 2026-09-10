@@ -1,6 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
-import { getTalks } from '../lib/content';
+import { getPublished } from '../lib/content';
 import Layout from '../layouts/Layout.astro';
 import { Icon } from 'astro-icon/components';
 import TalkCard from '../components/TalkCard.astro';
@@ -8,9 +7,9 @@ import TalkCard from '../components/TalkCard.astro';
 const base = import.meta.env.BASE_URL;
 
 const [initiatives, schedules, talksCollection] = await Promise.all([
-	getCollection('initiatives'),
-	getCollection('schedule'),
-	getTalks()
+	getPublished('initiatives'),
+	getPublished('schedule'),
+	getPublished('talks')
 ]);
 
 const initiativesById = new Map(initiatives.map((i) => [i.id, i]));

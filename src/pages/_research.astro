@@ -1,9 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { getCollection } from "astro:content";
+import { getPublished } from "../lib/content";
 const base = import.meta.env.BASE_URL;
 
-const publications = await getCollection("publications");
+const publications = await getPublished("publications");
 ---
 
 <Layout

@@ -1,7 +1,6 @@
 ---
 import { Image, Picture } from 'astro:assets'
-import { getCollection } from 'astro:content'
-import { getAnnouncements, hasBody } from '../lib/content'
+import { getPublished, hasBody } from '../lib/content'
 import InitiativesAccordion from '../components/InitiativesAccordion.astro'
 import Layout from '../layouts/Layout.astro'
 import { Icon } from 'astro-icon/components'
@@ -34,9 +33,9 @@ const organizationSchema = {
 	]
 }
 
-const initiatives = (await getCollection('initiatives')).sort((a, b) => a.data.order - b.data.order)
+const initiatives = (await getPublished('initiatives')).sort((a, b) => a.data.order - b.data.order)
 
-const recentAnnouncements = (await getAnnouncements())
+const recentAnnouncements = (await getPublished('announcements'))
 	.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
 	.slice(0, 3)
 

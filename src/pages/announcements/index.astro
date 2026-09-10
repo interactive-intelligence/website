@@ -1,11 +1,11 @@
 ---
-import { getAnnouncements, getTalks, hasBody } from '../../lib/content'
+import { getPublished, hasBody } from '../../lib/content'
 import Layout from '../../layouts/Layout.astro'
 import { Icon } from 'astro-icon/components'
 
 const base = import.meta.env.BASE_URL
 
-const [announcements, talks] = await Promise.all([getAnnouncements(), getTalks()])
+const [announcements, talks] = await Promise.all([getPublished('announcements'), getPublished('talks')])
 
 type FeedItem = {
 	date: Date

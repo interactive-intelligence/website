@@ -1,9 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
+import { getPublished } from '../lib/content';
 
-const members = await getCollection('team');
+const members = await getPublished('team');
 
 const roleOrder: Record<string, number> = {
 	President: 0,

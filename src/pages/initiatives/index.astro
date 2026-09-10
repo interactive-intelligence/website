@@ -1,11 +1,11 @@
 ---
 import { Image } from 'astro:assets'
-import { getCollection } from 'astro:content'
+import { getPublished } from '../../lib/content'
 import Layout from '../../layouts/Layout.astro'
 
 const base = import.meta.env.BASE_URL
 
-const initiatives = (await getCollection('initiatives')).sort((a, b) => a.data.order - b.data.order)
+const initiatives = (await getPublished('initiatives')).sort((a, b) => a.data.order - b.data.order)
 
 const learnMoreHref = (data: { external_url?: string }, id: string) =>
 	data.external_url ?? `${base}initiatives/${id}`

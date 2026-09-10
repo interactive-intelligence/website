@@ -1,46 +1,64 @@
-# Astro Starter Kit: Basics
+# i2 website
 
-```sh
-npm create astro@latest -- --template basics
-```
+Source code for i2's website. Built with [Astro](https://astro.build).
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Pushes to `main` deploy to GitHub Pages via `.github/workflows/deploy.yml`.
 
-## 🚀 Project Structure
+## Local development
 
-Inside of your Astro project, you'll see the following folders and files:
+Running the site locally lets you preview changes before pushing them.
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+1. **Install Node.js.** You need version 22.12 or newer. Download it from [nodejs.org](https://nodejs.org) or use a version manager like [nvm](https://github.com/nvm-sh/nvm). Check with:
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+   ```sh
+   node -v
+   ```
 
-## 🧞 Commands
+2. **Clone the repo** and enter the project folder:
 
-All commands are run from the root of the project, from a terminal:
+   ```sh
+   git clone https://github.com/interactive-intelligence/website.git
+   cd website
+   ```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+3. **Install dependencies.** This downloads Astro and the other packages the site uses into `node_modules/`. You only need to do this once, or again whenever `package.json` changes.
 
-## 👀 Want to learn more?
+   ```sh
+   npm install
+   ```
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+4. **Start the dev server:**
+
+   ```sh
+   npm run dev
+   ```
+
+   Open `http://localhost:4321/website/` in your browser. The page reloads on its own whenever you save a file. Press `Ctrl+C` in the terminal to stop the server.
+
+Note the `/website/` at the end of the URL. This base path is set in `astro.config.mjs` and applies to every link and asset on the site.
+
+To check that the site builds correctly before pushing, run `npm run build`. This writes the finished site to `dist/`, and `npm run preview` serves that folder locally.
+
+## Editing content
+
+Most content is Markdown with frontmatter under `src/content/`. Field definitions live in `src/content.config.ts`. Filenames become URL slugs.
+
+| What | Where | Notes |
+| --- | --- | --- |
+| Announcements | `src/content/announcements/` | Copy `example-announcement.md` (or the short variant). |
+| Talks | `src/content/talks/` | Copy `example-talk.md`. Talks display on the announcements page, the Talks initiative page, and the schedule page. |
+| Team | `src/content/team/` | One file per person. Put the photo in the same folder and reference it with `image: ./photo.jpg`. Set `active: false` for alumni. |
+| Initiatives | `src/content/initiatives/` | One file per program. Photos go in `photos/`. `order` sets the display order. |
+| Schedule | `src/content/schedule/` | One file per academic year with three quarters. Initiative `id`s are filenames from the initiatives folder. |
+| Constitution | `src/content/constitution.md` | |
+
+Every type accepts `published: false` to keep an entry out of the site, for example a draft or an outdated schedule. Entries are published by default.
+
+The `example-*.md` files document every field with comments. They are marked `published: false` so they never render.
+
+Other places you may need:
+
+- `src/pages/` has the page templates. Static copy on pages like About and Join lives here.
+- `src/lib/links.ts` holds shared links like the Discord invite.
+- `src/assets/` holds site images and fonts.
+- `src/styles/global.css` holds shared styles.

@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets'
-import { getCollection, render } from 'astro:content'
-import { getAnnouncements, getTalks, hasBody } from '../../lib/content'
+import { render } from 'astro:content'
+import { getPublished, hasBody } from '../../lib/content'
 import { Icon } from 'astro-icon/components'
 import Layout from '../../layouts/Layout.astro'
 import BackButton from '../../components/BackButton.astro'
@@ -11,7 +11,7 @@ import { discordUrl } from '../../lib/links'
 const base = import.meta.env.BASE_URL
 
 export async function getStaticPaths() {
-	const initiatives = await getCollection('initiatives')
+	const initiatives = await getPublished('initiatives')
 	return initiatives
 		.filter((entry) => !entry.data.external_url)
 		.map((entry) => ({ params: { slug: entry.id }, props: { entry } }))
@@ -21,9 +21,9 @@ const { entry } = Astro.props
 const { Content } = await render(entry)
 
 const [schedules, announcements, talks] = await Promise.all([
-	getCollection('schedule'),
-	getAnnouncements(),
-	getTalks()
+	getPublished('schedule'),
+	getPublished('announcements'),
+	getPublished('talks')
 ])
 
 const today = new Date()

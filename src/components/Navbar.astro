@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content'
+import { getPublished } from '../lib/content'
 import logoRaw from '../assets/i2logo.svg?raw'
 import { Icon } from 'astro-icon/components'
 
@@ -22,7 +22,7 @@ const links = [
 	{ href: '/initiatives', label: 'Initiatives', dropdown: true }
 ]
 
-const initiatives = (await getCollection('initiatives')).sort((a, b) => a.data.order - b.data.order)
+const initiatives = (await getPublished('initiatives')).sort((a, b) => a.data.order - b.data.order)
 
 const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\//, '')
 

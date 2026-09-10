@@ -1,13 +1,13 @@
 ---
 import { render } from 'astro:content';
-import { getTalks } from '../../lib/content';
+import { getPublished } from '../../lib/content';
 import Layout from '../../layouts/Layout.astro';
 import BackButton from '../../components/BackButton.astro';
 
 const base = import.meta.env.BASE_URL;
 
 export async function getStaticPaths() {
-	const talks = await getTalks();
+	const talks = await getPublished('talks');
 	return talks.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
 
