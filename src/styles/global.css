@@ -6,11 +6,13 @@
 	--text: hsl(260, 30%, 10%);
 	--text-accent: hsl(260, 45%, 42%);
 	--accent-dark: hsl(260, 45%, 45%);
-	--accent-dark-hover: hsl(260, 45%, 38%);
-	--border-accent-dark: hsl(260, 45%, 35%);
+	--accent-dark-border: hsl(260, 45%, 35%);
+	--accent-dark-hover: hsl(260, 45%, 53%);
+	--accent-dark-border-hover: hsl(260, 45%, 43%);
 	--accent-light: hsl(260, 70%, 80%);
+	--accent-light-border: hsl(260, 70%, 75%);
 	--accent-light-hover: hsl(260, 70%, 72%);
-	--border-accent-light: hsl(260, 70%, 75%);
+	--accent-light-border-hover: hsl(260, 70%, 67%);
 	--logo-bg: hsl(221, 48%, 67%);
 	--border-logo-bg: hsl(221, 48%, 62%);
 	--text-inverse: hsl(0, 0%, 100%);
@@ -255,23 +257,23 @@ table {
 .btn-primary {
 	background: var(--accent-dark);
 	color: var(--text-inverse);
-	border: 1px solid var(--border-accent-dark);
+	border: 1px solid var(--accent-dark-border);
 }
 
 .btn-primary:hover {
 	background: var(--accent-dark-hover);
-	border-color: var(--accent-dark-hover);
+	border-color: var(--accent-dark-border-hover);
 }
 
 .btn-accent {
 	background: var(--accent-light);
 	color: var(--text);
-	border: 1px solid var(--border-accent-light);
+	border: 1px solid var(--accent-light-border);
 }
 
 .btn-accent:hover {
 	background: var(--accent-light-hover);
-	border-color: var(--accent-light-hover);
+	border-color: var(--accent-light-border-hover);
 }
 
 /*
@@ -289,7 +291,7 @@ table {
 .btn-surface:hover,
 .btn-surface.active {
 	background: var(--accent-light);
-	border-color: var(--border-accent-light);
+	border-color: var(--accent-light-border);
 }
 
 .btn-surface:hover {

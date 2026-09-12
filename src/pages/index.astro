@@ -48,8 +48,8 @@ const announcementDateFmt = new Intl.DateTimeFormat('en-US', {
 const heroFormats = ['avif', 'webp'] as const
 
 const stats = [
-	{ value: '186', label: 'Intro Course graduates' },
-	{ value: '128', label: 'Active members across 5 initiatives' },
+	{ value: '180', plus: true, label: 'Intro Course graduates' },
+	{ value: '120', plus: true, label: 'Active members across 5 initiatives' },
 	{ value: '4', label: 'Research Room teams' },
 	{ value: '1', label: 'Talk hosted' }
 ]
@@ -152,7 +152,10 @@ const stats = [
 										{linked ? (
 											<a href={detailHref}>
 												{entry.data.title}
-												<Icon aria-hidden="true" name="mingcute:arrow-right-line" />
+												<Icon
+													aria-hidden="true"
+													name="mingcute:arrow-right-line"
+												/>
 											</a>
 										) : (
 											entry.data.title

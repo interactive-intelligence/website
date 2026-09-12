@@ -1,58 +1,57 @@
 ---
-import { getPublished } from '../lib/content';
-import Layout from '../layouts/Layout.astro';
-import { Icon } from 'astro-icon/components';
-import TalkCard from '../components/TalkCard.astro';
+import { getPublished } from '../lib/content'
+import Layout from '../layouts/Layout.astro'
+import { Icon } from 'astro-icon/components'
+import TalkCard from '../components/TalkCard.astro'
 
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL
 
 const [initiatives, schedules, talksCollection] = await Promise.all([
 	getPublished('initiatives'),
 	getPublished('schedule'),
 	getPublished('talks')
-]);
+])
 
-const initiativesById = new Map(initiatives.map((i) => [i.id, i]));
-const talksInitiative = initiativesById.get('talks');
+const initiativesById = new Map(initiatives.map((i) => [i.id, i]))
+const talksInitiative = initiativesById.get('talks')
 
-const today = new Date();
+const today = new Date()
 
 const upcomingTalks = talksCollection
 	.filter((t) => t.data.date.getTime() >= today.getTime())
 	.sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
-	.slice(0, 2);
-
+	.slice(0, 2)
 
 const status = (start: Date, end: Date) => {
-	if (today < start) return 'upcoming';
-	if (today > end) return 'past';
-	return 'current';
-};
+	if (today < start) return 'upcoming'
+	if (today > end) return 'past'
+	return 'current'
+}
 
 const years = [...schedules]
 	.sort((a, b) => a.data.year.localeCompare(b.data.year))
 	.map((entry) => {
 		const quarters = entry.data.quarters.map((q) => {
-			const items = new Map<string, { time?: string }>();
+			const items = new Map<string, { time?: string }>()
 			for (const i of q.initiatives) {
-				if (i.id === 'talks') continue;
-				if (!initiativesById.has(i.id)) continue;
-				items.set(i.id, { time: i.time });
+				if (i.id === 'talks') continue
+				if (!initiativesById.has(i.id)) continue
+				items.set(i.id, { time: i.time })
 			}
-			return { ...q, status: status(q.start, q.end), items };
-		});
+			return { ...q, status: status(q.start, q.end), items }
+		})
 
-		const ids = new Set<string>();
-		quarters.forEach((q) => q.items.forEach((_, id) => ids.add(id)));
+		const ids = new Set<string>()
+		quarters.forEach((q) => q.items.forEach((_, id) => ids.add(id)))
 		const rows = [...ids]
 			.map((id) => initiativesById.get(id)!)
-			.sort((a, b) => a.data.order - b.data.order);
+			.sort((a, b) => a.data.order - b.data.order)
 
-		return { year: entry.data.year, quarters, rows };
-	});
+		return { year: entry.data.year, quarters, rows }
+	})
 
-const defaultIndex = years.findIndex((y) => y.quarters.some((q) => q.status === 'current'));
-const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
+const defaultIndex = years.findIndex((y) => y.quarters.some((q) => q.status === 'current'))
+const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex
 ---
 
 <Layout
@@ -76,7 +75,9 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 			>
 				<Icon aria-hidden="true" name="mingcute:arrow-left-line" />
 			</button>
-			<span class="year-label" data-year-label aria-live="polite">{years[initialIndex].year}</span>
+			<span class="year-label" data-year-label aria-live="polite"
+				>{years[initialIndex].year}</span
+			>
 			<button type="button" class="year-nav" data-dir="1" aria-label="Next academic year">
 				<Icon aria-hidden="true" name="mingcute:arrow-right-line" />
 			</button>
@@ -100,7 +101,11 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 							<div class="m-cell m-corner" role="cell" />
 							{y.rows.map((row) => (
 								<div class="m-cell m-label" role="columnheader">
-									<a href={row.data.external_url ?? `${base}initiatives/${row.id}`}>
+									<a
+										href={
+											row.data.external_url ?? `${base}initiatives/${row.id}`
+										}
+									>
 										{row.data.name}
 									</a>
 								</div>
@@ -117,7 +122,7 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 									)}
 								</div>
 								{y.rows.map((row) => {
-									const entry = q.items.get(row.id);
+									const entry = q.items.get(row.id)
 									return (
 										<div
 											class="m-cell m-data"
@@ -127,7 +132,10 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 										>
 											<a
 												class="m-name"
-												href={row.data.external_url ?? `${base}initiatives/${row.id}`}
+												href={
+													row.data.external_url ??
+													`${base}initiatives/${row.id}`
+												}
 											>
 												{row.data.name}
 											</a>
@@ -135,12 +143,14 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 												<span class="m-time">{entry.time ?? 'TBD'}</span>
 											) : (
 												<>
-													<span class="m-empty" aria-hidden="true">—</span>
+													<span class="m-empty" aria-hidden="true">
+														—
+													</span>
 													<span class="sr-only">Not running</span>
 												</>
 											)}
 										</div>
-									);
+									)
 								})}
 							</div>
 						))}
@@ -193,36 +203,36 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 </Layout>
 
 <script>
-	const switcher = document.querySelector<HTMLElement>('[data-year-switcher]');
+	const switcher = document.querySelector<HTMLElement>('[data-year-switcher]')
 	if (switcher) {
-		const count = Number(switcher.dataset.count);
-		const label = switcher.querySelector<HTMLElement>('[data-year-label]')!;
-		const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-year-panel]'));
-		const buttons = switcher.querySelectorAll<HTMLButtonElement>('.year-nav');
+		const count = Number(switcher.dataset.count)
+		const label = switcher.querySelector<HTMLElement>('[data-year-label]')!
+		const panels = Array.from(document.querySelectorAll<HTMLElement>('[data-year-panel]'))
+		const buttons = switcher.querySelectorAll<HTMLButtonElement>('.year-nav')
 
 		const show = (index: number) => {
-			switcher.dataset.index = String(index);
+			switcher.dataset.index = String(index)
 			panels.forEach((p, i) => {
-				p.hidden = i !== index;
-			});
-			label.textContent = panels[index].dataset.year ?? '';
+				p.hidden = i !== index
+			})
+			label.textContent = panels[index].dataset.year ?? ''
 			buttons.forEach((btn) => {
-				const dir = Number(btn.dataset.dir);
-				const target = index + dir;
-				btn.disabled = target < 0 || target >= count;
-			});
-		};
+				const dir = Number(btn.dataset.dir)
+				const target = index + dir
+				btn.disabled = target < 0 || target >= count
+			})
+		}
 
 		buttons.forEach((btn) => {
 			btn.addEventListener('click', () => {
-				const current = Number(switcher.dataset.index);
-				const next = current + Number(btn.dataset.dir);
-				if (next < 0 || next >= count) return;
-				show(next);
-			});
-		});
+				const current = Number(switcher.dataset.index)
+				const next = current + Number(btn.dataset.dir)
+				if (next < 0 || next >= count) return
+				show(next)
+			})
+		})
 
-		show(Number(switcher.dataset.index));
+		show(Number(switcher.dataset.index))
 	}
 </script>
 
@@ -274,7 +284,7 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 
 	.year-nav:hover:not(:disabled) {
 		background: var(--accent-light);
-		border-color: var(--border-accent-light);
+		border-color: var(--accent-light-border);
 	}
 
 	.year-nav:disabled {
@@ -427,7 +437,6 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 		flex-direction: column;
 		gap: 0.5rem;
 	}
-
 
 	.calendar-embed {
 		margin-top: 1rem;
