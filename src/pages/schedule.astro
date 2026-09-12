@@ -89,23 +89,27 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 				years.map((y, idx) => (
 					<div
 						class="matrix"
+						role="table"
+						aria-label={`${y.year} schedule`}
 						data-year-panel
 						data-year={y.year}
 						hidden={idx !== initialIndex}
 						style={`--rows: ${y.rows.length + 1}`}
 					>
-						<div class="m-cell m-corner" aria-hidden="true" />
-						{y.rows.map((row) => (
-							<div class="m-cell m-label">
-								<a href={row.data.external_url ?? `${base}initiatives/${row.id}`}>
-									{row.data.name}
-								</a>
-							</div>
-						))}
+						<div class="m-row" role="row">
+							<div class="m-cell m-corner" role="cell" />
+							{y.rows.map((row) => (
+								<div class="m-cell m-label" role="columnheader">
+									<a href={row.data.external_url ?? `${base}initiatives/${row.id}`}>
+										{row.data.name}
+									</a>
+								</div>
+							))}
+						</div>
 
 						{y.quarters.map((q) => (
-							<>
-								<div class="m-cell m-head" data-status={q.status}>
+							<div class="m-row" role="row">
+								<div class="m-cell m-head" role="rowheader" data-status={q.status}>
 									<span class="m-head-name">{q.name}</span>
 									{q.status === 'current' && <span class="badge">Now</span>}
 									{q.status === 'upcoming' && (
@@ -117,6 +121,7 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 									return (
 										<div
 											class="m-cell m-data"
+											role="cell"
 											data-status={q.status}
 											data-active={entry ? 'true' : 'false'}
 										>
@@ -137,7 +142,7 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 										</div>
 									);
 								})}
-							</>
+							</div>
 						))}
 					</div>
 				))
@@ -285,7 +290,11 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 		position: relative;
 	}
 
-	/* Cells are emitted column-major (labels, then each quarter); 1px gaps draw the grid lines. */
+	/*
+	 * Cells are emitted column-major (labels, then each quarter); 1px gaps draw the grid lines.
+	 * Each column is an ARIA row (quarter = rowheader, initiative = columnheader), so the
+	 * .m-row wrappers use display: contents to keep the cells as direct grid items.
+	 */
 	.matrix {
 		display: grid;
 		grid-template-columns: minmax(0, 0.85fr) repeat(3, minmax(0, 1fr));
@@ -296,6 +305,10 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex;
 		border: 1px solid var(--border);
 		border-radius: var(--radius);
 		overflow: hidden;
+	}
+
+	.m-row {
+		display: contents;
 	}
 
 	.matrix[hidden] {
