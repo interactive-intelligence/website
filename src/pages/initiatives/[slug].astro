@@ -86,7 +86,7 @@ const pastTalks = talks
 				focus && (
 					<ul class="details">
 						<li>
-							<Icon name="mingcute:calendar-line" />
+							<Icon aria-hidden="true" name="mingcute:calendar-line" />
 							{focus.name}
 							<span class="muted">
 								{running
@@ -95,7 +95,7 @@ const pastTalks = talks
 							</span>
 						</li>
 						<li>
-							<Icon name="mingcute:time-line" />
+							<Icon aria-hidden="true" name="mingcute:time-line" />
 							{focus.time && focus.time !== 'TBD'
 								? `Meets ${focus.time}`
 								: 'Meeting time TBD'}
@@ -160,7 +160,7 @@ const pastTalks = talks
 				target="_blank"
 				rel="noopener"
 			>
-				<Icon name="mingcute:discord-line" />
+				<Icon aria-hidden="true" name="mingcute:discord-line" />
 				Join Discord
 			</a>
 		</div>
@@ -207,7 +207,7 @@ const pastTalks = talks
 				<div class="section-head">
 					<h2>Updates</h2>
 					<a href={`${base}announcements`} class="link-arrow">
-						All announcements <Icon name="mingcute:arrow-right-line" />
+						All announcements <Icon aria-hidden="true" name="mingcute:arrow-right-line" />
 					</a>
 				</div>
 				<ul class="updates">
@@ -224,7 +224,7 @@ const pastTalks = talks
 											class="update-link"
 										>
 											{a.data.title}
-											<Icon name="mingcute:arrow-right-line" />
+											<Icon aria-hidden="true" name="mingcute:arrow-right-line" />
 										</a>
 									) : (
 										a.data.title

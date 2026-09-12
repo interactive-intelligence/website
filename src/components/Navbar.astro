@@ -94,16 +94,22 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 		aria-controls="menu"
 		aria-expanded="false"
 	>
-		<Icon name="mingcute:menu-line" class="icon-open" />
-		<Icon name="mingcute:close-line" class="icon-close" />
+		<Icon aria-hidden="true" name="mingcute:menu-line" class="icon-open" />
+		<Icon aria-hidden="true" name="mingcute:close-line" class="icon-close" />
 	</button>
 </nav>
 
 <script>
 	const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle')!
-	toggle.addEventListener('click', () => {
-		const open = document.body.classList.toggle('menu-open')
+	const setOpen = (open: boolean) => {
+		document.body.classList.toggle('menu-open', open)
 		toggle.setAttribute('aria-expanded', String(open))
+	}
+	toggle.addEventListener('click', () => setOpen(!document.body.classList.contains('menu-open')))
+	document.addEventListener('keydown', (e) => {
+		if (e.key !== 'Escape' || !document.body.classList.contains('menu-open')) return
+		setOpen(false)
+		toggle.focus()
 	})
 </script>
 

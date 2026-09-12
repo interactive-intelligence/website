@@ -58,7 +58,15 @@ const learnMoreHref = (item: InitiativeItem) =>
 		panel.style.height = expanded ? 'auto' : '0px';
 	};
 
+	const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
 	const animatePanel = (item, panel, expand) => {
+		if (reducedMotion.matches) {
+			item.open = expand;
+			setExpandedState(item, panel, expand);
+			return;
+		}
+
 		item.dataset.animating = 'true';
 		panel.style.height = `${panel.offsetHeight}px`;
 		panel.offsetHeight;
