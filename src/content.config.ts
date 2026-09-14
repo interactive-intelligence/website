@@ -1,4 +1,5 @@
-import { defineCollection, reference, z } from "astro:content";
+import { defineCollection, reference } from "astro:content";
+import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 import { pacificMidnight } from "./lib/dates";
 
@@ -14,8 +15,8 @@ const team = defineCollection({
       active: z.boolean(),
       image: image().optional(),
       tags: z.array(z.string()).optional(),
-      website: z.string().url().optional(),
-      email: z.string().email().optional(),
+      website: z.url().optional(),
+      email: z.email().optional(),
       published: z.boolean().default(true),
     }),
 });
@@ -63,8 +64,8 @@ const initiatives = defineCollection({
       short_description: z.string(),
       long_description: z.string(),
       photo: image(),
-      external_url: z.string().url().optional(),
-      form_url: z.string().url().optional(),
+      external_url: z.url().optional(),
+      form_url: z.url().optional(),
       form_label: z.string().optional(),
       order: z.number(),
       published: z.boolean().default(true),
@@ -106,7 +107,7 @@ const announcements = defineCollection({
     title: z.string(),
     date: localDate,
     summary: z.string().optional(),
-    link_url: z.string().url().optional(),
+    link_url: z.url().optional(),
     link_label: z.string().optional(),
     initiatives: z.array(reference("initiatives")).optional(),
     published: z.boolean().default(true),

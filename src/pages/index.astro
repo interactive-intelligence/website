@@ -1,5 +1,6 @@
 ---
 import { Image, Picture } from 'astro:assets'
+import type { ImageOutputFormat } from 'astro'
 import { getPublished } from '../lib/content'
 import { getFeed } from '../lib/feed'
 import InitiativesAccordion from '../components/InitiativesAccordion.astro'
@@ -37,7 +38,7 @@ const initiatives = (await getPublished('initiatives')).sort((a, b) => a.data.or
 
 const recentAnnouncements = await getFeed({ limit: 3 })
 
-const heroFormats = ['avif', 'webp'] as const
+const heroFormats: ImageOutputFormat[] = ['avif', 'webp']
 
 const stats = [
 	{ value: '180', plus: true, label: 'Intro Course graduates' },
@@ -48,7 +49,7 @@ const stats = [
 ---
 
 <Layout title="i2 - interactive intelligence" description={description}>
-	<script type="application/ld+json" slot="head" set:html={JSON.stringify(organizationSchema)} />
+	<script is:inline type="application/ld+json" slot="head" set:html={JSON.stringify(organizationSchema)} />
 	<h1 class="hero">
 		<span>interactive intelligence</span>
 		<span>(i2)</span>

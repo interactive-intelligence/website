@@ -54,14 +54,14 @@ const learnMoreHref = (item: InitiativeItem) =>
 <script>
 	const accordions = document.querySelectorAll('.accordion')
 
-	const setExpandedState = (item, panel, expanded) => {
+	const setExpandedState = (item: HTMLDetailsElement, panel: HTMLElement, expanded: boolean) => {
 		item.dataset.expanded = String(expanded)
 		panel.style.height = expanded ? 'auto' : '0px'
 	}
 
 	const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
 
-	const animatePanel = (item, panel, expand) => {
+	const animatePanel = (item: HTMLDetailsElement, panel: HTMLElement, expand: boolean) => {
 		if (reducedMotion.matches) {
 			item.open = expand
 			setExpandedState(item, panel, expand)
@@ -81,7 +81,7 @@ const learnMoreHref = (item: InitiativeItem) =>
 			panel.style.height = expand ? `${panel.scrollHeight}px` : '0px'
 		})
 
-		const onTransitionEnd = (event) => {
+		const onTransitionEnd = (event: TransitionEvent) => {
 			if (event.propertyName !== 'height') return
 
 			panel.removeEventListener('transitionend', onTransitionEnd)
@@ -101,7 +101,7 @@ const learnMoreHref = (item: InitiativeItem) =>
 	for (const accordion of accordions) {
 		for (const item of accordion.querySelectorAll('details')) {
 			const summary = item.querySelector('summary')
-			const panel = item.querySelector('.panel')
+			const panel = item.querySelector<HTMLElement>('.panel')
 
 			if (!summary || !panel) continue
 
