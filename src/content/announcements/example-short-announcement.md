@@ -1,5 +1,6 @@
 ---
 # Example of a short announcement with no body: it appears in the list as plain text with no detail page.
+# The summary is the whole announcement here, so it should stand on its own.
 published: false
 title: Autumn 2025 Intro Course wrapped — 62 graduates
 date: 2025-12-13
