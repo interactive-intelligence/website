@@ -39,7 +39,7 @@
 }
 
 html {
-	font-family: 'Open Sauce Sans', system-ui, sans-serif;
+	font-family: var(--font-sans);
 	color: var(--text);
 	background: var(--bg);
 	scrollbar-gutter: stable;

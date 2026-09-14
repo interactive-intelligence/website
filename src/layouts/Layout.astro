@@ -1,9 +1,8 @@
 ---
-import { getImage } from 'astro:assets'
+import { getImage, Font } from 'astro:assets'
 import Navbar from '../components/Navbar.astro'
 import Footer from '../components/Footer.astro'
 import logoCard from '../assets/social-logo.png'
-import '../styles/fonts.css'
 import '../styles/global.css'
 
 interface Props {
@@ -38,6 +37,7 @@ const twitterCard = image ? 'summary_large_image' : 'summary'
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="generator" content={Astro.generator} />
+		<Font cssVariable="--font-sans" preload={[400, 500, 600, 700].map((weight) => ({ weight, style: 'normal' }))} />
 
 		<title>{title}</title>
 		<meta name="description" content={description} />
