@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import { Icon } from 'astro-icon/components'
+import LinkButton from '../components/LinkButton.astro'
 import { discordUrl } from '../lib/links'
 
 const socials = [
@@ -44,23 +45,18 @@ const socials = [
 				regardless of background or major.
 			</p>
 		</div>
-		<a href={discordUrl} target="_blank" rel="noopener" class="btn btn-primary cta-btn">
+		<LinkButton href={discordUrl} class="cta-btn" arrow={false}>
 			<Icon aria-hidden="true" name="mingcute:discord-line" />
 			Join Discord
-		</a>
+		</LinkButton>
 	</section>
 	<div class="socials">
 		{
 			socials.map(({ href, label, icon }) => (
-				<a
-					href={href}
-					target="_blank"
-					rel="noopener noreferrer"
-					class="btn btn-surface social-card"
-				>
+				<LinkButton href={href} variant="surface" class="social-card" arrow={false}>
 					<Icon aria-hidden="true" name={icon} />
 					{label}
-				</a>
+				</LinkButton>
 			))
 		}
 	</div>

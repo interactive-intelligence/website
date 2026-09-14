@@ -1,82 +1,161 @@
 ---
-import { render } from 'astro:content';
-import { getPublished, hasBody } from '../../lib/content';
-import Layout from '../../layouts/Layout.astro';
-import BackButton from '../../components/BackButton.astro';
+import { getEntries, render } from 'astro:content'
+import { getPublished, hasBody } from '../../lib/content'
+import { TIME_ZONE } from '../../lib/dates'
+import Layout from '../../layouts/Layout.astro'
+import BackButton from '../../components/BackButton.astro'
+import LinkButton from '../../components/LinkButton.astro'
 
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL
 
 export async function getStaticPaths() {
-	const announcements = await getPublished('announcements');
+	const announcements = await getPublished('announcements')
 	return announcements
 		.filter(hasBody)
-		.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+		.map((entry) => ({ params: { id: entry.id }, props: { entry } }))
 }
 
-const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { entry } = Astro.props
+const { Content } = await render(entry)
+const initiatives = entry.data.initiatives ? await getEntries(entry.data.initiatives) : []
 
 const fmt = new Intl.DateTimeFormat('en-US', {
 	month: 'long',
 	day: 'numeric',
-	year: 'numeric'
-});
+	year: 'numeric',
+	timeZone: TIME_ZONE
+})
 ---
 
 <Layout title={`${entry.data.title} - i2`} description={entry.data.summary} type="article">
 	<Fragment slot="head">
 		<meta property="article:published_time" content={entry.data.date.toISOString()} />
 	</Fragment>
-	<BackButton href={`${base}announcements`} label="All announcements" />
-
-	<header class="page-header">
-		<time datetime={entry.data.date.toISOString()}>{fmt.format(entry.data.date)}</time>
-		<h1>{entry.data.title}</h1>
-		{entry.data.summary && <p class="lede">{entry.data.summary}</p>}
-		{
-			entry.data.link_url && (
-				<div class="actions">
-					<a
-						href={entry.data.link_url}
-						class="btn btn-primary"
-						target="_blank"
-						rel="noopener"
-					>
-						{entry.data.link_label ?? 'Learn more'}
-					</a>
+	<article class="article">
+		<aside class="rail">
+			<BackButton href={`${base}announcements`} label="All announcements" />
+			<dl class="meta">
+				<div>
+					<dt>Posted</dt>
+					<dd>
+						<time datetime={entry.data.date.toISOString()}
+							>{fmt.format(entry.data.date)}</time
+						>
+					</dd>
 				</div>
-			)
-		}
-	</header>
+				{
+					initiatives.length > 0 && (
+						<div>
+							<dt>{initiatives.length === 1 ? 'Initiative' : 'Initiatives'}</dt>
+							<dd>
+								{initiatives.map((i) => (
+									<a
+										href={i.data.external_url ?? `${base}initiatives/${i.id}`}
+										class="text-link"
+									>
+										{i.data.name}
+									</a>
+								))}
+							</dd>
+						</div>
+					)
+				}
+			</dl>
+		</aside>
 
-	<section class="prose">
-		<Content />
-	</section>
+		<div class="body">
+			<header class="page-header">
+				<h1>{entry.data.title}</h1>
+				{entry.data.summary && <p class="lede">{entry.data.summary}</p>}
+				{
+					entry.data.link_url && (
+						<div class="actions">
+							<LinkButton href={entry.data.link_url}>
+								{entry.data.link_label ?? 'Learn more'}
+							</LinkButton>
+						</div>
+					)
+				}
+			</header>
+
+			<section class="prose">
+				<Content />
+			</section>
+		</div>
+	</article>
 </Layout>
 
 <style>
-	.page-header {
-		margin-bottom: 2.5rem;
+	.article {
+		display: grid;
+		grid-template-columns: 13rem minmax(0, 1fr);
+		column-gap: 4rem;
 	}
 
-	.page-header time {
-		display: block;
-		font-size: 0.875rem;
+	.rail {
+		position: sticky;
+		top: 2rem;
+		align-self: start;
+	}
+
+	.meta {
+		display: grid;
+		gap: 1.5rem;
+		margin: 0;
+		padding: 1rem;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+	}
+
+	.meta dt {
+		margin: 0 0 0.25rem;
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
 		color: var(--text-accent);
-		margin-bottom: 0.5rem;
+	}
+
+	.meta dd {
+		margin: 0;
+		font-size: 0.9375rem;
+	}
+
+	.meta dd a {
+		display: block;
+		color: var(--text);
+	}
+
+	.page-header {
+		margin-bottom: 2rem;
 	}
 
 	.page-header h1 {
-		margin: 0 0 1rem;
+		margin: 0;
 	}
 
 	.lede {
 		font-size: 1.125rem;
-		margin-bottom: 1.5rem;
+		margin: 1rem 0 0;
 	}
 
 	.actions {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem
+		margin-top: 2rem;
+	}
+
+	.prose {
+		margin-top: 0;
+	}
+
+	@media (max-width: 48rem) {
+		.article {
+			grid-template-columns: minmax(0, 1fr);
+			row-gap: 1.5rem;
+		}
+
+		.rail {
+			position: static;
+		}
+	}
 </style>

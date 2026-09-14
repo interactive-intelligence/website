@@ -1,43 +1,9 @@
 ---
-import { getPublished, hasBody } from '../../lib/content'
+import { getFeed } from '../../lib/feed'
 import Layout from '../../layouts/Layout.astro'
-import { Icon } from 'astro-icon/components'
+import AnnouncementList from '../../components/AnnouncementList.astro'
 
-const base = import.meta.env.BASE_URL
-
-const [announcements, talks] = await Promise.all([getPublished('announcements'), getPublished('talks')])
-
-type FeedItem = {
-	date: Date
-	title: string
-	summary?: string
-	href: string
-	linked: boolean
-}
-
-const annItems: FeedItem[] = announcements.map((entry) => ({
-	date: entry.data.date,
-	title: entry.data.title,
-	summary: entry.data.summary,
-	href: `${base}announcements/${entry.id}`,
-	linked: hasBody(entry)
-}))
-
-const talkItems: FeedItem[] = talks.map((entry) => ({
-	date: entry.data.posted,
-	title: `i2 Talk: ${entry.data.title}`,
-	summary: entry.data.summary,
-	href: `${base}talks/${entry.id}`,
-	linked: true
-}))
-
-const items = [...annItems, ...talkItems].sort((a, b) => b.date.getTime() - a.date.getTime())
-
-const fmt = new Intl.DateTimeFormat('en-US', {
-	month: 'long',
-	day: 'numeric',
-	year: 'numeric'
-})
+const items = await getFeed()
 ---
 
 <Layout
@@ -52,95 +18,13 @@ const fmt = new Intl.DateTimeFormat('en-US', {
 		>.
 	</p>
 
-	<ul class="announcement-cards">
-		{
-			items.map((item) => (
-				<li class={`announcement-card${item.linked ? ' is-linked' : ''}`}>
-					<time datetime={item.date.toISOString()}>{fmt.format(item.date)}</time>
-					<div class="announcement-body">
-						<h2>
-							{item.linked ? (
-								<a href={item.href}>
-									{item.title}
-									<Icon aria-hidden="true" name="mingcute:arrow-right-line" />
-								</a>
-							) : (
-								item.title
-							)}
-						</h2>
-						{item.summary && <p>{item.summary}</p>}
-					</div>
-				</li>
-			))
-		}
-	</ul>
+	<div class="feed">
+		<AnnouncementList items={items} />
+	</div>
 </Layout>
 
 <style>
-	.announcement-cards {
-		list-style: none;
-		padding: 0;
-		margin: 2rem 0 0;
-		border-top: 1px solid var(--rule);
-	}
-
-	.announcement-card {
-		position: relative;
-		display: grid;
-		grid-template-columns: 9rem minmax(0, 1fr);
-		gap: 2rem;
-		padding: 1.25rem 0;
-		border-bottom: 1px solid var(--rule);
-	}
-
-	.announcement-card time {
-		font-size: 0.875rem;
-		color: var(--text-accent);
-		font-variant-numeric: tabular-nums;
-		white-space: nowrap;
-	}
-
-	.announcement-card h2 {
-		margin: 0;
-		font-size: 1.25rem;
-	}
-
-	.announcement-card h2 a {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.375rem;
-		transition: color var(--duration-fast) var(--ease);
-	}
-
-	.announcement-card h2 a::after {
-		content: '';
-		position: absolute;
-		inset: 0;
-	}
-
-	.announcement-card h2 a [data-icon] {
-		font-size: 0.875em;
-		color: var(--text-accent);
-		transition: transform var(--duration) var(--ease);
-	}
-
-	.announcement-card.is-linked:hover h2 a {
-		color: var(--text-accent);
-	}
-
-	.announcement-card.is-linked:hover h2 a [data-icon] {
-		transform: translateX(4px);
-	}
-
-	.announcement-card p {
-		margin: 0.5rem 0 0;
-		font-size: 0.875rem;
-	}
-
-	@media (max-width: 48rem) {
-		.announcement-card {
-			grid-template-columns: 1fr;
-			gap: 0.5rem;
-		}
+	.feed {
+		margin-top: 2rem;
 	}
 </style>

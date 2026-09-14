@@ -1,5 +1,9 @@
 import { defineCollection, reference, z } from "astro:content";
 import { glob } from "astro/loaders";
+import { pacificMidnight } from "./lib/dates";
+
+// Date-only frontmatter (`2026-09-14`), interpreted as Pacific time.
+const localDate = z.coerce.date().transform(pacificMidnight);
 
 const team = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/team" }),
@@ -32,7 +36,7 @@ const talks = defineCollection({
     title: z.string(),
     speaker: z.string(),
     date: z.coerce.date(),
-    posted: z.coerce.date(),
+    posted: localDate,
     location: z.string().optional(),
     summary: z.string().optional(),
     youtubeUrl: z.string().optional(),
@@ -45,7 +49,7 @@ const publications = defineCollection({
   schema: z.object({
     title: z.string(),
     authors: z.array(z.string()),
-    date: z.coerce.date(),
+    date: localDate,
     url: z.string().optional(),
     published: z.boolean().default(true),
   }),
@@ -80,8 +84,8 @@ const schedule = defineCollection({
       .array(
         z.object({
           name: z.string(),
-          start: z.coerce.date(),
-          end: z.coerce.date(),
+          start: localDate,
+          end: localDate,
           initiatives: z.array(
             z.object({
               id: z.string(),
@@ -100,7 +104,7 @@ const announcements = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/announcements" }),
   schema: z.object({
     title: z.string(),
-    date: z.coerce.date(),
+    date: localDate,
     summary: z.string().optional(),
     link_url: z.string().url().optional(),
     link_label: z.string().optional(),

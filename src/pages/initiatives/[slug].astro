@@ -1,11 +1,15 @@
 ---
 import { Picture } from 'astro:assets'
 import { render } from 'astro:content'
-import { getPublished, hasBody } from '../../lib/content'
+import { getPublished } from '../../lib/content'
+import { getFeed } from '../../lib/feed'
+import { TIME_ZONE } from '../../lib/dates'
 import { Icon } from 'astro-icon/components'
 import Layout from '../../layouts/Layout.astro'
 import BackButton from '../../components/BackButton.astro'
 import TalkCard from '../../components/TalkCard.astro'
+import AnnouncementList from '../../components/AnnouncementList.astro'
+import LinkButton from '../../components/LinkButton.astro'
 import { discordUrl } from '../../lib/links'
 
 const base = import.meta.env.BASE_URL
@@ -20,10 +24,10 @@ export async function getStaticPaths() {
 const { entry } = Astro.props
 const { Content } = await render(entry)
 
-const [schedules, announcements, talks] = await Promise.all([
+const [schedules, talks, updates] = await Promise.all([
 	getPublished('schedule'),
-	getPublished('announcements'),
-	getPublished('talks')
+	getPublished('talks'),
+	getFeed({ initiative: entry.id, limit: 4 })
 ])
 
 const today = new Date()
@@ -44,22 +48,10 @@ const running = Boolean(current?.active)
 const next = quarters.find((q) => q.start > today && q.active)
 const focus = running ? current : next
 
-// Schedule dates are date-only (parsed as UTC midnight), so format them in UTC.
 const dateFmt = new Intl.DateTimeFormat('en-US', {
 	month: 'short',
 	day: 'numeric',
-	timeZone: 'UTC'
-})
-
-const updates = announcements
-	.filter((a) => a.data.initiatives?.some((ref) => ref.id === entry.id))
-	.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-	.slice(0, 4)
-
-const updateDateFmt = new Intl.DateTimeFormat('en-US', {
-	month: 'short',
-	day: 'numeric',
-	year: 'numeric'
+	timeZone: TIME_ZONE
 })
 
 const isTalks = entry.id === 'talks'
@@ -106,14 +98,7 @@ const pastTalks = talks
 			{
 				entry.data.form_url && (
 					<div class="actions">
-						<a
-							href={entry.data.form_url}
-							class="btn btn-primary"
-							target="_blank"
-							rel="noopener"
-						>
-							{entry.data.form_label}
-						</a>
+						<LinkButton href={entry.data.form_url}>{entry.data.form_label}</LinkButton>
 					</div>
 				)
 			}
@@ -144,25 +129,13 @@ const pastTalks = talks
 		<div class="actions">
 			{
 				entry.data.form_url && (
-					<a
-						href={entry.data.form_url}
-						class="btn btn-primary"
-						target="_blank"
-						rel="noopener"
-					>
-						{entry.data.form_label}
-					</a>
+					<LinkButton href={entry.data.form_url}>{entry.data.form_label}</LinkButton>
 				)
 			}
-			<a
-				href={discordUrl}
-				class={`btn ${entry.data.form_url ? 'btn-surface' : 'btn-primary'}`}
-				target="_blank"
-				rel="noopener"
-			>
+			<LinkButton href={discordUrl} variant={entry.data.form_url ? 'surface' : 'primary'}>
 				<Icon aria-hidden="true" name="mingcute:discord-line" />
 				Join Discord
-			</a>
+			</LinkButton>
 		</div>
 	</section>
 
@@ -207,34 +180,10 @@ const pastTalks = talks
 				<div class="section-head">
 					<h2>Updates</h2>
 					<a href={`${base}announcements`} class="link-arrow">
-						All announcements <Icon aria-hidden="true" name="mingcute:arrow-right-line" />
+						All announcements <Icon aria-hidden="true" name="mingcute:arrow-right-line" class="arrow-right" />
 					</a>
 				</div>
-				<ul class="updates">
-					{updates.map((a) => (
-						<li class="update">
-							<time datetime={a.data.date.toISOString()}>
-								{updateDateFmt.format(a.data.date)}
-							</time>
-							<div>
-								<h3>
-									{hasBody(a) ? (
-										<a
-											href={`${base}announcements/${a.id}`}
-											class="update-link"
-										>
-											{a.data.title}
-											<Icon aria-hidden="true" name="mingcute:arrow-right-line" />
-										</a>
-									) : (
-										a.data.title
-									)}
-								</h3>
-								{a.data.summary && <p>{a.data.summary}</p>}
-							</div>
-						</li>
-					))}
-				</ul>
+				<AnnouncementList items={updates} headingLevel="h3" />
 			</section>
 		)
 	}
@@ -331,56 +280,6 @@ const pastTalks = talks
 		margin-top: 2rem;
 	}
 
-	.updates {
-		list-style: none;
-		padding: 0;
-		border-top: 1px solid var(--rule);
-	}
-
-	.update {
-		display: grid;
-		grid-template-columns: 9rem minmax(0, 1fr);
-		gap: 2rem;
-		margin: 0;
-		padding: 1.25rem 0;
-		border-bottom: 1px solid var(--rule);
-	}
-
-	.update time {
-		color: var(--text-accent);
-		font-variant-numeric: tabular-nums;
-		white-space: nowrap;
-	}
-
-	.update h3 {
-		margin: 0;
-	}
-
-	.update p {
-		margin: 0.5rem 0 0;
-	}
-
-	.update-link {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.375rem;
-		transition: color var(--duration-fast) var(--ease);
-	}
-
-	.update-link [data-icon] {
-		font-size: 0.875em;
-		color: var(--text-accent);
-		transition: transform var(--duration) var(--ease);
-	}
-
-	.update-link:hover {
-		color: var(--text-accent);
-	}
-
-	.update-link:hover [data-icon] {
-		transform: translateX(4px);
-	}
-
 	.cta {
 		display: flex;
 		align-items: center;
@@ -420,11 +319,6 @@ const pastTalks = talks
 
 		.hero-photo {
 			aspect-ratio: 16 / 9;
-		}
-
-		.update {
-			grid-template-columns: 1fr;
-			gap: 0.5rem;
 		}
 
 		.cta {

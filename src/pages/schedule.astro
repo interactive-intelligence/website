@@ -73,13 +73,13 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex
 				data-dir="-1"
 				aria-label="Previous academic year"
 			>
-				<Icon aria-hidden="true" name="mingcute:arrow-left-line" />
+				<Icon aria-hidden="true" name="mingcute:arrow-left-line" class="arrow-left" />
 			</button>
 			<span class="year-label" data-year-label aria-live="polite"
 				>{years[initialIndex].year}</span
 			>
 			<button type="button" class="year-nav" data-dir="1" aria-label="Next academic year">
-				<Icon aria-hidden="true" name="mingcute:arrow-right-line" />
+				<Icon aria-hidden="true" name="mingcute:arrow-right-line" class="arrow-right" />
 			</button>
 		</div>
 	</div>
@@ -165,7 +165,7 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex
 			<h2>Upcoming talks</h2>
 			<a class="link-arrow" href={`${base}initiatives/talks`}>
 				<span>All talks</span>
-				<Icon aria-hidden="true" name="mingcute:arrow-right-line" />
+				<Icon aria-hidden="true" name="mingcute:arrow-right-line" class="arrow-right" />
 			</a>
 		</div>
 		{

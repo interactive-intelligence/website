@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import { Icon } from 'astro-icon/components'
+import LinkButton from '../components/LinkButton.astro'
 
 const base = import.meta.env.BASE_URL
 const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\//, '')
@@ -26,9 +26,7 @@ const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\/
 			<p>
 				i2 is run by a diverse team of student officers and supported by faculty advisors.
 			</p>
-			<a class="btn btn-accent" href={prefixed('/team')}
-				>Meet the team <Icon aria-hidden="true" name="mingcute:arrow-right-line" /></a
-			>
+			<LinkButton href={prefixed('/team')} variant="accent">Meet the team</LinkButton>
 		</section>
 
 		<section>
@@ -37,9 +35,7 @@ const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\/
 				Our governance structure, membership policies, and officer roles are documented in
 				our constitution.
 			</p>
-			<a class="btn btn-accent" href={prefixed('/constitution')}
-				>Read the constitution <Icon aria-hidden="true" name="mingcute:arrow-right-line" /></a
-			>
+			<LinkButton href={prefixed('/constitution')} variant="accent">Read the constitution</LinkButton>
 		</section>
 	</div>
 </Layout>

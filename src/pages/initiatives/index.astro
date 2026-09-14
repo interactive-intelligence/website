@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets'
 import { getPublished } from '../../lib/content'
 import Layout from '../../layouts/Layout.astro'
+import LinkButton from '../../components/LinkButton.astro'
 
 const base = import.meta.env.BASE_URL
 
@@ -38,13 +39,11 @@ const learnMoreHref = (data: { external_url?: string }, id: string) =>
 						<h2>{item.data.name}</h2>
 						<p>{item.data.long_description}</p>
 						<div class="actions">
-							<a href={learnMoreHref(item.data, item.id)} class="btn btn-accent">
+							<LinkButton href={learnMoreHref(item.data, item.id)} variant="accent">
 								Learn More
-							</a>
+							</LinkButton>
 							{item.data.form_url && (
-								<a href={item.data.form_url} class="btn btn-primary">
-									{item.data.form_label}
-								</a>
+								<LinkButton href={item.data.form_url}>{item.data.form_label}</LinkButton>
 							)}
 						</div>
 					</div>
