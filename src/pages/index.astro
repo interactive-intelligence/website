@@ -13,8 +13,6 @@ import heroSmallB from '../assets/selfie.jpg'
 import allenLogo from '../assets/allen-school-logo.svg'
 import cntLogo from '../assets/cnt-logo.png'
 
-const base = import.meta.env.BASE_URL
-
 const description =
 	"interactive intelligence (i2) is the University of Washington's student-led NeuroAI education and research organization, exploring the intersection of AI, neuroscience, and philosophy."
 
@@ -23,8 +21,8 @@ const organizationSchema = {
 	'@type': 'Organization',
 	name: 'interactive intelligence',
 	alternateName: 'i2',
-	url: new URL(base, Astro.site).toString(),
-	logo: new URL(`${base}favicon.svg`, Astro.site).toString(),
+	url: Astro.site!.toString(),
+	logo: new URL('/favicon.svg', Astro.site).toString(),
 	description,
 	parentOrganization: { '@type': 'CollegeOrUniversity', name: 'University of Washington' },
 	sameAs: [
@@ -128,7 +126,7 @@ const stats = [
 							#
 						</a>
 					</h2>
-					<a href={`${base}announcements`} class="link-arrow">
+					<a href="/announcements" class="link-arrow">
 						See all <Icon aria-hidden="true" name="mingcute:arrow-right-line" class="arrow-right" />
 					</a>
 				</header>

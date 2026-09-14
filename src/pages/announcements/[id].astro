@@ -6,8 +6,6 @@ import Layout from '../../layouts/Layout.astro'
 import BackButton from '../../components/BackButton.astro'
 import LinkButton from '../../components/LinkButton.astro'
 
-const base = import.meta.env.BASE_URL
-
 export async function getStaticPaths() {
 	const announcements = await getPublished('announcements')
 	return announcements
@@ -33,7 +31,7 @@ const fmt = new Intl.DateTimeFormat('en-US', {
 	</Fragment>
 	<article class="article">
 		<aside class="rail">
-			<BackButton href={`${base}announcements`} label="All announcements" />
+			<BackButton href="/announcements" label="All announcements" />
 			<dl class="meta">
 				<div>
 					<dt>Posted</dt>
@@ -50,7 +48,7 @@ const fmt = new Intl.DateTimeFormat('en-US', {
 							<dd>
 								{initiatives.map((i) => (
 									<a
-										href={i.data.external_url ?? `${base}initiatives/${i.id}`}
+										href={i.data.external_url ?? `/initiatives/${i.id}`}
 										class="text-link"
 									>
 										{i.data.name}

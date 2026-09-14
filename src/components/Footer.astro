@@ -1,9 +1,6 @@
 ---
 import logoRaw from '../assets/i2logo.svg?raw'
 
-const base = import.meta.env.BASE_URL
-const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\//, '')
-
 const links = [
 	{ href: '/about', label: 'About' },
 	{ href: '/team', label: 'Team' },
@@ -28,7 +25,7 @@ const resources = [{ href: 'https://grimoire.uw-i2.org/', label: 'Textbook' }]
 <footer>
 	<div class="inner">
 		<div class="brand">
-			<a href={base} class="logo" aria-label="Home">
+			<a href="/" class="logo" aria-label="Home">
 				<Fragment set:html={logoRaw} />
 			</a>
 			<p class="tag">UW's student-led NeuroAI education and research organization.</p>
@@ -41,7 +38,7 @@ const resources = [{ href: 'https://grimoire.uw-i2.org/', label: 'Textbook' }]
 				{
 					links.map(({ href, label }) => (
 						<li>
-							<a href={prefixed(href)}>{label}</a>
+							<a href={href}>{label}</a>
 						</li>
 					))
 				}

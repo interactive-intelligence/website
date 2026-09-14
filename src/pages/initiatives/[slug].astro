@@ -12,8 +12,6 @@ import AnnouncementList from '../../components/AnnouncementList.astro'
 import LinkButton from '../../components/LinkButton.astro'
 import { discordUrl } from '../../lib/links'
 
-const base = import.meta.env.BASE_URL
-
 export async function getStaticPaths() {
 	const initiatives = await getPublished('initiatives')
 	return initiatives
@@ -68,7 +66,7 @@ const pastTalks = talks
 	description={entry.data.short_description}
 	image={entry.data.photo}
 >
-	<BackButton href={`${base}initiatives`} label="All initiatives" />
+	<BackButton href="/initiatives" label="All initiatives" />
 
 	<header class="hero">
 		<div class="hero-text">
@@ -179,7 +177,7 @@ const pastTalks = talks
 			<section>
 				<div class="section-head">
 					<h2>Updates</h2>
-					<a href={`${base}announcements`} class="link-arrow">
+					<a href="/announcements" class="link-arrow">
 						All announcements <Icon aria-hidden="true" name="mingcute:arrow-right-line" class="arrow-right" />
 					</a>
 				</div>

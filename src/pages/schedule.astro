@@ -4,8 +4,6 @@ import Layout from '../layouts/Layout.astro'
 import { Icon } from 'astro-icon/components'
 import TalkCard from '../components/TalkCard.astro'
 
-const base = import.meta.env.BASE_URL
-
 const [initiatives, schedules, talksCollection] = await Promise.all([
 	getPublished('initiatives'),
 	getPublished('schedule'),
@@ -103,7 +101,7 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex
 								<div class="m-cell m-label" role="columnheader">
 									<a
 										href={
-											row.data.external_url ?? `${base}initiatives/${row.id}`
+											row.data.external_url ?? `/initiatives/${row.id}`
 										}
 									>
 										{row.data.name}
@@ -134,7 +132,7 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex
 												class="m-name"
 												href={
 													row.data.external_url ??
-													`${base}initiatives/${row.id}`
+													`/initiatives/${row.id}`
 												}
 											>
 												{row.data.name}
@@ -163,7 +161,7 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex
 	<section>
 		<div class="talks-widget-head">
 			<h2>Upcoming talks</h2>
-			<a class="link-arrow" href={`${base}initiatives/talks`}>
+			<a class="link-arrow" href="/initiatives/talks">
 				<span>All talks</span>
 				<Icon aria-hidden="true" name="mingcute:arrow-right-line" class="arrow-right" />
 			</a>

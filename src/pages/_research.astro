@@ -1,7 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { getPublished } from "../lib/content";
-const base = import.meta.env.BASE_URL;
 
 const publications = await getPublished("publications");
 ---
@@ -32,8 +31,8 @@ const publications = await getPublished("publications");
   <section>
     <h2 id="related-programs">Related Programs<a class="heading-anchor" href="#related-programs" aria-label="Link to section">#</a></h2>
     <ul>
-      <li><a href={`${base}initiatives/research-room`} class="text-link">Research Room</a></li>
-      <li><a href={`${base}initiatives/fellows`} class="text-link">Fellows</a></li>
+      <li><a href="/initiatives/research-room" class="text-link">Research Room</a></li>
+      <li><a href="/initiatives/fellows" class="text-link">Fellows</a></li>
     </ul>
   </section>
 </Layout>

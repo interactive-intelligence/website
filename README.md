@@ -33,9 +33,8 @@ Running the site locally lets you preview changes before pushing them.
    npm run dev
    ```
 
-   Open `http://localhost:4321/website/` in your browser. The page reloads on its own whenever you save a file. Press `Ctrl+C` in the terminal to stop the server.
+   Open `http://localhost:4321/` in your browser. The page reloads on its own whenever you save a file. Press `Ctrl+C` in the terminal to stop the server.
 
-Note the `/website/` at the end of the URL. This base path is set in `astro.config.mjs` and applies to every link and asset on the site.
 
 To check that the site builds correctly before pushing, run `npm run build`. This writes the finished site to `dist/`, and `npm run preview` serves that folder locally.
 

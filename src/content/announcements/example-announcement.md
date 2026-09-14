@@ -22,4 +22,4 @@ This cycle we're recruiting for projects across:
 - mechanistic interpretability of vision-language models
 - neural population geometry and representation learning
 
-Read the program description on the [Fellows page](/website/initiatives/fellows) before applying.
+Read the program description on the [Fellows page](/initiatives/fellows) before applying.

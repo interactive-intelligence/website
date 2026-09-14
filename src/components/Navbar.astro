@@ -3,7 +3,6 @@ import { getPublished } from '../lib/content'
 import logoRaw from '../assets/i2logo.svg?raw'
 import { Icon } from 'astro-icon/components'
 
-const base = import.meta.env.BASE_URL
 const currentPath = Astro.url.pathname
 
 const links = [
@@ -24,19 +23,15 @@ const links = [
 
 const initiatives = (await getPublished('initiatives')).sort((a, b) => a.data.order - b.data.order)
 
-const prefixed = (path: string) => base.replace(/\/?$/, '/') + path.replace(/^\//, '')
-
-const isActive = (href: string) => {
-	const full = prefixed(href)
-	return href === '/' ? currentPath === full : currentPath.startsWith(full)
-}
+const isActive = (href: string) =>
+	href === '/' ? currentPath === href : currentPath.startsWith(href)
 
 const initiativeHref = (data: { external_url?: string }, id: string) =>
-	data.external_url ?? prefixed(`/initiatives/${id}`)
+	data.external_url ?? `/initiatives/${id}`
 ---
 
 <nav>
-	<a href={base} class="logo" aria-label="Home">
+	<a href="/" class="logo" aria-label="Home">
 		<Fragment set:html={logoRaw} />
 	</a>
 	<div class="drawer" id="menu">
@@ -45,7 +40,7 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 				links.map(({ href, label, dropdown, items }) => (
 					<li class:list={[{ 'has-dropdown': dropdown || items }]}>
 						<a
-							href={prefixed(href)}
+							href={href}
 							class:list={['btn btn-surface', { active: isActive(href) }]}
 						>
 							{label}
@@ -54,7 +49,7 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 							<ul class="submenu">
 								{items.map((item) => (
 									<li class:list={[{ duplicate: item.href === href }]}>
-										<a href={prefixed(item.href)}>{item.label}</a>
+										<a href={item.href}>{item.label}</a>
 									</li>
 								))}
 							</ul>
@@ -78,7 +73,7 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 									aria-hidden="true"
 								/>
 								<li class="duplicate">
-									<a href={prefixed('/initiatives')}>All initiatives</a>
+									<a href="/initiatives">All initiatives</a>
 								</li>
 							</ul>
 						)}
@@ -86,7 +81,7 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 				))
 			}
 		</ul>
-		<a href={prefixed('/join')} class="btn btn-primary">Join Us</a>
+		<a href="/join" class="btn btn-primary">Join Us</a>
 	</div>
 	<button
 		class="btn btn-surface menu-toggle"

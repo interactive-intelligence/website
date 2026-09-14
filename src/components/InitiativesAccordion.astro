@@ -17,10 +17,9 @@ interface Props {
 }
 
 const { items } = Astro.props
-const base = import.meta.env.BASE_URL
 
 const learnMoreHref = (item: InitiativeItem) =>
-	item.data.external_url ?? `${base}initiatives/${item.id}`
+	item.data.external_url ?? `/initiatives/${item.id}`
 ---
 
 <div class="accordion">

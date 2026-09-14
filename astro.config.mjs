@@ -8,8 +8,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://interactive-intelligence.github.io',
-	base: '/website/',
+	site: 'https://uw-i2.org',
 	integrations: [icon(), sitemap()],
 	fonts: [
 		{

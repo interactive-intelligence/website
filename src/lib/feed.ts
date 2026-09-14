@@ -17,7 +17,6 @@ type FeedOptions = {
 }
 
 export async function getFeed({ initiative, limit }: FeedOptions = {}): Promise<FeedItem[]> {
-	const base = import.meta.env.BASE_URL
 	const [announcements, talks] = await Promise.all([
 		getPublished('announcements'),
 		getPublished('talks')
@@ -29,7 +28,7 @@ export async function getFeed({ initiative, limit }: FeedOptions = {}): Promise<
 			date: a.data.date,
 			title: a.data.title,
 			summary: a.data.summary,
-			href: hasBody(a) ? `${base}announcements/${a.id}` : undefined
+			href: hasBody(a) ? `/announcements/${a.id}` : undefined
 		}))
 
 	const talkItems: FeedItem[] =
@@ -38,7 +37,7 @@ export async function getFeed({ initiative, limit }: FeedOptions = {}): Promise<
 					date: t.data.posted,
 					title: `i2 Talk: ${t.data.title}`,
 					summary: t.data.summary,
-					href: `${base}talks/${t.id}`
+					href: `/talks/${t.id}`
 				}))
 			: []
 

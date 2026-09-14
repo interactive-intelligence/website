@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://interactive-intelligence.github.io/website/sitemap-index.xml
+Sitemap: https://uw-i2.org/sitemap-index.xml
