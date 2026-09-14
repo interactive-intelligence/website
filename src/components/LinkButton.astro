@@ -1,0 +1,36 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import { Icon } from 'astro-icon/components'
+import { isExternal } from '../lib/links'
+
+// A call-to-action link. The trailing icon says where it goes: a diagonal
+// arrow for external sites (opened in a new tab), a right arrow for pages on
+// this site. Pass arrow={false} when the button already carries its own icon.
+interface Props extends HTMLAttributes<'a'> {
+	href: string
+	variant?: 'primary' | 'accent' | 'surface'
+	arrow?: boolean
+}
+
+const { href, variant = 'primary', arrow = true, class: className, ...rest } = Astro.props
+const external = isExternal(href)
+---
+
+<a
+	href={href}
+	class:list={['btn', `btn-${variant}`, className]}
+	target={external ? '_blank' : undefined}
+	rel={external ? 'noopener' : undefined}
+	{...rest}
+>
+	<slot />
+	{
+		arrow && (
+			<Icon
+				aria-hidden="true"
+				name={external ? 'mingcute:arrow-right-up-line' : 'mingcute:arrow-right-line'}
+				class={external ? 'arrow-external' : 'arrow-right'}
+			/>
+		)
+	}
+</a>

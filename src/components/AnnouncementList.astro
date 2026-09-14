@@ -1,0 +1,110 @@
+---
+import { Icon } from 'astro-icon/components'
+import { TIME_ZONE } from '../lib/dates'
+import type { FeedItem } from '../lib/feed'
+
+interface Props {
+	items: FeedItem[]
+	// Heading level for each item's title, so the list nests correctly under the page's headings.
+	headingLevel?: 'h2' | 'h3'
+}
+
+const { items, headingLevel = 'h2' } = Astro.props
+const Heading = headingLevel
+
+const dateFmt = new Intl.DateTimeFormat('en-US', {
+	month: 'short',
+	day: 'numeric',
+	year: 'numeric',
+	timeZone: TIME_ZONE
+})
+---
+
+<ul class="feed">
+	{
+		items.map((item) => (
+			<li class={`feed-item${item.href ? ' is-linked' : ''}`}>
+				<time datetime={item.date.toISOString()}>{dateFmt.format(item.date)}</time>
+				<div>
+					<Heading>
+						{item.href ? (
+							<a href={item.href}>
+								{item.title}
+								<Icon aria-hidden="true" name="mingcute:arrow-right-line" class="arrow-right" />
+							</a>
+						) : (
+							item.title
+						)}
+					</Heading>
+					{item.summary && <p>{item.summary}</p>}
+				</div>
+			</li>
+		))
+	}
+</ul>
+
+<style>
+	.feed {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		border-top: 1px solid var(--rule);
+	}
+
+	.feed-item {
+		position: relative;
+		display: grid;
+		grid-template-columns: 9rem minmax(0, 1fr);
+		gap: 2rem;
+		margin: 0;
+		padding: 1.25rem 0;
+		border-bottom: 1px solid var(--rule);
+	}
+
+	.feed-item time {
+		font-size: 0.875rem;
+		color: var(--text-accent);
+		font-variant-numeric: tabular-nums;
+		white-space: nowrap;
+	}
+
+	.feed-item :is(h2, h3) {
+		margin: 0;
+		font-size: 1.25rem;
+	}
+
+	.feed-item a {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		transition: color var(--duration-fast) var(--ease);
+	}
+
+	/* Stretch the link so the whole row is clickable. */
+	.feed-item a::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+	}
+
+	.feed-item a [data-icon] {
+		font-size: 0.875em;
+		color: var(--text-accent);
+	}
+
+	.feed-item.is-linked:hover a {
+		color: var(--text-accent);
+	}
+
+	.feed-item p {
+		margin: 0.5rem 0 0;
+		font-size: 0.875rem;
+	}
+
+	@media (max-width: 48rem) {
+		.feed-item {
+			grid-template-columns: 1fr;
+			gap: 0.5rem;
+		}
+	}
+</style>

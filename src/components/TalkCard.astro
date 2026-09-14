@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content'
 import { Icon } from 'astro-icon/components'
+import { TIME_ZONE } from '../lib/dates'
 
 interface Props {
 	talk: CollectionEntry<'talks'>
@@ -13,13 +14,13 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
 	weekday: 'short',
 	month: 'short',
 	day: 'numeric',
-	timeZone: 'America/Los_Angeles'
+	timeZone: TIME_ZONE
 })
 
 const timeFmt = new Intl.DateTimeFormat('en-US', {
 	hour: 'numeric',
 	minute: '2-digit',
-	timeZone: 'America/Los_Angeles'
+	timeZone: TIME_ZONE
 })
 
 const meta = [dateFmt.format(talk.data.date), timeFmt.format(talk.data.date), talk.data.location]
@@ -34,7 +35,7 @@ const meta = [dateFmt.format(talk.data.date), timeFmt.format(talk.data.date), ta
 			<time datetime={talk.data.date.toISOString()}>{meta}</time>
 		</span>
 	</span>
-	<Icon aria-hidden="true" name="mingcute:arrow-right-line" class="talk-arrow" />
+	<Icon aria-hidden="true" name="mingcute:arrow-right-line" class="talk-arrow arrow-right" />
 </a>
 
 <style>
