@@ -27,11 +27,14 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      # must come after npm ci, which wipes node_modules
+      # must come after npm ci, which wipes node_modules.
+      # The key is unique per run so the cache is saved after every build;
+      # restore-keys picks up the most recent one. Astro's image cache is
+      # content-addressed, so it invalidates itself when images change.
       - uses: actions/cache@v5
         with:
           path: node_modules/.astro
-          key: astro-assets-${{ hashFiles('src/**/*.{jpg,jpeg,JPG,png,webp,avif}') }}
+          key: astro-assets-${{ github.run_id }}
           restore-keys: astro-assets-
       - run: npm run build
       - uses: actions/upload-pages-artifact@v5
