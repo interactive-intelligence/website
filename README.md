@@ -44,12 +44,14 @@ Most content is Markdown with frontmatter under `src/content/`. Field definition
 
 | What | Where | Notes |
 | --- | --- | --- |
-| Announcements | `src/content/announcements/` | Copy `example-announcement.md` (or the short variant). |
+| Announcements | `src/content/announcements/` | Copy `example-announcement.md` (or the short variant). Shown on the announcements page and the home page. Tag one with `initiatives` to also show it on those initiative pages. An announcement with a body gets its own page; a `link_url` adds a button there. |
 | Talks | `src/content/talks/` | Copy `example-talk.md`. Talks display on the announcements page, the Talks initiative page, and the schedule page. |
+| Links | `src/content/links/` | Copy `example-link.md`. Anything people can act on right now: applications, signups, interest forms. Every open link is listed on the Join page. Tag one with an `initiative` to also show it as a button on that initiative's card and page. An optional `closes` date hides it automatically the day after. |
 | Team | `src/content/team/` | One file per person. Put the photo in the same folder and reference it with `image: ./photo.jpg`. Set `active: false` for alumni. |
-| Initiatives | `src/content/initiatives/` | One file per program. Photos go in `photos/`. `order` sets the display order. |
+| Initiatives | `src/content/initiatives/` | One file per program. Photos go in `photos/`. `order` sets the display order. `external_url` sends the initiative's links off-site instead of to a page here. Apply buttons come from the links folder, not from this file. |
 | Schedule | `src/content/schedule/` | One file per academic year with three quarters. Initiative `id`s are filenames from the initiatives folder. |
 | Constitution | `src/content/constitution.md` | |
+| Projects, Publications | `src/content/projects/`, `src/content/publications/` | Defined but not shown anywhere yet. Only the unpublished research page draft (`src/pages/_research.astro`) reads them. |
 
 Every type accepts `published: false` to keep an entry out of the site, for example a draft or an outdated schedule. Entries are published by default.
 
