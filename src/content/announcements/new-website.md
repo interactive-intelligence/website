@@ -4,7 +4,6 @@ date: 2026-09-14
 summary: We rebuilt the site from scratch. Initiatives, schedules, and announcements now live in one place.
 link_url: https://github.com/interactive-intelligence/website
 link_label: View the source
-initiatives: [fellows, intro-course]
 ---
 
 The old site was built on a template and had grown into a patchwork of outdated pages, so we started over with a cleaner design and a structure that matches how i2 actually runs.
