@@ -1,7 +1,7 @@
 ---
 # Example announcement. Set `published: true` (or delete the line) to publish it.
 # Copy this file to add a new announcement; the filename becomes the URL slug.
-published: true
+published: false
 title: Fellows applications open for Autumn 2026
 date: 2026-05-08
 # Shown on the announcements list, the home page, and as the lede at the top of the

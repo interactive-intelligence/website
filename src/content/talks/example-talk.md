@@ -1,7 +1,7 @@
 ---
 # Example talk. Set `published: true` (or delete the line) to publish it.
 # Copy this file to add a new talk; the filename becomes the URL slug.
-published: true
+published: false
 title: Goal-driven models of visual cortex
 speaker: Joe Bob
 # When the talk happens (Pacific time). Talks move from "Upcoming" to "Past" automatically after this date.
