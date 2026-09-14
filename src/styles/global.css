@@ -317,6 +317,22 @@ table {
 	transform: scale(0.98);
 }
 
+/* No hover motion when the user asks for less. Color changes still apply. */
+@media (prefers-reduced-motion: reduce) {
+	.arrow-right,
+	.arrow-left,
+	.arrow-external,
+	.btn {
+		transition-property: background, border-color, color;
+	}
+
+	:is(a, button, .is-linked):hover :is(.arrow-right, .arrow-left, .arrow-external),
+	.btn:hover,
+	.btn:active {
+		transform: none;
+	}
+}
+
 /* Visually hidden, still read by screen readers. */
 .sr-only {
 	position: absolute;

@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets'
 import { render } from 'astro:content'
-import { getPublished } from '../../lib/content'
+import { getOpenLinks, getPublished, linksFor } from '../../lib/content'
 import { getFeed } from '../../lib/feed'
 import { TIME_ZONE } from '../../lib/dates'
 import { Icon } from 'astro-icon/components'
@@ -22,11 +22,13 @@ export async function getStaticPaths() {
 const { entry } = Astro.props
 const { Content } = await render(entry)
 
-const [schedules, talks, updates] = await Promise.all([
+const [schedules, talks, updates, openLinks] = await Promise.all([
 	getPublished('schedule'),
 	getPublished('talks'),
-	getFeed({ initiative: entry.id, limit: 4 })
+	getFeed({ initiative: entry.id, limit: 4 }),
+	getOpenLinks()
 ])
+const links = linksFor(openLinks, entry.id)
 
 const today = new Date()
 
@@ -94,9 +96,11 @@ const pastTalks = talks
 				)
 			}
 			{
-				entry.data.form_url && (
+				links.length > 0 && (
 					<div class="actions">
-						<LinkButton href={entry.data.form_url}>{entry.data.form_label}</LinkButton>
+						{links.map((link) => (
+							<LinkButton href={link.data.url}>{link.data.title}</LinkButton>
+						))}
 					</div>
 				)
 			}
@@ -118,19 +122,17 @@ const pastTalks = talks
 			<h2>Get involved</h2>
 			<p>
 				{
-					entry.data.form_url
+					links.length > 0
 						? `Applications are open. Have questions? Ask us on Discord.`
 						: `Join our Discord for ${entry.data.name} announcements, meeting times, and how to take part.`
 				}
 			</p>
 		</div>
 		<div class="actions">
-			{
-				entry.data.form_url && (
-					<LinkButton href={entry.data.form_url}>{entry.data.form_label}</LinkButton>
-				)
-			}
-			<LinkButton href={discordUrl} variant={entry.data.form_url ? 'surface' : 'primary'}>
+			{links.map((link) => (
+				<LinkButton href={link.data.url}>{link.data.title}</LinkButton>
+			))}
+			<LinkButton href={discordUrl} variant={links.length > 0 ? 'surface' : 'primary'}>
 				<Icon aria-hidden="true" name="mingcute:discord-line" />
 				Join Discord
 			</LinkButton>

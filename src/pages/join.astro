@@ -2,7 +2,23 @@
 import Layout from '../layouts/Layout.astro'
 import { Icon } from 'astro-icon/components'
 import LinkButton from '../components/LinkButton.astro'
+import ListCard from '../components/ListCard.astro'
 import { discordUrl } from '../lib/links'
+import { getOpenLinks } from '../lib/content'
+import { TIME_ZONE } from '../lib/dates'
+
+const links = await getOpenLinks()
+
+const dateFmt = new Intl.DateTimeFormat('en-US', {
+	month: 'short',
+	day: 'numeric',
+	timeZone: TIME_ZONE
+})
+
+const linkMeta = (l: (typeof links)[number]) =>
+	[l.data.description, l.data.closes && `Closes ${dateFmt.format(l.data.closes)}`]
+		.filter(Boolean)
+		.join(' · ')
 
 const socials = [
 	{
@@ -61,7 +77,29 @@ const socials = [
 		}
 	</div>
 
-	{/* When an interest form or signup is active, link it here as a secondary CTA. */}
+	{
+		links.length > 0 && (
+			<section class="links">
+				<h2 id="get-involved">
+					Get involved
+					<a class="heading-anchor" href="#get-involved" aria-label="Link to section">
+						#
+					</a>
+				</h2>
+				<ul class="link-list">
+					{links.map((l) => (
+						<li>
+							<ListCard
+								href={l.data.url}
+								title={l.data.title}
+								meta={linkMeta(l)}
+							/>
+						</li>
+					))}
+				</ul>
+			</section>
+		)
+	}
 </Layout>
 
 <style>
@@ -105,5 +143,22 @@ const socials = [
 
 	.cta-btn [data-icon] {
 		font-size: 1.5rem;
+	}
+
+	.links {
+		margin-top: 3rem;
+	}
+
+	.link-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.link-list li {
+		margin: 0;
 	}
 </style>

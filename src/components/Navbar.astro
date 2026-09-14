@@ -359,4 +359,20 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 			margin-top: 0.25rem;
 		}
 	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.submenu {
+			transform: translateX(-50%);
+			transition-property: opacity, visibility;
+		}
+
+		.submenu a {
+			transition-property: background, border-color;
+		}
+
+		.submenu a:hover,
+		.submenu a:active {
+			transform: none;
+		}
+	}
 </style>

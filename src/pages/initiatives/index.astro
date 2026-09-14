@@ -1,10 +1,11 @@
 ---
 import { Image } from 'astro:assets'
-import { getPublished } from '../../lib/content'
+import { getOpenLinks, getPublished, linksFor } from '../../lib/content'
 import Layout from '../../layouts/Layout.astro'
 import LinkButton from '../../components/LinkButton.astro'
 
 const initiatives = (await getPublished('initiatives')).sort((a, b) => a.data.order - b.data.order)
+const links = await getOpenLinks()
 
 const learnMoreHref = (data: { external_url?: string }, id: string) =>
 	data.external_url ?? `/initiatives/${id}`
@@ -40,9 +41,9 @@ const learnMoreHref = (data: { external_url?: string }, id: string) =>
 							<LinkButton href={learnMoreHref(item.data, item.id)} variant="accent">
 								Learn More
 							</LinkButton>
-							{item.data.form_url && (
-								<LinkButton href={item.data.form_url}>{item.data.form_label}</LinkButton>
-							)}
+							{linksFor(links, item.id).map((link) => (
+								<LinkButton href={link.data.url}>{link.data.title}</LinkButton>
+							))}
 						</div>
 					</div>
 				</article>

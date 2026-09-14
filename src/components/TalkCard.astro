@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content'
-import { Icon } from 'astro-icon/components'
 import { TIME_ZONE } from '../lib/dates'
+import ListCard from './ListCard.astro'
 
 interface Props {
 	talk: CollectionEntry<'talks'>
@@ -27,56 +27,9 @@ const meta = [dateFmt.format(talk.data.date), timeFmt.format(talk.data.date), ta
 	.join(' · ')
 ---
 
-<a class="btn btn-surface talk-card" href={`/talks/${talk.id}`}>
-	<span class="talk-body">
-		<span class="talk-title">{talk.data.speaker}: {talk.data.title}</span>
-		<span class="talk-meta">
-			<time datetime={talk.data.date.toISOString()}>{meta}</time>
-		</span>
-	</span>
-	<Icon aria-hidden="true" name="mingcute:arrow-right-line" class="talk-arrow arrow-right" />
-</a>
-
-<style>
-	.talk-card {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-		padding: 1rem;
-	}
-
-	.talk-body {
-		display: flex;
-		flex-direction: column;
-		gap: 0.25rem;
-		min-width: 0;
-		flex: 1;
-	}
-
-	.talk-title {
-		font-weight: 500;
-		font-size: 1.125rem;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
-
-	.talk-meta {
-		font-size: 0.875rem;
-		color: var(--text-accent);
-		font-variant-numeric: tabular-nums;
-	}
-
-	.talk-arrow {
-		color: var(--text-accent);
-		font-size: 1.25em;
-		margin-left: auto;
-		flex-shrink: 0;
-	}
-
-	@media (max-width: 32rem) {
-		.talk-title {
-			white-space: normal;
-		}
-	}
-</style>
+<ListCard
+	href={`/talks/${talk.id}`}
+	title={`${talk.data.speaker}: ${talk.data.title}`}
+	meta={meta}
+	datetime={talk.data.date.toISOString()}
+/>

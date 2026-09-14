@@ -1,0 +1,86 @@
+---
+import { Icon } from 'astro-icon/components'
+import { isExternal } from '../lib/links'
+
+// A full-width card row: title, one line of meta, trailing arrow. External
+// links open in a new tab and get a diagonal arrow.
+interface Props {
+	href: string
+	title: string
+	meta?: string
+	// ISO datetime for the meta line, when it is a date.
+	datetime?: string
+}
+
+const { href, title, meta, datetime } = Astro.props
+const external = isExternal(href)
+---
+
+<a
+	class="btn btn-surface list-card"
+	href={href}
+	target={external ? '_blank' : undefined}
+	rel={external ? 'noopener' : undefined}
+>
+	<span class="card-body">
+		<span class="card-title">{title}</span>
+		{
+			meta &&
+				(datetime ? (
+					<time class="card-meta" datetime={datetime}>{meta}</time>
+				) : (
+					<span class="card-meta">{meta}</span>
+				))
+		}
+	</span>
+	<Icon
+		aria-hidden="true"
+		name={external ? 'mingcute:arrow-right-up-line' : 'mingcute:arrow-right-line'}
+		class:list={['card-arrow', external ? 'arrow-external' : 'arrow-right']}
+	/>
+</a>
+
+<style>
+	.list-card {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding: 1rem;
+	}
+
+	.card-body {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		min-width: 0;
+		flex: 1;
+	}
+
+	.card-title {
+		font-weight: 500;
+		font-size: 1.125rem;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.card-meta {
+		font-size: 0.875rem;
+		color: var(--text-accent);
+		font-variant-numeric: tabular-nums;
+	}
+
+	/* Scoped to out-rank the global a.btn [data-icon] size. */
+	.list-card .card-arrow {
+		color: var(--text-accent);
+		font-size: 1.5rem;
+		margin-left: auto;
+		flex-shrink: 0;
+	}
+
+	@media (max-width: 32rem) {
+		.card-title {
+			white-space: normal;
+		}
+	}
+</style>

@@ -1,7 +1,7 @@
 ---
 import { Image, Picture } from 'astro:assets'
 import type { ImageOutputFormat } from 'astro'
-import { getPublished } from '../lib/content'
+import { getOpenLinks, getPublished } from '../lib/content'
 import { getFeed } from '../lib/feed'
 import InitiativesAccordion from '../components/InitiativesAccordion.astro'
 import AnnouncementList from '../components/AnnouncementList.astro'
@@ -37,6 +37,7 @@ const organizationSchema = {
 const initiatives = (await getPublished('initiatives')).sort((a, b) => a.data.order - b.data.order)
 
 const recentAnnouncements = await getFeed({ limit: 3 })
+const links = await getOpenLinks()
 
 const heroFormats: ImageOutputFormat[] = ['avif', 'webp']
 
@@ -87,7 +88,7 @@ const stats = [
 				aria-label="Link to section">#</a
 			>
 		</h2>
-		<InitiativesAccordion items={initiatives} />
+		<InitiativesAccordion items={initiatives} links={links} />
 	</section>
 
 	<section class="numbers">
@@ -346,6 +347,16 @@ const stats = [
 
 		.initiatives h2 {
 			position: static;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.cell :global(img) {
+			transition: none;
+		}
+
+		.cell:hover :global(img) {
+			transform: none;
 		}
 	}
 </style>

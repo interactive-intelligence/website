@@ -1,5 +1,6 @@
 ---
 import LinkButton from './LinkButton.astro'
+import { linksFor, type Link } from '../lib/content'
 
 interface InitiativeItem {
 	id: string
@@ -7,16 +8,16 @@ interface InitiativeItem {
 		name: string
 		short_description: string
 		external_url?: string
-		form_url?: string
-		form_label?: string
 	}
 }
 
 interface Props {
 	items: InitiativeItem[]
+	// Open links (see getOpenLinks); those tagged with an initiative become its buttons.
+	links?: Link[]
 }
 
-const { items } = Astro.props
+const { items, links = [] } = Astro.props
 
 const learnMoreHref = (item: InitiativeItem) =>
 	item.data.external_url ?? `/initiatives/${item.id}`
@@ -38,11 +39,9 @@ const learnMoreHref = (item: InitiativeItem) =>
 							<LinkButton href={learnMoreHref(item)} variant="accent">
 								Learn More
 							</LinkButton>
-							{item.data.form_url && item.data.form_label && (
-								<LinkButton href={item.data.form_url}>
-									{item.data.form_label}
-								</LinkButton>
-							)}
+							{linksFor(links, item.id).map((link) => (
+								<LinkButton href={link.data.url}>{link.data.title}</LinkButton>
+							))}
 						</div>
 					</div>
 				</div>

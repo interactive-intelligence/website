@@ -65,8 +65,6 @@ const initiatives = defineCollection({
       long_description: z.string(),
       photo: image(),
       external_url: z.url().optional(),
-      form_url: z.url().optional(),
-      form_label: z.string().optional(),
       order: z.number(),
       published: z.boolean().default(true),
     }),
@@ -114,4 +112,20 @@ const announcements = defineCollection({
   }),
 });
 
-export const collections = { team, projects, talks, publications, initiatives, constitution, schedule, announcements };
+// Links people can act on right now: applications, signup forms, interest forms.
+// Every open link is listed on the Join page; one tagged with an initiative is
+// also shown as a button wherever that initiative appears. An entry with a
+// `closes` date disappears the day after it.
+const links = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/links" }),
+  schema: z.object({
+    title: z.string(),
+    url: z.url(),
+    description: z.string().optional(),
+    closes: localDate.optional(),
+    initiative: reference("initiatives").optional(),
+    published: z.boolean().default(true),
+  }),
+});
+
+export const collections = { team, projects, talks, publications, initiatives, constitution, schedule, announcements, links };

@@ -11,7 +11,8 @@ export type FeedItem = {
 }
 
 type FeedOptions = {
-	// Only items belonging to this initiative. Talks belong to the `talks` initiative.
+	// Only announcements tagged with this initiative. Talks are left out, since
+	// the Talks page already lists them as cards.
 	initiative?: string
 	limit?: number
 }
@@ -31,15 +32,14 @@ export async function getFeed({ initiative, limit }: FeedOptions = {}): Promise<
 			href: hasBody(a) ? `/announcements/${a.id}` : undefined
 		}))
 
-	const talkItems: FeedItem[] =
-		!initiative || initiative === 'talks'
-			? talks.map((t) => ({
-					date: t.data.posted,
-					title: `i2 Talk: ${t.data.title}`,
-					summary: t.data.summary,
-					href: `/talks/${t.id}`
-				}))
-			: []
+	const talkItems: FeedItem[] = initiative
+		? []
+		: talks.map((t) => ({
+				date: t.data.posted,
+				title: `i2 Talk: ${t.data.title}`,
+				summary: t.data.summary,
+				href: `/talks/${t.id}`
+			}))
 
 	const items = [...announcementItems, ...talkItems].sort(
 		(a, b) => b.date.getTime() - a.date.getTime()
