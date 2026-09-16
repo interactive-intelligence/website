@@ -27,7 +27,9 @@ const external = isExternal(href)
 		{
 			meta &&
 				(datetime ? (
-					<time class="card-meta" datetime={datetime}>{meta}</time>
+					<time class="card-meta" datetime={datetime}>
+						{meta}
+					</time>
 				) : (
 					<span class="card-meta">{meta}</span>
 				))
@@ -57,7 +59,7 @@ const external = isExternal(href)
 	}
 
 	.card-title {
-		font-weight: 500;
+		font-weight: 600;
 		font-size: 1.125rem;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -66,6 +68,7 @@ const external = isExternal(href)
 
 	.card-meta {
 		font-size: 0.875rem;
+		font-weight: 400;
 		color: var(--text-accent);
 		font-variant-numeric: tabular-nums;
 	}
