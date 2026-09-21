@@ -5,7 +5,7 @@ import LinkButton from '../components/LinkButton.astro'
 import ListCard from '../components/ListCard.astro'
 import { discordUrl } from '../lib/links'
 import { getOpenLinks } from '../lib/content'
-import { TIME_ZONE } from '../lib/dates'
+import { TIME_ZONE, hasTime } from '../lib/dates'
 
 const links = await getOpenLinks()
 
@@ -15,10 +15,20 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
 	timeZone: TIME_ZONE
 })
 
+const dateTimeFmt = new Intl.DateTimeFormat('en-US', {
+	month: 'short',
+	day: 'numeric',
+	hour: 'numeric',
+	minute: '2-digit',
+	timeZone: TIME_ZONE
+})
+
+// "Closes Oct 5" for a date-only deadline, "Closes Oct 5, 11:59 PM" for one with a time.
+const closesLabel = (closes: Date) =>
+	`Closes ${(hasTime(closes) ? dateTimeFmt : dateFmt).format(closes)}`
+
 const linkMeta = (l: (typeof links)[number]) =>
-	[l.data.description, l.data.closes && `Closes ${dateFmt.format(l.data.closes)}`]
-		.filter(Boolean)
-		.join(' · ')
+	[l.data.description, l.data.closes && closesLabel(l.data.closes)].filter(Boolean).join(' · ')
 
 const socials = [
 	{

@@ -1,4 +1,5 @@
 import { getCollection, type CollectionEntry, type CollectionKey } from 'astro:content'
+import { hasTime } from './dates'
 
 // Entries with `published: false` in their frontmatter are never rendered.
 export const getPublished = <C extends CollectionKey>(collection: C) =>
@@ -7,10 +8,16 @@ export const getPublished = <C extends CollectionKey>(collection: C) =>
 export type Link = CollectionEntry<'links'>
 
 const DAY = 24 * 60 * 60 * 1000
-const closesAt = (link: Link) => (link.data.closes ? link.data.closes.getTime() + DAY : Infinity)
 
-// Published links that haven't closed yet, soonest deadline first. A link with a
-// `closes` date stays up through that whole day, Pacific time.
+// The instant a link disappears. A date-only `closes` keeps it up through that whole
+// day, Pacific time; a `closes` with a time takes it down at that minute.
+const closesAt = (link: Link) => {
+	const { closes } = link.data
+	if (!closes) return Infinity
+	return hasTime(closes) ? closes.getTime() : closes.getTime() + DAY
+}
+
+// Published links that haven't closed yet, soonest deadline first.
 export async function getOpenLinks(): Promise<Link[]> {
 	const now = Date.now()
 	return (await getPublished('links'))

@@ -1,10 +1,15 @@
 import { defineCollection, reference } from "astro:content";
 import { z } from "astro/zod";
 import { glob } from "astro/loaders";
-import { pacificMidnight } from "./lib/dates";
+import { isWallClock, pacificTime } from "./lib/dates";
 
 // Date-only frontmatter (`2026-09-14`), interpreted as Pacific time.
-const localDate = z.coerce.date().transform(pacificMidnight);
+const localDate = z.coerce.date().transform(pacificTime);
+
+// Frontmatter with an optional time (`2026-10-05` or `2026-10-05 23:59`), Pacific time.
+const localDateTime = z
+  .union([z.date(), z.string().refine(isWallClock, "Use YYYY-MM-DD or YYYY-MM-DD HH:MM")])
+  .transform(pacificTime);
 
 const team = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/team" }),
@@ -115,14 +120,14 @@ const announcements = defineCollection({
 // Links people can act on right now: applications, signup forms, interest forms.
 // Every open link is listed on the Join page; one tagged with an initiative is
 // also shown as a button wherever that initiative appears. An entry with a
-// `closes` date disappears the day after it.
+// `closes` date disappears the day after it; one with a `closes` time, at that minute.
 const links = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/links" }),
   schema: z.object({
     title: z.string(),
     url: z.url(),
     description: z.string().optional(),
-    closes: localDate.optional(),
+    closes: localDateTime.optional(),
     initiative: reference("initiatives").optional(),
     published: z.boolean().default(true),
   }),

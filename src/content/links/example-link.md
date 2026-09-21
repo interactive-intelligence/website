@@ -8,6 +8,7 @@ url: https://forms.gle/example
 # Optional. One sentence shown under the title.
 description: Two quarters of research with a faculty mentor. Open to students who have completed the Intro Course.
 # Optional. The last day the link is open; the entry is hidden the day after.
+# Add a time (`2026-06-07 23:59`, Pacific) to hide it at that minute and show it on the card.
 # Leave it out for a link with no deadline.
 closes: 2026-06-07
 # Optional. Initiative id (filename in src/content/initiatives). The link is also
