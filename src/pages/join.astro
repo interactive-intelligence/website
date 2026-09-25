@@ -4,7 +4,7 @@ import { Icon } from 'astro-icon/components'
 import LinkButton from '../components/LinkButton.astro'
 import ListCard from '../components/ListCard.astro'
 import { discordUrl } from '../lib/links'
-import { getOpenLinks } from '../lib/content'
+import { closesAttr, getOpenLinks } from '../lib/content'
 import { TIME_ZONE, hasTime } from '../lib/dates'
 
 const links = await getOpenLinks()
@@ -98,7 +98,7 @@ const socials = [
 				</h2>
 				<ul class="link-list">
 					{links.map((l) => (
-						<li>
+						<li data-closes={closesAttr(l)}>
 							<ListCard
 								href={l.data.url}
 								title={l.data.title}
@@ -157,6 +157,11 @@ const socials = [
 
 	.links {
 		margin-top: 3rem;
+	}
+
+	/* Every link closed since the last build. */
+	.links:not(:has(li:not([hidden]))) {
+		display: none;
 	}
 
 	.link-list {

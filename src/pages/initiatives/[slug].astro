@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets'
 import { render } from 'astro:content'
-import { getOpenLinks, getPublished, linksFor } from '../../lib/content'
+import { closesAttr, getOpenLinks, getPublished, linksFor } from '../../lib/content'
 import { getFeed } from '../../lib/feed'
 import { TIME_ZONE } from '../../lib/dates'
 import { Icon } from 'astro-icon/components'
@@ -99,7 +99,9 @@ const pastTalks = talks
 				links.length > 0 && (
 					<div class="actions">
 						{links.map((link) => (
-							<LinkButton href={link.data.url}>{link.data.title}</LinkButton>
+							<LinkButton href={link.data.url} data-closes={closesAttr(link)}>
+								{link.data.title}
+							</LinkButton>
 						))}
 					</div>
 				)
@@ -130,7 +132,9 @@ const pastTalks = talks
 		</div>
 		<div class="actions">
 			{links.map((link) => (
-				<LinkButton href={link.data.url}>{link.data.title}</LinkButton>
+				<LinkButton href={link.data.url} data-closes={closesAttr(link)}>
+					{link.data.title}
+				</LinkButton>
 			))}
 			<LinkButton href={discordUrl} variant={links.length > 0 ? 'surface' : 'primary'}>
 				<Icon aria-hidden="true" name="mingcute:discord-line" />

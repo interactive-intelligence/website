@@ -333,6 +333,11 @@ table {
 	}
 }
 
+/* A link hidden in the browser once its deadline passes (see Layout.astro). */
+[data-closes][hidden] {
+	display: none;
+}
+
 /* Visually hidden, still read by screen readers. */
 .sr-only {
 	position: absolute;

@@ -17,6 +17,13 @@ const closesAt = (link: Link) => {
 	return hasTime(closes) ? closes.getTime() : closes.getTime() + DAY
 }
 
+// For a `data-closes` attribute, so the browser can hide a link the moment it closes
+// instead of waiting for the next nightly rebuild (see Layout.astro).
+export const closesAttr = (link: Link) => {
+	const at = closesAt(link)
+	return Number.isFinite(at) ? at : undefined
+}
+
 // Published links that haven't closed yet, soonest deadline first.
 export async function getOpenLinks(): Promise<Link[]> {
 	const now = Date.now()

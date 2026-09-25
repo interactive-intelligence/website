@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets'
-import { getOpenLinks, getPublished, linksFor } from '../../lib/content'
+import { closesAttr, getOpenLinks, getPublished, linksFor } from '../../lib/content'
 import Layout from '../../layouts/Layout.astro'
 import LinkButton from '../../components/LinkButton.astro'
 
@@ -42,7 +42,9 @@ const learnMoreHref = (data: { external_url?: string }, id: string) =>
 								Learn More
 							</LinkButton>
 							{linksFor(links, item.id).map((link) => (
-								<LinkButton href={link.data.url}>{link.data.title}</LinkButton>
+								<LinkButton href={link.data.url} data-closes={closesAttr(link)}>
+									{link.data.title}
+								</LinkButton>
 							))}
 						</div>
 					</div>

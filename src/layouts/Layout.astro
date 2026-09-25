@@ -76,6 +76,21 @@ const twitterCard = image ? 'summary_large_image' : 'summary'
 				if (!link) return
 				navigator.clipboard?.writeText(new URL(link.href, location.href).toString())
 			})
+
+			// Links carry their deadline in `data-closes`. The nightly rebuild drops closed
+			// links from the HTML; this hides them right on time in the meantime.
+			const hideClosedLinks = () => {
+				const now = Date.now()
+				let next = Infinity
+				for (const el of document.querySelectorAll<HTMLElement>('[data-closes]')) {
+					const closes = Number(el.dataset.closes)
+					if (closes <= now) el.hidden = true
+					else next = Math.min(next, closes)
+				}
+				// setTimeout overflows past ~24.8 days.
+				if (next < Infinity) setTimeout(hideClosedLinks, Math.min(next - now, 2 ** 31 - 1))
+			}
+			hideClosedLinks()
 		</script>
 	</body>
 </html>

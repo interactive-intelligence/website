@@ -1,6 +1,6 @@
 ---
 import LinkButton from './LinkButton.astro'
-import { linksFor, type Link } from '../lib/content'
+import { closesAttr, linksFor, type Link } from '../lib/content'
 
 interface InitiativeItem {
 	id: string
@@ -40,7 +40,9 @@ const learnMoreHref = (item: InitiativeItem) =>
 								Learn More
 							</LinkButton>
 							{linksFor(links, item.id).map((link) => (
-								<LinkButton href={link.data.url}>{link.data.title}</LinkButton>
+								<LinkButton href={link.data.url} data-closes={closesAttr(link)}>
+									{link.data.title}
+								</LinkButton>
 							))}
 						</div>
 					</div>
