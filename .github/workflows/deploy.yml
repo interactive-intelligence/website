@@ -4,9 +4,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-  # weekly run keeps the image cache from being evicted after 7 idle days
+  # Daily rebuild just after midnight Pacific (08:15 UTC is 1:15am PDT / 12:15am PST).
+  # Date-dependent content (closed links, "Now" badges, upcoming vs past talks) is
+  # computed at build time, and regular runs keep the image cache from being evicted.
   schedule:
-    - cron: '0 8 * * 1'
+    - cron: '15 8 * * *'
 
 permissions:
   contents: read
