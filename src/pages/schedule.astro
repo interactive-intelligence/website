@@ -21,7 +21,7 @@ const upcomingTalks = talksCollection
 
 const status = (start: Date, end: Date) => {
 	if (today < start) return 'upcoming'
-	if (today > end) return 'past'
+	if (today >= end) return 'past'
 	return 'current'
 }
 

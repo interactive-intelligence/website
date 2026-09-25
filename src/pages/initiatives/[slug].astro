@@ -43,7 +43,7 @@ const quarters = schedules
 	)
 	.sort((a, b) => a.start.getTime() - b.start.getTime())
 
-const current = quarters.find((q) => today >= q.start && today <= q.end)
+const current = quarters.find((q) => today >= q.start && today < q.end)
 const running = Boolean(current?.active)
 const next = quarters.find((q) => q.start > today && q.active)
 const focus = running ? current : next

@@ -6,6 +6,12 @@ import { isWallClock, pacificTime } from "./lib/dates";
 // Date-only frontmatter (`2026-09-14`), interpreted as Pacific time.
 const localDate = z.coerce.date().transform(pacificTime);
 
+// Date-only frontmatter for the last day of a range, parsed as the moment that
+// day is over (Pacific midnight at the start of the next day) so the whole day counts.
+const localDayEnd = z.coerce
+  .date()
+  .transform((day) => pacificTime(new Date(day.getTime() + 24 * 60 * 60 * 1000)));
+
 // Frontmatter with an optional time (`2026-10-05` or `2026-10-05 23:59`), Pacific time.
 const localDateTime = z
   .union([z.date(), z.string().refine(isWallClock, "Use YYYY-MM-DD or YYYY-MM-DD HH:MM")])
@@ -89,7 +95,7 @@ const schedule = defineCollection({
         z.object({
           name: z.string(),
           start: localDate,
-          end: localDate,
+          end: localDayEnd,
           initiatives: z.array(
             z.object({
               id: z.string(),
