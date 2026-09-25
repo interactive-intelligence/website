@@ -12,10 +12,16 @@ const wallClock = new Intl.DateTimeFormat('en-US', {
 	second: 'numeric'
 })
 
-const pacificParts = (date: Date) => {
+const pacificParts = (date: Date | number) => {
 	const p: Record<string, string> = {}
 	for (const { type, value } of wallClock.formatToParts(date)) p[type] = value
 	return p
+}
+
+// Pacific's offset from UTC at a given instant, in ms (e.g. -7h during PDT).
+function pacificOffset(instant: number): number {
+	const p = pacificParts(instant)
+	return Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour, +p.minute, +p.second) - instant
 }
 
 // Frontmatter `YYYY-MM-DD` or `YYYY-MM-DD HH:MM`, read as a UTC wall clock.
@@ -25,13 +31,12 @@ export const isWallClock = (value: string) => WALL_CLOCK.test(value)
 // Frontmatter dates carry no timezone. YAML parses `2026-09-14` and `2026-10-05 23:59:00`
 // as UTC Dates and leaves `2026-10-05 23:59` as a string, but all of them mean Pacific
 // wall-clock time here. Shift the value onto the same wall clock in Pacific time so
-// formatting and "is this in the past" checks match what was written.
+// formatting and "is this in the past" checks match what was written. The second pass
+// picks the right offset when a DST change falls between the two guesses.
 export function pacificTime(value: Date | string): Date {
-	const utc = typeof value === 'string' ? parseWallClock(value) : value
-	const p = pacificParts(utc)
-	const wallAsUtc = Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour, +p.minute, +p.second)
-	const offset = wallAsUtc - utc.getTime()
-	return new Date(utc.getTime() - offset)
+	const wall = (typeof value === 'string' ? parseWallClock(value) : value).getTime()
+	const guess = wall - pacificOffset(wall)
+	return new Date(wall - pacificOffset(guess))
 }
 
 function parseWallClock(value: string): Date {

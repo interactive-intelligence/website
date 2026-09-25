@@ -4,8 +4,9 @@
 published: false
 title: Goal-driven models of visual cortex
 speaker: Joe Bob
-# When the talk happens (Pacific time). Talks move from "Upcoming" to "Past" automatically after this date.
-date: 2026-05-28T17:30:00-07:00
+# When the talk happens: YYYY-MM-DD HH:MM, 24-hour Pacific time (17:30 is 5:30 PM). No timezone offset.
+# Talks move from "Upcoming" to "Past" automatically after this time.
+date: 2026-05-28 17:30
 # When it appears in the announcements feed.
 posted: 2026-05-14
 location: CSE2 G10

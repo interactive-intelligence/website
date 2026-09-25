@@ -41,7 +41,7 @@ const talks = defineCollection({
   schema: z.object({
     title: z.string(),
     speaker: z.string(),
-    date: z.coerce.date(),
+    date: localDateTime,
     posted: localDate,
     location: z.string().optional(),
     summary: z.string().optional(),
