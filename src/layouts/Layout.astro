@@ -61,6 +61,17 @@ const twitterCard = image ? 'summary_large_image' : 'summary'
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={socialImage} />
 
+		{
+			import.meta.env.PROD && (
+				<script
+					is:inline
+					defer
+					src="https://cloud.umami.is/script.js"
+					data-website-id="6d236e63-00b6-4b01-8ae8-7c37aa8d548f"
+				/>
+			)
+		}
+
 		<slot name="head" />
 	</head>
 	<body>
