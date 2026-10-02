@@ -1,0 +1,108 @@
+---
+import { Font } from 'astro:assets'
+import QRCode from 'qrcode'
+import { discordUrl } from '../lib/links'
+import '../styles/global.css'
+
+const links = [
+	{ name: 'website', label: 'uw-i2.org', url: 'https://uw-i2.org' },
+	{ name: 'discord', label: discordUrl.replace('https://', ''), url: discordUrl },
+	{ name: 'instagram', label: '@uw_i2', url: 'https://www.instagram.com/uw_i2/' }
+]
+
+const codes = await Promise.all(
+	links.map(async (link) => ({
+		...link,
+		svg: await QRCode.toString(link.url, { type: 'svg', margin: 0, color: { light: '#0000' } })
+	}))
+)
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="robots" content="noindex" />
+		<Font cssVariable="--font-sans" />
+		<title>QR codes - i2</title>
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+	</head>
+	<body>
+		<h1>interactive intelligence</h1>
+		<ul>
+			{
+				codes.map((code) => (
+					<li>
+						<Fragment set:html={code.svg} />
+						<h2>{code.name}</h2>
+						<p>{code.label}</p>
+					</li>
+				))
+			}
+		</ul>
+	</body>
+</html>
+
+<style>
+	/* Everything scales from one QR size, chosen so all three always fit the screen. */
+	body {
+		--size: min(26vw, 48dvh);
+		height: 100dvh;
+		display: grid;
+		place-content: center;
+		gap: calc(var(--size) / 5);
+		text-align: center;
+		font-size: calc(var(--size) / 14);
+		line-height: 1.3;
+	}
+
+	ul {
+		display: flex;
+		gap: calc(var(--size) / 5);
+		list-style: none;
+		padding: 0;
+	}
+
+	li :global(svg) {
+		display: block;
+		width: var(--size);
+		margin: 0 auto calc(var(--size) / 12);
+	}
+
+	h1,
+	h2,
+	p,
+	li {
+		margin: 0;
+	}
+
+	h1 {
+		font-size: 2em;
+	}
+
+	h2 {
+		font-size: 1.5em;
+	}
+
+	p {
+		color: var(--text-accent);
+		font-weight: 500;
+	}
+
+	@media (orientation: portrait) {
+		body {
+			--size: min(55vw, 19dvh);
+			gap: calc(var(--size) / 8);
+		}
+
+		ul {
+			flex-direction: column;
+			gap: calc(var(--size) / 8);
+		}
+
+		h1 {
+			font-size: 1.6em;
+		}
+	}
+</style>

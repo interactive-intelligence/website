@@ -9,7 +9,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://uw-i2.org',
-	integrations: [icon(), sitemap()],
+	integrations: [icon(), sitemap({ filter: (page) => !page.includes('/qr-codes') })],
 	fonts: [
 		{
 			provider: fontProviders.local(),
