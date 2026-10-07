@@ -1,9 +1,9 @@
 ---
 name: Data Science Initiative
-short_description: Small teams build a complete data science project each quarter, from framing a question through modeling and presenting results.
-long_description: Small teams build a complete data science project each quarter, from framing a question through modeling and presenting results. Each team works with a mentor who guides them through the full process.
+short_description: A quarter-long course on the fundamentals of data science, from cleaning and visualizing data to analyzing it with machine learning.
+long_description: A quarter-long course on the fundamentals of data science, from cleaning and visualizing data to analyzing it with machine learning. You will learn how data is used to better understand our world.
 photo: ./photos/dsi.jpg
 order: 2
 ---
 
-The Data Science Initiative pairs members into small teams that ship a complete data science project each quarter. Teams are matched with a mentor and work through the full lifecycle: framing a question, sourcing and cleaning data, modeling, and presenting results to the rest of i2.
+The Data Science Initiative introduces students to the fundamental principles of data science. Over a quarter-long course, you will learn about data: how it is cleaned, analyzed, and used to better understand our world. Topics include data preprocessing, visualization, and several machine learning algorithms used to analyze data.
