@@ -9,6 +9,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "check": "astro check",
     "astro": "astro"
   },
   "dependencies": {
@@ -22,6 +23,8 @@
     "rehype-slug": "^6.0.0"
   },
   "devDependencies": {
-    "@types/qrcode": "^1.5.6"
+    "@astrojs/check": "^0.9.10",
+    "@types/qrcode": "^1.5.6",
+    "typescript": "^6.0.3"
   }
 }
