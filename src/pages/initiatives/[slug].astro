@@ -131,12 +131,7 @@ const pastTalks = talks
 			</p>
 		</div>
 		<div class="actions">
-			{links.map((link) => (
-				<LinkButton href={link.data.url} data-closes={closesAttr(link)}>
-					{link.data.title}
-				</LinkButton>
-			))}
-			<LinkButton href={discordUrl} variant={links.length > 0 ? 'surface' : 'primary'}>
+			<LinkButton href={discordUrl}>
 				<Icon aria-hidden="true" name="mingcute:discord-line" />
 				Join Discord
 			</LinkButton>
