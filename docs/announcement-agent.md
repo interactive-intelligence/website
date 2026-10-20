@@ -26,9 +26,10 @@ Make every change the message calls for, and nothing else.
 
 ## Edits
 
-- **Links, schedules, and talks hold current info.** Edit them in place.
-- **Announcements are a dated record.** Fix mistakes in place. For later changes, like an extended deadline, a moved date, or applications closing early, add a short new announcement.
-- **Cancellations:** set `published: false` on the talk or announcement and add a short announcement. This is the only time to change `published`. Never delete files.
+- **Changed dates, deadlines, times, or rooms:** update every place on the site that shows the old value: links, talks, the schedule, and announcements. Don't post a new announcement about the change. In an announcement, keep its `date` and add one line like "Update: the deadline was extended to November 9th, 2026."
+- **Mistakes:** fix them in place.
+- **Removing something,** like a cancelled talk or a post a leader asks to take down: set `published: false`. That's your delete button. Never delete a file. For a cancellation, also add a short announcement saying it's cancelled.
+- **`published` is for removal only.** Never set it in any other case, and leave it out of new files.
 - **Unsure which entry a message means?** Change nothing and explain in `note`.
 
 ## Format
