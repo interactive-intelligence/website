@@ -26,8 +26,10 @@ Make every change the message calls for, and nothing else.
 
 ## Edits
 
-- **Changed dates, deadlines, times, or rooms:** update every place on the site that shows the old value: links, talks, the schedule, and announcements. Don't post a new announcement about the change. In an announcement, keep its `date` and add one line like "Update: the deadline was extended to November 9th, 2026."
-- **Mistakes:** fix them in place.
+- **Changed details** (a date, deadline, time, room, or link): update every place the site shows the old value. Don't post a new announcement about the change.
+  - **Edit frontmatter directly,** because readers trust it as current: titles, summaries, talk dates, `closes`, `link_url`, and schedule times. Never change an announcement's `date`, which is when it was posted.
+  - **Leave body text as written.** If the body mentions the old value, add a line at the end like "Update: the deadline was extended to November 9th, 2026." Never add a body just to hold an update, because that creates a new page.
+- **Mistakes:** fix them directly, anywhere.
 - **Removing something,** like a cancelled talk or a post a leader asks to take down: set `published: false`. That's your delete button. Never delete a file. For a cancellation, also add a short announcement saying it's cancelled.
 - **`published` is for removal only.** Never set it in any other case, and leave it out of new files.
 - **Unsure which entry a message means?** Change nothing and explain in `note`.
