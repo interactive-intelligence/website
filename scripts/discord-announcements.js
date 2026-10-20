@@ -5,6 +5,8 @@
 // draft didn't build.
 // A leader can react 🌐 to a skipped or older message to have Claude look again. If the
 // site already has it, the bot marks it 👌.
+// A leader can also @mention the bot with a request, in a watched channel or a ping-only
+// channel. The bot does what they ask and replies with what it did.
 // The README explains the setup.
 //
 //   node scripts/discord-announcements.js check   # only report whether anything is pending
@@ -55,6 +57,8 @@ const DRAFT_SCHEMA = {
 
 const { DISCORD_BOT_TOKEN, GITHUB_OUTPUT } = process.env;
 const channelIds = list(process.env.DISCORD_CHANNEL_IDS);
+// Channels where the bot only answers pings, without reading every message.
+const pingChannelIds = list(process.env.DISCORD_PING_CHANNEL_IDS);
 const roleIds = list(process.env.DISCORD_ROLE_IDS);
 
 if (!DISCORD_BOT_TOKEN || channelIds.length === 0 || roleIds.length === 0) {
@@ -71,17 +75,15 @@ async function postPending() {
 	// Imported here so `check` runs before `npm ci`.
 	const { default: Anthropic } = await import('@anthropic-ai/sdk');
 	const client = new Anthropic();
-	const marks = [];
+	const results = [];
 	let committed = false;
 
 	for (const message of await pendingMessages()) {
 		try {
-			if (await postMessage(client, message)) {
-				committed = true;
-				marks.push([message, POSTED]);
-			} else {
-				marks.push([message, message.forced ? CHECKED : SKIPPED]);
-			}
+			const { changed, note } = await postMessage(client, message);
+			committed ||= changed;
+			const emoji = changed ? POSTED : message.forced || message.pinged ? CHECKED : SKIPPED;
+			results.push({ message, emoji, reply: note });
 		} catch (error) {
 			// API errors are usually temporary, so leave the message unmarked and retry next run.
 			if (error instanceof Anthropic.APIError) {
@@ -91,7 +93,8 @@ async function postPending() {
 			}
 			console.error(`Couldn't post ${message.id}: ${error.message}`);
 			revertContent();
-			marks.push([message, FAILED]);
+			const reply = 'Something went wrong, so nothing changed. The workflow log has details.';
+			results.push({ message, emoji: FAILED, reply });
 		}
 	}
 
@@ -107,30 +110,52 @@ async function postPending() {
 		}
 	}
 
-	// Mark last, so a message is only marked once its content is pushed.
-	for (const [message, emoji] of marks) await mark(message, emoji);
+	// Mark and reply last, so a message is only marked once its content is pushed.
+	for (const { message, emoji, reply } of results) {
+		await mark(message, emoji);
+		// A missing Send Messages permission shouldn't stop the remaining marks.
+		if (message.pinged) {
+			await sendReply(message, reply).catch((error) => console.error(error.message));
+		}
+	}
 }
 
-// Oldest first: recent messages the bot hasn't marked yet, plus messages a leader
-// reacted 🌐 to that the bot hasn't looked at again (`forced`). To have the bot reread a
-// message, remove its mark and react 🌐.
+// Oldest first: recent messages the bot hasn't marked yet, messages a leader reacted 🌐 to
+// that the bot hasn't looked at again (`forced`), and leader pings (`pinged`). To have the
+// bot reread a message, remove its mark and react 🌐.
 async function pendingMessages() {
+	const bot = await discord('/users/@me');
+	const channels = [
+		...channelIds.map((id) => ({ id, pingsOnly: false })),
+		...pingChannelIds.map((id) => ({ id, pingsOnly: true }))
+	];
 	const pending = [];
-	for (const channelId of channelIds) {
-		const { guild_id } = await discord(`/channels/${channelId}`);
-		const messages = await discord(`/channels/${channelId}/messages?limit=100`);
+	for (const channel of channels) {
+		const { guild_id } = await discord(`/channels/${channel.id}`);
+		const botRole = await botRoleId(guild_id, bot.id);
+		const messages = await discord(`/channels/${channel.id}/messages?limit=100`);
 		for (const message of messages.reverse()) {
 			// Only regular messages and replies, not joins, pins, and other system messages.
-			if (![0, 19].includes(message.type)) continue;
+			if (![0, 19].includes(message.type) || message.author.id === bot.id) continue;
 			const reactions = message.reactions ?? [];
 			const marks = reactions.filter((r) => r.me).map((r) => r.emoji.name);
 			if ([POSTED, FAILED, CHECKED].some((emoji) => marks.includes(emoji))) continue;
+			const recent = Date.now() - Date.parse(message.timestamp) < MAX_AGE_MS;
+			const mentionsBot =
+				(message.mentions ?? []).some((user) => user.id === bot.id) ||
+				(message.mention_roles ?? []).includes(botRole);
+			const pinged =
+				recent &&
+				marks.length === 0 &&
+				mentionsBot &&
+				(await isLeader(guild_id, message.author.id));
+			if (channel.pingsOnly && !pinged) continue;
 			const forced =
+				!pinged &&
 				reactions.some((r) => r.emoji.name === OVERRIDE) &&
 				(await reactedByLeader(guild_id, message));
-			const recent = Date.now() - Date.parse(message.timestamp) < MAX_AGE_MS;
-			if (forced || (recent && marks.length === 0)) {
-				pending.push({ ...message, guild_id, marks, forced });
+			if (pinged || forced || (recent && marks.length === 0)) {
+				pending.push({ ...message, guild_id, marks, forced, pinged });
 			}
 		}
 	}
@@ -142,18 +167,28 @@ async function reactedByLeader(guildId, message) {
 		`${messagePath(message)}/reactions/${encodeURIComponent(OVERRIDE)}?limit=100`
 	);
 	for (const user of users) {
-		// 404 means the user has left the server.
-		const member = await discord(`/guilds/${guildId}/members/${user.id}`).catch((error) => {
-			if (error.status === 404) return null;
-			throw error;
-		});
-		if (member?.roles.some((id) => roleIds.includes(id))) return true;
+		if (await isLeader(guildId, user.id)) return true;
 	}
 	return false;
 }
 
+async function isLeader(guildId, userId) {
+	// 404 means the user has left the server.
+	const member = await discord(`/guilds/${guildId}/members/${userId}`).catch((error) => {
+		if (error.status === 404) return null;
+		throw error;
+	});
+	return Boolean(member?.roles.some((id) => roleIds.includes(id)));
+}
+
+// The role Discord creates for the bot, which people sometimes @mention instead of the bot.
+async function botRoleId(guildId, botId) {
+	const roles = await discord(`/guilds/${guildId}/roles`);
+	return roles.find((role) => role.tags?.bot_id === botId)?.id;
+}
+
 // Has Claude draft the message and commits the result. If the draft can't be used, Claude
-// gets the error and one more try. Returns whether anything was committed.
+// gets the error and one more try. Returns whether anything was committed, and Claude's note.
 async function postMessage(client, message) {
 	const messages = [
 		{
@@ -182,9 +217,8 @@ async function postMessage(client, message) {
 			const text = response.content.find((block) => block.type === 'text')?.text ?? '';
 			const draft = JSON.parse(text);
 			console.log(`${message.id}: ${draft.note}`);
-			if (draft.files.length === 0) return false;
-			commitDraft(message, draft);
-			return true;
+			if (draft.files.length > 0) commitDraft(message, draft);
+			return { changed: draft.files.length > 0, note: draft.note };
 		} catch (error) {
 			if (attempt === 2) throw error;
 			console.error(`Retrying ${message.id}: ${error.message}`);
@@ -247,9 +281,11 @@ function messagePrompt(message) {
 			: []),
 		`Discord message from ${displayName(message.author)}, posted ${pacificDateTime(message.timestamp)}:`,
 		`<message>\n${messageText(message)}\n</message>`,
-		message.forced
-			? `A leader reacted ${OVERRIDE} to this message: they think the site should change.`
-			: 'Decide whether this message belongs on the website.'
+		message.pinged
+			? `${displayName(message.author)} is a leader and pinged you with this request. Do what they ask. Your note is your reply to them in Discord.`
+			: message.forced
+				? `A leader reacted ${OVERRIDE} to this message: they think the site should change.`
+				: 'Decide whether this message belongs on the website.'
 	].join('\n\n');
 }
 
@@ -297,7 +333,7 @@ async function discord(path, options = {}) {
 	for (;;) {
 		const response = await fetch(`https://discord.com/api/v10${path}`, {
 			...options,
-			headers: { Authorization: `Bot ${DISCORD_BOT_TOKEN}` }
+			headers: { Authorization: `Bot ${DISCORD_BOT_TOKEN}`, 'Content-Type': 'application/json' }
 		});
 		if (response.status === 429) {
 			const { retry_after } = await response.json();
@@ -322,6 +358,18 @@ async function mark(message, emoji) {
 		if (old !== emoji) await discord(path(old), { method: 'DELETE' });
 	}
 	await discord(path(emoji), { method: 'PUT' });
+}
+
+// Replies without pinging anyone, since `note` may mention names.
+function sendReply(message, content) {
+	return discord(`/channels/${message.channel_id}/messages`, {
+		method: 'POST',
+		body: JSON.stringify({
+			content: content.slice(0, 2000),
+			message_reference: { message_id: message.id, fail_if_not_exists: false },
+			allowed_mentions: { parse: [] }
+		})
+	});
 }
 
 function messagePath(message) {
