@@ -46,7 +46,7 @@ Follow the example files, without their comments or `published: false`.
 - **`date` and `posted`** are the day the message was posted. A talk's `date` and a link's `closes` use Pacific `YYYY-MM-DD HH:MM`, and `closes` can be just a date.
 - **Summaries** are one or two sentences that stand alone. The list and home page show only the summary.
 - **An announcement gets its own page only if it has a body.** Without one, it's plain text in the list. Add a body when there's more to say than the short summary, and try not to just repeat the summary in it. The `link_url` button only appears on that page, so an announcement with a link always needs a body, even a single sentence.
-- **Links** are things people act on to get involved: applications, signups, RSVPs, registration pages, mailing lists. The Join page lists them under "Get involved" until `closes`, and a tagged link becomes a button on its initiative. Reference material like slides, recordings, or photos goes in an announcement's `link_url` instead.
+- **Link entries** (files in `links/`) are for things people sign up for or join, like applications, RSVPs, and mailing lists. They show on the Join page until `closes`. For anything people just view, like slides or a recording, don't add a link entry. Use the announcement's `link_url` button instead.
 - **Schedule times** look like `Thu 4:00–5:00 PM`, with no location. "This quarter" is the quarter containing the posted date. Leave the rest of the file untouched.
 - **Double-quote** every frontmatter text value.
 - **`commit_message`** is short, lowercase, and imperative: `extend intro course application deadline`. **`note`** is one line.
