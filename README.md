@@ -77,7 +77,7 @@ The bot reacts to every message it reads:
 | 👌 | Looked again after a 🌐, but the site already had everything in the message. |
 | ❌ | The draft didn't build, so nothing was posted. Remove the ❌ to retry (this needs the Manage Messages permission), or update the site by hand. |
 
-**Pings:** a leader can @mention the bot with a request, like "the DSI deadline moved to Friday" or "put this on the site" as a reply to another message. The bot follows the request and replies with what it did. Pings work in the announcements channel and in any ping-only channel, where the bot ignores everything else. Replies can take up to 15 minutes.
+The bot also watches a leadership-only channel. Post there when something should go on the site, or change on it, without being announced to the whole server. It goes through the same flow.
 
 Edited messages aren't read again on their own. To have the bot reread one, remove its mark (this also needs Manage Messages) and react 🌐.
 
@@ -86,11 +86,11 @@ To change how Claude decides and writes, edit `docs/announcement-agent.md`. The 
 ### Setup
 
 1. **Create the bot.** Open the [Discord developer portal](https://discord.com/developers/applications) and click **New Application**. On the **Bot** page, turn on **Message Content Intent**, then click **Reset Token** and copy the token.
-2. **Add it to the server.** On the **OAuth2** page, copy the client ID. Open `https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=68672` (that grants View Channels, Send Messages, Read Message History, and Add Reactions) and pick the i2 server. If the announcements channel is private, give the bot access to it.
+2. **Add it to the server.** On the **OAuth2** page, copy the client ID. Open `https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=66624` (that grants View Channels, Read Message History, and Add Reactions) and pick the i2 server. If the announcements channel is private, give the bot access to it.
 3. **Copy the IDs.** In Discord, turn on **Settings → Advanced → Developer Mode**. Right-click the announcements channel and choose **Copy Channel ID**. Then go to **Server Settings → Roles**, right-click the leadership role, and choose **Copy Role ID**.
 4. **Get an Anthropic API key** from the [Claude Console](https://platform.claude.com/settings/keys).
 5. **Add everything to GitHub** under **Settings → Secrets and variables → Actions**:
    - Secrets: `DISCORD_BOT_TOKEN` and `ANTHROPIC_API_KEY`
-   - Variables: `DISCORD_CHANNEL_IDS` (the channel ID) and `DISCORD_ROLE_IDS` (the role ID). Optionally, `DISCORD_PING_CHANNEL_IDS` for ping-only channels. Separate multiple IDs with commas.
+   - Variables: `DISCORD_CHANNEL_IDS` (the channel ID) and `DISCORD_ROLE_IDS` (the role ID). Separate multiple IDs with commas.
 
 The workflow does nothing until all four are set. Unmarked messages older than three days are ignored, so turning it on won't post old history.

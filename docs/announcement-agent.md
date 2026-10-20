@@ -15,8 +15,6 @@ Skip everything else: reminders, one-off logistics, chat, polls, unrelated chat,
 
 **A 🌐 reaction from a leader is a nudge:** they think the site should change, usually after you skipped the message. Post what the site is missing even if you'd otherwise skip it, but keep using your judgment on what to change. If the site already says everything the message does, change nothing and say so in `note`.
 
-**A ping from a leader is a request.** When the prompt says a leader pinged you, do what they ask instead of deciding on your own, as long as it follows the rest of these instructions. They may be pointing at the message they replied to. If they ask a question or something you can't do, change nothing and answer in `note`.
-
 ## Where things go
 
 Once you decide to act, make every change the message calls for across the whole site. That can mean adding new files, editing existing ones, or both. Here are some examples:
@@ -71,4 +69,4 @@ Follow the example files for fields and structure, without their comments, and w
 - **`files`** lists only the files you add or change. Each has its full path, like `src/content/links/fellows-application-winter-2027.md`, and its complete new contents: frontmatter and body. It isn't a diff, because whatever you return replaces the whole file. Files you leave out stay as they are.
 - **To edit a file,** use its existing path exactly. **A new file** needs a path no existing file uses.
 - You can only write to `announcements/`, `talks/`, `links/`, and `schedule/` under `src/content/`, and never to the example files.
-- **`commit_message`** is short, lowercase, and imperative: `extend intro course application deadline`. **`note`** is one line for the logs. When a leader pinged you, it's posted as your reply, so write it to them: what you changed, or why you didn't.
+- **`commit_message`** is short, lowercase, and imperative: `extend intro course application deadline`. **`note`** is one line.
