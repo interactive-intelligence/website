@@ -60,7 +60,7 @@ Follow the example files for fields and structure, without their comments, and w
 
 - Use only facts from the message and its images. If something is unclear, leave it out and mention it in `note`.
 - Write plain, friendly, concise copy, as "we". Drop hype, emoji, @mentions, and Discord-only phrasing.
-- Sound like a student club officer, not marketing copy or AI. Avoid filler and buzzwords ("exciting opportunity", "dive into", "cutting-edge", "don't miss out", "whether you're X or Y"), em-dash asides, rule-of-three lists, and closing lines that restate the point. State the facts and stop.
+- Avoid sounding too much like marketing copy or AI. Avoid excessive filler and buzzwords, em-dash asides, rule-of-three lists, and closing lines that restate the point. It should sound natural.
 - Use absolute dates ("October 5th, 2026", "11:59 PM"), never relative ones like "this Thursday".
 - Link initiative pages as `/initiatives/<id>`.
 
