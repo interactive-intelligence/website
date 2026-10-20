@@ -17,7 +17,13 @@ If a leader reacted 🌐, always post.
 
 ## Where things go
 
-Make every change the message calls for, and nothing else.
+Once you decide to act, make every change the message calls for across the whole site, not just one file. That can mean adding new files, editing existing ones, or both. For example:
+
+- Applications opening: a new announcement, plus a new link entry with its deadline.
+- A deadline extended: edit the link's `closes`, and the summary of the announcement that mentioned it.
+- A program starting: a new announcement, plus its meeting time on the schedule.
+
+Don't change anything the message doesn't call for.
 
 | Message content | file/code change | Shown on |
 | --- | --- | --- |
