@@ -39,7 +39,8 @@ Follow the example files, without their comments or `published: false`.
 - **Filenames** are kebab-case slugs that become URLs: `fellows-applications-winter-2027.md`.
 - **Titles** are sentence case and specific. No prefixes, no emoji.
 - **`date` and `posted`** are the day the message was posted. A talk's `date` and a link's `closes` use Pacific `YYYY-MM-DD HH:MM`, and `closes` can be just a date.
-- **Summaries** are one or two sentences that stand alone. Add a body only for extra detail, and don't repeat the summary in it.
+- **Summaries** are one or two sentences that stand alone. The list and home page show only the summary.
+- **An announcement gets its own page only if it has a body.** Without one, it's plain text in the list. Add a body when there's more to say than the summary, and don't repeat the summary in it. The `link_url` button only appears on that page, so an announcement with a link always needs a body, even a single sentence.
 - **Talks** need a speaker and a start time. Without both, write an announcement instead.
 - **Links** are only forms people can fill out now. The Join page lists them until `closes`.
 - **Schedule times** look like `Thu 4:00–5:00 PM`, with no location. "This quarter" is the quarter containing the posted date. Leave the rest of the file untouched.
