@@ -3,7 +3,8 @@
 // docs/announcement-agent.md). Posts are checked with a build and committed to main.
 // The bot marks every message it reads: ✅ the site changed, 👀 nothing changed, ❌ the
 // draft didn't build.
-// A leader can react 🌐 to a skipped or older message to post it anyway.
+// A leader can react 🌐 to a skipped or older message to have Claude look again. If the
+// site already has it, the bot marks it 👌.
 // The README explains the setup.
 //
 //   node scripts/discord-announcements.js check   # only report whether anything is pending
@@ -18,8 +19,10 @@ const OVERRIDE = '🌐';
 const POSTED = '✅';
 const SKIPPED = '👀';
 const FAILED = '❌';
+const CHECKED = '👌';
 // Unmarked messages older than this are left alone, so the first run doesn't post old history.
 const MAX_AGE_MS = 3 * 24 * 60 * 60 * 1000;
+const TIME_ZONE = 'America/Los_Angeles';
 // What Claude may read and write. Everything else on the site stays hand-edited.
 const CONTENT_DIRS = [
 	'src/content/announcements',
@@ -76,10 +79,8 @@ async function postPending() {
 			if (await postMessage(client, message)) {
 				committed = true;
 				marks.push([message, POSTED]);
-			} else if (message.forced) {
-				throw new Error(`Nothing was drafted for a ${OVERRIDE} message.`);
 			} else {
-				marks.push([message, SKIPPED]);
+				marks.push([message, message.forced ? CHECKED : SKIPPED]);
 			}
 		} catch (error) {
 			// API errors are usually temporary, so leave the message unmarked and retry next run.
@@ -107,11 +108,12 @@ async function postPending() {
 	}
 
 	// Mark last, so a message is only marked once its content is pushed.
-	for (const [message, emoji] of marks) await react(message, emoji);
+	for (const [message, emoji] of marks) await mark(message, emoji);
 }
 
 // Oldest first: recent messages the bot hasn't marked yet, plus messages a leader
-// reacted 🌐 to that weren't posted (`forced`).
+// reacted 🌐 to that the bot hasn't looked at again (`forced`). To have the bot reread a
+// message, remove its mark and react 🌐.
 async function pendingMessages() {
 	const pending = [];
 	for (const channelId of channelIds) {
@@ -122,12 +124,14 @@ async function pendingMessages() {
 			if (![0, 19].includes(message.type)) continue;
 			const reactions = message.reactions ?? [];
 			const marks = reactions.filter((r) => r.me).map((r) => r.emoji.name);
-			if (marks.includes(POSTED) || marks.includes(FAILED)) continue;
+			if ([POSTED, FAILED, CHECKED].some((emoji) => marks.includes(emoji))) continue;
 			const forced =
 				reactions.some((r) => r.emoji.name === OVERRIDE) &&
 				(await reactedByLeader(guild_id, message));
 			const recent = Date.now() - Date.parse(message.timestamp) < MAX_AGE_MS;
-			if (forced || (recent && marks.length === 0)) pending.push({ ...message, guild_id, forced });
+			if (forced || (recent && marks.length === 0)) {
+				pending.push({ ...message, guild_id, marks, forced });
+			}
 		}
 	}
 	return pending;
@@ -173,11 +177,12 @@ async function postMessage(client, message) {
 			);
 		}
 		if (response.stop_reason === 'max_tokens') throw new Error('The draft was cut off.');
-		const draft = JSON.parse(response.content.find((block) => block.type === 'text')?.text ?? '');
-		console.log(`${message.id}: ${draft.note}`);
-		if (draft.files.length === 0) return false;
 
 		try {
+			const text = response.content.find((block) => block.type === 'text')?.text ?? '';
+			const draft = JSON.parse(text);
+			console.log(`${message.id}: ${draft.note}`);
+			if (draft.files.length === 0) return false;
 			commitDraft(message, draft);
 			return true;
 		} catch (error) {
@@ -227,36 +232,50 @@ function messagePrompt(message) {
 		return `- ${basename(path, '.md')}: ${name}`;
 	});
 	const existing = CONTENT_DIRS.flatMap(markdownFiles).filter((path) => !isExample(path));
-	const author = message.author.global_name ?? message.author.username;
+	// Deleted messages leave `referenced_message` null.
+	const reply = message.type === 19 ? message.referenced_message : null;
 
 	return [
 		`Initiative ids:\n${initiatives.join('\n')}`,
 		`Existing site content:\n\n${existing.map(fileBlock).join('\n\n')}`,
-		`Discord message from ${author}, posted ${pacificDate(message.timestamp)}:`,
+		`Today is ${pacificDay(Date.now())}.`,
+		...(reply
+			? [
+					`The message replies to this one from ${displayName(reply.author)}, posted ${pacificDateTime(reply.timestamp)}:`,
+					`<replied-message>\n${messageText(reply)}\n</replied-message>`
+				]
+			: []),
+		`Discord message from ${displayName(message.author)}, posted ${pacificDateTime(message.timestamp)}:`,
 		`<message>\n${messageText(message)}\n</message>`,
 		message.forced
-			? `A leader reacted ${OVERRIDE} to this message, so post it.`
+			? `A leader reacted ${OVERRIDE} to this message: they think the site should change.`
 			: 'Decide whether this message belongs on the website.'
 	].join('\n\n');
 }
 
-// The message text with user mentions resolved and non-image attachments listed.
+// The message text with user mentions resolved, non-image attachments listed, and any
+// forwarded messages included.
 function messageText(message) {
-	const names = new Map(
-		message.mentions.map((user) => [user.id, user.global_name ?? user.username])
-	);
-	const text = message.content.replace(/<@!?(\d+)>/g, (mention, id) =>
+	const names = new Map((message.mentions ?? []).map((user) => [user.id, displayName(user)]));
+	const text = (message.content ?? '').replace(/<@!?(\d+)>/g, (mention, id) =>
 		names.has(id) ? `@${names.get(id)}` : mention
 	);
-	const files = message.attachments
+	const files = (message.attachments ?? [])
 		.filter((file) => !file.content_type?.startsWith('image/'))
 		.map((file) => `Attached file: ${file.filename}`);
-	return [text, ...files].join('\n');
+	const forwarded = (message.message_snapshots ?? []).map(
+		(snapshot) => `Forwarded message:\n${messageText(snapshot.message)}`
+	);
+	return [text, ...files, ...forwarded].filter(Boolean).join('\n');
 }
 
+// Images attached to the message or to a message it forwards.
 async function images(message) {
+	const attachments = [message, ...(message.message_snapshots ?? []).map((s) => s.message)].flatMap(
+		(m) => m.attachments ?? []
+	);
 	const blocks = [];
-	for (const file of message.attachments) {
+	for (const file of attachments) {
 		const mediaType = file.content_type?.split(';')[0];
 		if (
 			!['image/png', 'image/jpeg', 'image/gif', 'image/webp'].includes(mediaType) ||
@@ -296,10 +315,13 @@ async function discord(path, options = {}) {
 	}
 }
 
-function react(message, emoji) {
-	return discord(`${messagePath(message)}/reactions/${encodeURIComponent(emoji)}/@me`, {
-		method: 'PUT'
-	});
+// Leaves `emoji` as the bot's only mark, so a 🌐 message doesn't keep its old 👀.
+async function mark(message, emoji) {
+	const path = (name) => `${messagePath(message)}/reactions/${encodeURIComponent(name)}/@me`;
+	for (const old of message.marks) {
+		if (old !== emoji) await discord(path(old), { method: 'DELETE' });
+	}
+	await discord(path(emoji), { method: 'PUT' });
 }
 
 function messagePath(message) {
@@ -320,8 +342,30 @@ function fileBlock(path) {
 	return `<file path="${path}">\n${readFileSync(path, 'utf8').trim()}\n</file>`;
 }
 
+function displayName(user) {
+	return user.global_name ?? user.username;
+}
+
+// `2026-10-19`
 function pacificDate(timestamp) {
-	return new Date(timestamp).toLocaleDateString('en-CA', { timeZone: 'America/Los_Angeles' });
+	return new Date(timestamp).toLocaleDateString('en-CA', { timeZone: TIME_ZONE });
+}
+
+// `Monday 2026-10-19`
+function pacificDay(timestamp) {
+	const weekday = new Date(timestamp).toLocaleDateString('en-US', {
+		timeZone: TIME_ZONE,
+		weekday: 'long'
+	});
+	return `${weekday} ${pacificDate(timestamp)}`;
+}
+
+// `Monday 2026-10-19 at 9:42 PM Pacific`
+function pacificDateTime(timestamp) {
+	const time = new Date(timestamp)
+		.toLocaleTimeString('en-US', { timeZone: TIME_ZONE, hour: 'numeric', minute: '2-digit' })
+		.replace(/\s/g, ' ');
+	return `${pacificDay(timestamp)} at ${time} Pacific`;
 }
 
 function revertContent() {

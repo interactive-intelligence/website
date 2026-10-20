@@ -73,8 +73,11 @@ The bot reacts to every message it reads:
 | Reaction | Meaning |
 | --- | --- |
 | ✅ | The site changed: a new post, or an edit to something already there. |
-| 👀 | Read, but nothing on the site changed. A leader can react 🌐 to post it anyway. This also works on older messages the bot never read. |
+| 👀 | Read, but nothing on the site changed. A leader can react 🌐 to have Claude look again, leaning toward posting. This also works on older messages the bot never read. |
+| 👌 | Looked again after a 🌐, but the site already had everything in the message. |
 | ❌ | The draft didn't build, so nothing was posted. Remove the ❌ to retry (this needs the Manage Messages permission), or update the site by hand. |
+
+Edited messages aren't read again on their own. To have the bot reread one, remove its mark (this also needs Manage Messages) and react 🌐.
 
 To change how Claude decides and writes, edit `docs/announcement-agent.md`. The script sends that file as Claude's instructions. To fix a post, edit or delete its file under `src/content/` like any other entry. To check right away instead of waiting, open the workflow under the repo's **Actions** tab and click **Run workflow**.
 
