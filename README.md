@@ -66,14 +66,14 @@ Other places you may need:
 
 ## Discord announcements
 
-Announcements posted in Discord reach the site on their own. Every 15 minutes, `.github/workflows/discord-announcements.yml` reads new messages in the announcements channel. Claude decides which ones belong on the site and writes the announcement, plus a link entry for any form with a deadline. If the site still builds, the change is committed straight to `main` and deployed.
+Announcements posted in Discord reach the site on their own. Every 15 minutes, `.github/workflows/discord-announcements.yml` reads new messages in the announcements channel. Claude decides which ones belong on the site and makes the matching changes: an announcement or talk, a link for any form people can fill out (shown on the Join page), and new meeting times on the schedule. If the site still builds, the change is committed straight to `main` and deployed.
 
 The bot reacts to every message it reads:
 
 | Reaction | Meaning |
 | --- | --- |
-| ✅ | Posted to the site. |
-| 👀 | Read, but not posted. A leader can react 🌐 to post it anyway. This also works on older messages the bot never read. |
+| ✅ | The site changed: a new post, or an edit to something already there. |
+| 👀 | Read, but nothing on the site changed. A leader can react 🌐 to post it anyway. This also works on older messages the bot never read. |
 | ❌ | The draft didn't build, so nothing was posted. Remove the ❌ to retry (this needs the Manage Messages permission), or update the site by hand. |
 
 To change how Claude decides and writes, edit `docs/announcement-agent.md`. The script sends that file as Claude's instructions. To fix a post, edit or delete its file under `src/content/` like any other entry. To check right away instead of waiting, open the workflow under the repo's **Actions** tab and click **Run workflow**.

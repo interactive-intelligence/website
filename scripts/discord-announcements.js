@@ -1,16 +1,18 @@
 // Posts Discord announcements to the website. Claude reads each new message in the
 // watched channels and decides whether it belongs on the site (see
 // docs/announcement-agent.md). Posts are checked with a build and committed to main.
-// The bot marks every message it reads: ✅ posted, 👀 skipped, ❌ the draft didn't build.
+// The bot marks every message it reads: ✅ the site changed, 👀 nothing changed, ❌ the
+// draft didn't build.
 // A leader can react 🌐 to a skipped or older message to post it anyway.
 // The README explains the setup.
 //
 //   node scripts/discord-announcements.js check   # only report whether anything is pending
 //   node scripts/discord-announcements.js         # handle everything pending
 
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { appendFileSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { basename } from 'node:path';
+import { stripVTControlCharacters } from 'node:util';
 
 const OVERRIDE = '🌐';
 const POSTED = '✅';
@@ -18,8 +20,15 @@ const SKIPPED = '👀';
 const FAILED = '❌';
 // Unmarked messages older than this are left alone, so the first run doesn't post old history.
 const MAX_AGE_MS = 3 * 24 * 60 * 60 * 1000;
-const CONTENT_DIRS = ['src/content/announcements', 'src/content/links'];
-const WRITABLE_PATH = /^src\/content\/(announcements|links)\/(?!example-)[a-z0-9-]+\.md$/;
+// What Claude may read and write. Everything else on the site stays hand-edited.
+const CONTENT_DIRS = [
+	'src/content/announcements',
+	'src/content/talks',
+	'src/content/links',
+	'src/content/schedule'
+];
+const WRITABLE_PATH =
+	/^src\/content\/(announcements|talks|links|schedule)\/(?!example-)[a-z0-9-]+\.md$/;
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 
 const DRAFT_SCHEMA = {
@@ -64,10 +73,7 @@ async function postPending() {
 
 	for (const message of await pendingMessages()) {
 		try {
-			const draft = await draftContent(client, message);
-			console.log(`${message.id}: ${draft.note}`);
-			if (draft.files.length > 0) {
-				commitDraft(message, draft);
+			if (await postMessage(client, message)) {
 				committed = true;
 				marks.push([message, POSTED]);
 			} else if (message.forced) {
@@ -83,9 +89,7 @@ async function postPending() {
 				continue;
 			}
 			console.error(`Couldn't post ${message.id}: ${error.message}`);
-			git('reset', '-q', '--', 'src/content');
-			git('checkout', '--', 'src/content');
-			git('clean', '-fdq', '--', 'src/content');
+			revertContent();
 			marks.push([message, FAILED]);
 		}
 	}
@@ -144,37 +148,65 @@ async function reactedByLeader(guildId, message) {
 	return false;
 }
 
-async function draftContent(client, message) {
-	const response = await client.beta.messages.create({
-		model: 'claude-sonnet-5-5',
-		max_tokens: 16000,
-		betas: ['server-side-fallback-2026-07-01'],
-		fallbacks: 'default',
-		output_config: { format: { type: 'json_schema', schema: DRAFT_SCHEMA } },
-		system: systemPrompt(),
-		messages: [
-			{
-				role: 'user',
-				content: [...(await images(message)), { type: 'text', text: messagePrompt(message) }]
-			}
-		]
-	});
-	if (response.stop_reason === 'refusal') {
-		throw new Error(`Claude declined: ${response.stop_details?.explanation ?? 'no reason given'}`);
+// Has Claude draft the message and commits the result. If the draft can't be used, Claude
+// gets the error and one more try. Returns whether anything was committed.
+async function postMessage(client, message) {
+	const messages = [
+		{
+			role: 'user',
+			content: [...(await images(message)), { type: 'text', text: messagePrompt(message) }]
+		}
+	];
+	for (let attempt = 1; ; attempt++) {
+		const response = await client.beta.messages.create({
+			model: 'claude-sonnet-5-5',
+			max_tokens: 16000,
+			betas: ['server-side-fallback-2026-07-01'],
+			fallbacks: 'default',
+			output_config: { format: { type: 'json_schema', schema: DRAFT_SCHEMA } },
+			system: systemPrompt(),
+			messages
+		});
+		if (response.stop_reason === 'refusal') {
+			throw new Error(
+				`Claude declined: ${response.stop_details?.explanation ?? 'no reason given'}`
+			);
+		}
+		if (response.stop_reason === 'max_tokens') throw new Error('The draft was cut off.');
+		const draft = JSON.parse(response.content.find((block) => block.type === 'text')?.text ?? '');
+		console.log(`${message.id}: ${draft.note}`);
+		if (draft.files.length === 0) return false;
+
+		try {
+			commitDraft(message, draft);
+			return true;
+		} catch (error) {
+			if (attempt === 2) throw error;
+			console.error(`Retrying ${message.id}: ${error.message}`);
+			revertContent();
+			messages.push(
+				{ role: 'assistant', content: response.content },
+				{
+					role: 'user',
+					content: `${error.message}\n\nFix the draft and return all of its files again.`
+				}
+			);
+		}
 	}
-	if (response.stop_reason === 'max_tokens') throw new Error('The draft was cut off.');
-	const text = response.content.find((block) => block.type === 'text')?.text;
-	return JSON.parse(text ?? '');
 }
 
 // Writes the draft, checks that the site builds, and commits it.
 function commitDraft(message, { files, commit_message }) {
 	for (const { path } of files) {
-		if (!WRITABLE_PATH.test(path)) throw new Error(`Refusing to write ${path}`);
+		if (!WRITABLE_PATH.test(path)) throw new Error(`You can't write to ${path}.`);
 	}
 	for (const { path, content } of files) writeFileSync(path, content.trimEnd() + '\n');
 
-	execFileSync('npm', ['run', 'build'], { stdio: 'inherit' });
+	const build = spawnSync('npm', ['run', 'build'], { encoding: 'utf8' });
+	if (build.status !== 0) {
+		const output = stripVTControlCharacters(build.stdout + build.stderr).slice(-4000);
+		throw new Error(`The site failed to build with this draft:\n\n${output}`);
+	}
 
 	git('add', '--', ...files.map((file) => file.path));
 	const source = `https://discord.com/channels/${message.guild_id}/${message.channel_id}/${message.id}`;
@@ -199,7 +231,7 @@ function messagePrompt(message) {
 
 	return [
 		`Initiative ids:\n${initiatives.join('\n')}`,
-		`Existing announcements and links:\n\n${existing.map(fileBlock).join('\n\n')}`,
+		`Existing site content:\n\n${existing.map(fileBlock).join('\n\n')}`,
 		`Discord message from ${author}, posted ${pacificDate(message.timestamp)}:`,
 		`<message>\n${messageText(message)}\n</message>`,
 		message.forced
@@ -290,6 +322,12 @@ function fileBlock(path) {
 
 function pacificDate(timestamp) {
 	return new Date(timestamp).toLocaleDateString('en-CA', { timeZone: 'America/Los_Angeles' });
+}
+
+function revertContent() {
+	git('reset', '-q', '--', 'src/content');
+	git('checkout', '--', 'src/content');
+	git('clean', '-fdq', '--', 'src/content');
 }
 
 function git(...args) {
