@@ -3,7 +3,6 @@ import { getPublished } from './content'
 
 // The Intro Course's own pages. Its initiative page advertises it.
 export const courseHref = '/intro-course'
-export const courseInitiativeHref = '/initiatives/intro-course'
 
 export type Unit = CollectionEntry<'courseUnits'>
 

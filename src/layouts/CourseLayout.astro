@@ -1,12 +1,10 @@
 ---
 import 'katex/dist/katex.min.css'
 import Layout from './Layout.astro'
-import BackButton from '../components/BackButton.astro'
-import { courseHref, courseInitiativeHref, getUnits, unitHref } from '../lib/course'
+import { courseHref, getUnits, unitHref } from '../lib/course'
 
 // Intro Course pages: a rail with the course contents beside the page.
 // The current page's sections (`headings`) are listed under it in the rail.
-// The back button leaves the course for its initiative page.
 interface Props {
 	title: string
 	description: string
@@ -43,7 +41,6 @@ const groups = [
 <Layout title={pageTitle} description={description}>
 	<div class="course">
 		<aside class="rail">
-			<BackButton href={courseInitiativeHref} label="Intro Course" />
 			<nav class="course-nav" aria-label="Intro Course">
 				{
 					groups.map((group) => (
