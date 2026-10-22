@@ -12,7 +12,7 @@ if (!home) {
 	throw new Error('Missing src/content/course/home.md')
 }
 
-const [{ Content }, { core, additional }, updates] = await Promise.all([
+const [{ Content }, { core, optional }, updates] = await Promise.all([
 	render(home),
 	getUnits(),
 	getFeed({ initiative: 'intro-course', limit: 4 })
@@ -77,11 +77,11 @@ const pages = [
 	</section>
 
 	{
-		additional.length > 0 && (
+		optional.length > 0 && (
 			<section>
-				<h2 id="additional-units">Additional units</h2>
+				<h2 id="optional-units">Optional units</h2>
 				<ul class="list-reset cards">
-					{additional.map((unit) => (
+					{optional.map((unit) => (
 						<li>
 							<ListCard
 								href={unitHref(unit)}

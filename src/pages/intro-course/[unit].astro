@@ -5,8 +5,8 @@ import CourseLayout from '../../layouts/CourseLayout.astro'
 import { getUnits, unitHref, unitLabel } from '../../lib/course'
 
 export async function getStaticPaths() {
-	const { core, additional } = await getUnits()
-	const units = [...core, ...additional]
+	const { core, optional } = await getUnits()
+	const units = [...core, ...optional]
 	return units.map((entry, i) => ({
 		params: { unit: entry.id },
 		props: { entry, prev: units[i - 1], next: units[i + 1] }

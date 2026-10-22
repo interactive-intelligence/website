@@ -5,9 +5,8 @@ title: Course Overview, Prerequisite Knowledge
 
 ### Purpose
 
-- Gen acquainted with the course
-- Learn some of the pre-reqs necessary (Python)
-- Learn some of the pre-reqs necessary (calculus, linear algebra)
+- Get acquainted with the course
+- Learn some of the pre-reqs necessary (Python, calculus, linear algebra)
 
 ### Resources
 

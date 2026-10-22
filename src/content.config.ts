@@ -146,7 +146,7 @@ const courseUnits = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    // Core units are numbered and taught in this order. Additional units leave it out.
+    // Core units are numbered and taught in this order. Optional units leave it out.
     unit: z.number().optional(),
     published: z.boolean().default(true),
   }),

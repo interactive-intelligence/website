@@ -7,7 +7,7 @@ title: Example Unit
 # One sentence on what the unit covers. Shown under the unit on the course page and in link previews.
 description: What machine learning is, how models learn from data, and the math behind linear regression.
 # Core units have a number, which sets their order and shows as "Unit 1" in lists.
-# Leave it out for additional units; those are listed alphabetically after the core units.
+# Leave it out for optional units; those are listed alphabetically after the core units.
 unit: 1
 ---
 
