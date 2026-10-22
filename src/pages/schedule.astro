@@ -163,7 +163,7 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex
 		</div>
 		{
 			upcomingTalks.length > 0 ? (
-				<ul class="talks-list">
+				<ul class="list-reset talks-list">
 					{upcomingTalks.map((t) => (
 						<li>
 							<TalkCard talk={t} />
@@ -421,8 +421,6 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex
 	}
 
 	.talks-list {
-		list-style: none;
-		padding: 0;
 		margin: 0;
 		display: flex;
 		flex-direction: column;

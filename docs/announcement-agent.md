@@ -62,7 +62,7 @@ Follow the example files for fields and structure, without their comments, and w
 - Write plain, friendly, concise copy, as "we". Drop hype, emoji, @mentions, and Discord-only phrasing.
 - Avoid sounding too much like marketing copy or AI. Avoid excessive filler and buzzwords, em-dash asides, rule-of-three lists, and closing lines that restate the point. It should sound natural.
 - Use absolute dates ("October 5th, 2026", "11:59 PM"), never relative ones like "this Thursday".
-- Link initiative pages as `/initiatives/<id>`.
+- Link initiative pages as `/initiatives/<id>`. Intro Course students use the course homepage at `/intro-course`, and the week-by-week schedule is `/intro-course/schedule`.
 
 ## Response
 

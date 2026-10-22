@@ -5,6 +5,30 @@ import sitemap from '@astrojs/sitemap';
 import { unified } from '@astrojs/markdown-remark';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+
+// `$...$` is math only in course content. Everywhere else the original text goes back,
+// so "$5 to $10" in an announcement stays a price.
+/** @type {import('@astrojs/markdown-remark').RemarkPlugin} */
+function remarkMathOnlyInCourse() {
+	return (tree, file) => {
+		if (file.path?.includes('/src/content/course/')) return;
+		/** @param {import('mdast').Parent} node */
+		const restore = (node) =>
+			node.children.forEach((child, i) => {
+				if (child.type !== 'math' && child.type !== 'inlineMath') {
+					if ('children' in child) restore(child);
+					return;
+				}
+				const { start, end } = child.position ?? {};
+				/** @type {import('mdast').Text} */
+				const text = { type: 'text', value: String(file.value).slice(start?.offset, end?.offset) };
+				node.children[i] = child.type === 'math' ? { type: 'paragraph', children: [text] } : text;
+			});
+		restore(tree);
+	};
+}
 
 // https://astro.build/config
 export default defineConfig({
@@ -35,12 +59,21 @@ export default defineConfig({
 			},
 		},
 	],
+	vite: {
+		// Mermaid is imported lazily (see CourseLayout.astro), so the dev server only finds it mid-session
+		// and its pre-bundle can go stale ("504 Outdated Optimize Dep"). Bundle it up front instead.
+		optimizeDeps: { include: ['mermaid'] },
+	},
 	image: {
 		layout: 'constrained',
 		responsiveStyles: true,
 	},
 	markdown: {
+		// Mermaid blocks are left as code and drawn in the browser (see CourseLayout.astro).
+		syntaxHighlight: { type: 'shiki', excludeLangs: ['math', 'mermaid'] },
+		shikiConfig: { theme: 'github-light' },
 		processor: unified({
+			remarkPlugins: [remarkMath, remarkMathOnlyInCourse],
 			rehypePlugins: [
 				rehypeSlug,
 				[
@@ -51,6 +84,8 @@ export default defineConfig({
 						content: { type: 'text', value: '#' },
 					},
 				],
+				// After the heading plugins, so headings with math get plain-text ids.
+				rehypeKatex,
 			],
 		}),
 	},

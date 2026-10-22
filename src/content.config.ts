@@ -139,4 +139,65 @@ const links = defineCollection({
   }),
 });
 
-export const collections = { team, projects, talks, publications, initiatives, constitution, schedule, announcements, links };
+// Intro Course pages, under /intro-course. Only Markdown in
+// src/content/course/ renders `$...$` as math.
+const courseUnits = defineCollection({
+  loader: glob({ pattern: "*.md", base: "./src/content/course/units" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    // Core units are numbered and taught in this order. Additional units leave it out.
+    unit: z.number().optional(),
+    published: z.boolean().default(true),
+  }),
+});
+
+const courseWeeks = defineCollection({
+  loader: glob({ pattern: "*.md", base: "./src/content/course/weeks" }),
+  schema: z.object({
+    week: z.number(),
+    title: z.string(),
+    published: z.boolean().default(true),
+  }),
+});
+
+const courseStaff = defineCollection({
+  loader: glob({ pattern: "*.md", base: "./src/content/course/staff" }),
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      role: z.enum(["Education Lead", "Teaching Assistant", "Creator"]),
+      // The quarter a TA taught, like "Spring 2026". Past TAs are grouped by it.
+      quarter: z
+        .string()
+        .regex(/^(Winter|Spring|Summer|Autumn) \d{4}$/, "Use a quarter like Spring 2026")
+        .optional(),
+      active: z.boolean(),
+      image: image().optional(),
+      website: z.url().optional(),
+      email: z.email().optional(),
+      published: z.boolean().default(true),
+    }),
+});
+
+// Single pages of course text: home.md (the course home) and graduates.md.
+const coursePages = defineCollection({
+  loader: glob({ pattern: "*.md", base: "./src/content/course" }),
+  schema: z.object({}),
+});
+
+export const collections = {
+  team,
+  projects,
+  talks,
+  publications,
+  initiatives,
+  constitution,
+  schedule,
+  announcements,
+  links,
+  courseUnits,
+  courseWeeks,
+  courseStaff,
+  coursePages,
+};

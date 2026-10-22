@@ -4,15 +4,15 @@
 	--border: hsl(260, 50%, 87%);
 	--rule: hsl(260, 30%, 80%);
 	--text: hsl(260, 30%, 10%);
-	--text-accent: hsl(260, 45%, 42%);
+	--text-accent: hsl(260, 45%, 40%);
 	--accent-dark: hsl(260, 45%, 45%);
 	--accent-dark-border: hsl(260, 45%, 35%);
 	--accent-dark-hover: hsl(260, 45%, 53%);
 	--accent-dark-border-hover: hsl(260, 45%, 43%);
-	--accent-light: hsl(260, 70%, 80%);
-	--accent-light-border: hsl(260, 70%, 75%);
-	--accent-light-hover: hsl(260, 70%, 72%);
-	--accent-light-border-hover: hsl(260, 70%, 67%);
+	--accent-light: hsl(260, 70%, 84%);
+	--accent-light-border: hsl(260, 70%, 79%);
+	--accent-light-hover: hsl(260, 70%, 76%);
+	--accent-light-border-hover: hsl(260, 70%, 71%);
 	--logo-bg: hsl(221, 48%, 67%);
 	--border-logo-bg: hsl(221, 48%, 62%);
 	--text-inverse: hsl(0, 0%, 100%);
@@ -21,6 +21,8 @@
 
 	--container: 70rem;
 	--gutter: 1.5rem;
+	--radius-xs: 0.5rem;
+	--radius-sm: 1rem;
 	--radius: 1.5rem;
 	--radius-lg: 2rem;
 
@@ -191,7 +193,36 @@ h4 {
 	text-decoration: underline;
 }
 
+/* A page's title and optional lede, spaced off from the content below. */
+.page-header {
+	margin-bottom: 2rem;
+
+	> :last-child {
+		margin-bottom: 0;
+	}
+}
+
+/* A section heading with a link (e.g. "All announcements") on the right. */
+.section-head {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+/* Small uppercase label, like a definition term or a nav group name. */
+.label {
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	line-height: 1.5;
+	color: var(--text-accent);
+}
+
 .prose {
+	overflow-wrap: break-word;
+
 	h2 {
 		margin-top: 2rem;
 	}
@@ -201,8 +232,94 @@ h4 {
 	h4 {
 		margin-top: 1rem;
 	}
-	ul {
+	ul,
+	ol {
 		margin-bottom: 1rem;
+	}
+	li > :is(ul, ol) {
+		margin-bottom: 0;
+	}
+	hr {
+		border: 0;
+		border-top: 1px solid var(--rule);
+		margin: 2rem 0;
+	}
+	blockquote {
+		margin: 0 0 1rem;
+		padding: 1rem 1.25rem;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-sm);
+
+		> :last-child {
+			margin-bottom: 0;
+		}
+	}
+	mark {
+		padding: 0 0.125em;
+		background: var(--accent-light);
+		color: inherit;
+		border-radius: 0.25em;
+	}
+	:not(pre) > code {
+		padding: 0.125em 0.375em;
+		font-size: 0.875em;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: 0.375em;
+	}
+	pre {
+		margin: 0 0 1rem;
+		padding: 1rem 1.25rem;
+		font-size: 0.875rem;
+		line-height: 1.6;
+		border: 1px solid var(--border);
+		border-radius: var(--radius-sm);
+		overflow-x: auto;
+	}
+	/* Images are centered and scaled down to fit a reading-sized box. */
+	img {
+		width: auto;
+		height: auto;
+		max-width: min(100%, 36rem);
+		max-height: 28rem;
+		margin: 1.5rem auto;
+		border-radius: var(--radius-sm);
+	}
+	/* Images on consecutive lines of one paragraph sit side by side. */
+	p:has(> img + img) {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.5rem;
+		margin: 1.5rem 0;
+
+		img {
+			width: auto;
+			height: 10rem;
+			margin: 0;
+		}
+	}
+	iframe {
+		display: block;
+		width: 100%;
+		max-width: 40rem;
+		height: auto;
+		aspect-ratio: 16 / 9;
+		margin: 1.5rem auto;
+		border: 0;
+		border-radius: var(--radius);
+	}
+	.mermaid {
+		display: flex;
+		justify-content: center;
+		margin: 1.5rem 0;
+	}
+	/* Long equations scroll instead of overflowing the column. */
+	.katex-display {
+		overflow-x: auto;
+		overflow-y: hidden;
+		padding: 0.25rem 0;
 	}
 }
 
@@ -222,6 +339,58 @@ ol {
 
 section {
 	margin-top: 3rem;
+}
+
+/* A list without bullets or indent, for lists laid out as grids or rows. */
+.list-reset {
+	list-style: none;
+	padding: 0;
+
+	> li {
+		margin: 0;
+	}
+}
+
+/* A plus that turns into a minus when its <details> opens. */
+.indicator {
+	position: relative;
+	flex-shrink: 0;
+	width: 1rem;
+	height: 1rem;
+
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+		inset: calc(50% - 0.0625rem) 0 auto;
+		height: 0.125rem;
+		background: currentColor;
+		border-radius: 999px;
+		transition: rotate var(--duration) var(--ease);
+	}
+
+	&::after {
+		rotate: 90deg;
+	}
+
+	details[open] > summary &::after,
+	details[data-expanded='true'] > summary &::after {
+		rotate: 0deg;
+	}
+}
+
+summary:has(.indicator) {
+	cursor: pointer;
+	list-style: none;
+	transition: color var(--duration-fast) var(--ease);
+
+	&::-webkit-details-marker {
+		display: none;
+	}
+
+	&:hover {
+		color: var(--text-accent);
+	}
 }
 
 table {
@@ -330,6 +499,11 @@ table {
 	.btn:hover,
 	.btn:active {
 		transform: none;
+	}
+
+	.indicator::before,
+	.indicator::after {
+		transition: none;
 	}
 }
 

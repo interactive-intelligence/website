@@ -1,0 +1,92 @@
+---
+import { render, type CollectionEntry } from 'astro:content'
+import CourseLayout from '../../layouts/CourseLayout.astro'
+import PersonCard from '../../components/PersonCard.astro'
+import { getPublished } from '../../lib/content'
+import { quarterKey } from '../../lib/course'
+
+type Staffer = CollectionEntry<'courseStaff'>
+
+const staff = await Promise.all(
+	(await getPublished('courseStaff'))
+		.sort((a, b) => a.data.name.localeCompare(b.data.name))
+		.map(async (s) => ({ ...s.data, ...(await render(s)) }))
+)
+
+const pick = (role: Staffer['data']['role'], active: boolean) =>
+	staff.filter((s) => s.role === role && s.active === active)
+
+// Past TAs, one group per quarter, newest first.
+const pastTAs = Object.entries(
+	Object.groupBy(pick('Teaching Assistant', false), (s) => s.quarter ?? 'Earlier')
+).sort(([a], [b]) => quarterKey(b) - quarterKey(a))
+
+// `short` is the group's name in the rail beside the page.
+const groups = [
+	{ slug: 'education-leads', title: 'Education leads', people: pick('Education Lead', true) },
+	{
+		slug: 'teaching-assistants',
+		title: 'Teaching assistants',
+		people: pick('Teaching Assistant', true)
+	},
+	{ slug: 'creators', title: 'Creators', people: pick('Creator', false) },
+	{
+		slug: 'past-education-leads',
+		title: 'Past education leads',
+		people: pick('Education Lead', false)
+	},
+	...pastTAs.map(([quarter, people = []]) => ({
+		slug: quarter.toLowerCase().replace(' ', '-'),
+		title: `${quarter} teaching assistants`,
+		short: `${quarter} TAs`,
+		people
+	}))
+].filter((g) => g.people.length > 0)
+
+const roleLine = (s: (typeof staff)[number]) => (s.quarter ? `${s.role}, ${s.quarter}` : s.role)
+---
+
+<CourseLayout
+	title="Staff"
+	description="The education leads, teaching assistants, and creators of i2's Intro Course."
+	lede="The people who teach and built the Intro Course. Reach out to any of us with questions."
+	headings={groups.map((g) => ({ slug: g.slug, text: 'short' in g ? g.short : g.title }))}
+>
+	{
+		groups.map((group) => (
+			<section>
+				<h2 id={group.slug}>
+					{group.title}
+					<a class="heading-anchor" href={`#${group.slug}`} aria-label="Link to section">
+						#
+					</a>
+				</h2>
+				<div class="grid">
+					{group.people.map((s) => (
+						<PersonCard
+							name={s.name}
+							role={roleLine(s)}
+							image={s.image}
+							email={s.email}
+							website={s.website}
+						>
+							<s.Content />
+						</PersonCard>
+					))}
+				</div>
+			</section>
+		))
+	}
+</CourseLayout>
+
+<style>
+	section h2 {
+		margin-bottom: 1.5rem;
+	}
+
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+		gap: 1.5rem;
+	}
+</style>

@@ -3,6 +3,8 @@ import Layout from '../layouts/Layout.astro'
 import { Image } from 'astro:assets'
 import { render } from 'astro:content'
 import { getPublished } from '../lib/content'
+import { websiteLabel } from '../lib/links'
+import PersonCard from '../components/PersonCard.astro'
 
 const members = await getPublished('team')
 
@@ -37,17 +39,6 @@ const alumni = sorted
 		return a.data.name.localeCompare(b.data.name)
 	})
 
-function websiteLabel(url: string): string {
-	try {
-		const host = new URL(url).hostname.replace(/^www\./, '')
-		if (host.includes('linkedin.com')) return 'Linkedin'
-		if (host.includes('instagram.com')) return 'Instagram'
-		if (host.includes('github.com')) return 'Github'
-		if (host === 'twitter.com' || host === 'x.com') return 'Twitter'
-	} catch {}
-	return 'Website'
-}
-
 const activeWithBody = await Promise.all(
 	active.map(async (m) => {
 		const { Content } = await render(m)
@@ -69,46 +60,16 @@ const activeWithBody = await Promise.all(
 		<div class="grid">
 			{
 				activeWithBody.map(({ data, Content }) => (
-					<article class="card">
-						<div class="card-top">
-							{data.image && (
-								<div class="photo">
-									<Image
-										src={data.image}
-										alt={data.name}
-										sizes="7rem"
-										loading="lazy"
-									/>
-								</div>
-							)}
-							<div class="summary">
-								<div class="head">
-									<h3>{data.name}</h3>
-									<span class="role">{data.role}</span>
-								</div>
-								{data.tags && data.tags.length > 0 && (
-									<ul class="tags">
-										{data.tags.map((t) => (
-											<li>{t}</li>
-										))}
-									</ul>
-								)}
-								<div class="links">
-									{data.email && (
-										<a href={`mailto:${data.email}`}>{data.email}</a>
-									)}
-									{data.website && (
-										<a href={data.website} target="_blank" rel="noopener">
-											{websiteLabel(data.website)}
-										</a>
-									)}
-								</div>
-							</div>
-						</div>
-						<div class="bio prose">
-							<Content />
-						</div>
-					</article>
+					<PersonCard
+						name={data.name}
+						role={data.role}
+						image={data.image}
+						tags={data.tags}
+						email={data.email}
+						website={data.website}
+					>
+						<Content />
+					</PersonCard>
 				))
 			}
 		</div>
@@ -161,132 +122,18 @@ const activeWithBody = await Promise.all(
 </Layout>
 
 <style>
-	.page-header {
-		margin-bottom: 2rem;
-	}
-
 	section {
 		margin-bottom: 5rem;
 	}
 
 	section h2 {
-		margin-bottom: 2rem;
+		margin-bottom: 1.5rem;
 	}
 
 	.grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(min(100%, 30rem), 1fr));
 		gap: 1.5rem;
-	}
-
-	.card {
-		display: flex;
-		flex-direction: column;
-		align-items: stretch;
-		gap: 1rem;
-		padding: 1.25rem;
-		background: var(--surface);
-		border: 1px solid var(--border);
-		border-radius: var(--radius);
-	}
-
-	.card-top {
-		display: grid;
-		grid-template-columns: 7rem minmax(0, 1fr);
-		align-items: start;
-		gap: 1.25rem;
-	}
-
-	.photo {
-		aspect-ratio: 1;
-		border-radius: calc(var(--radius) - 0.5rem);
-		overflow: hidden;
-		background: var(--border);
-	}
-
-	.photo img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-
-	.summary {
-		display: flex;
-		flex-direction: column;
-		min-width: 0;
-	}
-
-	.head {
-		display: flex;
-		flex-direction: column;
-		gap: 0.125rem;
-		margin-bottom: 0.5rem;
-	}
-
-	.head h3 {
-		font-size: 1.125rem;
-		margin: 0 0 0.25rem 0;
-	}
-
-	.role {
-		font-size: 0.875rem;
-		color: var(--text-accent);
-		font-weight: 500;
-	}
-
-	.tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.25rem;
-		list-style: none;
-		padding: 0;
-	}
-
-	.tags li {
-		margin: 0;
-		padding: 0.125rem 0.5rem;
-		font-size: 0.75rem;
-		font-weight: 500;
-		background: var(--accent-light);
-		border: 1px solid var(--accent-light-border);
-		border-radius: 999px;
-		color: var(--text-accent);
-	}
-
-	.bio {
-		font-size: 0.875rem;
-		color: var(--text);
-		width: 100%;
-		min-width: 0;
-	}
-
-	.bio :global(p) {
-		margin: 0 0 0.5rem;
-	}
-
-	.bio :global(p:last-child) {
-		margin-bottom: 0;
-	}
-
-	.links {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.75rem;
-		margin-top: 0.5rem;
-		font-size: 0.875rem;
-	}
-
-	.links a {
-		overflow-wrap: anywhere;
-		color: var(--text-accent);
-		text-decoration: underline;
-		text-decoration-color: var(--rule);
-		text-underline-offset: 2px;
-		transition: text-decoration-color var(--duration-fast) var(--ease);
-	}
-
-	.links a:hover {
-		text-decoration-color: var(--text-accent);
 	}
 
 	.alumni-grid {
@@ -353,11 +200,6 @@ const activeWithBody = await Promise.all(
 	}
 
 	@media (max-width: 30rem) {
-		.card-top {
-			grid-template-columns: 5rem minmax(0, 1fr);
-			gap: 1rem;
-		}
-
 		.alumni-grid {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}

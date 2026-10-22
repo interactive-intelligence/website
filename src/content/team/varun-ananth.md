@@ -2,7 +2,7 @@
 name: Varun Ananth
 role: Alumni
 active: false
-image: ./varun.jpg
+image: ./photos/varun.jpg
 email: varunananth1@gmail.com
 website: https://www.linkedin.com/in/varunananth1
 tags: ["Founding Member", "Education Lead", "CS", "RL"]

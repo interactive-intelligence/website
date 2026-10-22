@@ -1,0 +1,195 @@
+---
+import 'katex/dist/katex.min.css'
+import Layout from './Layout.astro'
+import BackButton from '../components/BackButton.astro'
+import { courseHref, courseInitiativeHref, getUnits, unitHref } from '../lib/course'
+
+// Intro Course pages: a rail with the course contents beside the page.
+// The current page's sections (`headings`) are listed under it in the rail.
+// The back button leaves the course for its initiative page.
+interface Props {
+	title: string
+	description: string
+	lede?: string
+	headings?: { slug: string; text: string }[]
+}
+
+const { title, description, lede, headings = [] } = Astro.props
+const { core, additional } = await getUnits()
+const current = Astro.url.pathname.replace(/\/$/, '')
+
+const groups = [
+	{
+		items: [
+			{ href: courseHref, label: 'Home' },
+			{ href: `${courseHref}/schedule`, label: 'Schedule' },
+			{ href: `${courseHref}/staff`, label: 'Staff' },
+			{ href: `${courseHref}/graduates`, label: 'Graduates' }
+		]
+	},
+	{
+		label: 'Core units',
+		items: core.map((u) => ({ href: unitHref(u), label: u.data.title, num: u.data.unit }))
+	},
+	{
+		label: 'Additional units',
+		items: additional.map((u) => ({ href: unitHref(u), label: u.data.title }))
+	}
+]
+---
+
+<Layout title={`${title} - Intro Course - i2`} description={description}>
+	<div class="course">
+		<aside class="rail">
+			<BackButton href={courseInitiativeHref} label="Intro Course" />
+			<nav class="course-nav" aria-label="Intro Course">
+				{
+					groups.map((group) => (
+						<div class="group">
+							{group.label && <p class="label group-label">{group.label}</p>}
+							<ul class="list-reset">
+								{group.items.map((item) => (
+									<li>
+										<a
+											href={item.href}
+											aria-current={item.href === current ? 'page' : undefined}
+										>
+											{'num' in item && <span class="num">{item.num}</span>}
+											{item.label}
+										</a>
+										{item.href === current && headings.length > 0 && (
+											<ul class="list-reset sections">
+												{headings.map((h) => (
+													<li>
+														<a href={`#${h.slug}`}>{h.text}</a>
+													</li>
+												))}
+											</ul>
+										)}
+									</li>
+								))}
+							</ul>
+						</div>
+					))
+				}
+			</nav>
+		</aside>
+
+		<div class="body">
+			<header class="page-header">
+				<h1>{title}</h1>
+				{lede && <p class="lede">{lede}</p>}
+			</header>
+			<slot />
+		</div>
+	</div>
+</Layout>
+
+<script>
+	// Draw ```mermaid code blocks as diagrams, themed from the site's colors.
+	// The library is only downloaded on pages that have one.
+	const diagrams = [...document.querySelectorAll('pre > code.language-mermaid')].map((code) => {
+		const figure = document.createElement('figure')
+		figure.className = 'mermaid'
+		figure.textContent = code.textContent
+		code.parentElement!.replaceWith(figure)
+		return figure
+	})
+
+	if (diagrams.length > 0) {
+		const { default: mermaid } = await import('mermaid')
+		const style = getComputedStyle(document.documentElement)
+		const token = (name: string) => style.getPropertyValue(name).trim()
+		mermaid.initialize({
+			startOnLoad: false,
+			// Mermaid's default ELK layout is a ~1.5 MB download. Dagre is small and fine for course diagrams.
+			layout: 'dagre',
+			theme: 'base',
+			fontFamily: getComputedStyle(document.body).fontFamily,
+			themeVariables: {
+				background: token('--bg'),
+				primaryColor: token('--surface'),
+				primaryBorderColor: token('--accent-light-border'),
+				primaryTextColor: token('--text'),
+				lineColor: token('--text-accent'),
+				edgeLabelBackground: token('--bg')
+			}
+		})
+		await mermaid.run({ nodes: diagrams })
+	}
+</script>
+
+<style>
+	.course {
+		display: grid;
+		grid-template-columns: 16rem minmax(0, 1fr);
+		column-gap: 3rem;
+	}
+
+	.course-nav {
+		display: grid;
+		gap: 1rem;
+		padding: 0.5rem;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+	}
+
+	.group-label {
+		margin: 0.5rem 0.75rem 0.25rem;
+	}
+
+	.course-nav ul {
+		display: grid;
+		gap: 0.25rem;
+	}
+
+	.course-nav a {
+		display: flex;
+		gap: 0.5rem;
+		padding: 0.375rem 0.75rem;
+		border: 1px solid transparent;
+		border-radius: var(--radius-sm);
+		font-size: 0.9375rem;
+		font-weight: 500;
+		line-height: 1.4;
+		transition:
+			background var(--duration-fast) var(--ease),
+			border-color var(--duration-fast) var(--ease);
+	}
+
+	.course-nav a:hover,
+	.course-nav a[aria-current='page'] {
+		background: var(--accent-light);
+		border-color: var(--accent-light-border);
+	}
+
+	.num {
+		min-width: 0.75rem;
+		color: var(--text-accent);
+		font-variant-numeric: tabular-nums;
+	}
+
+	.sections {
+		margin: 0.25rem 0 0.25rem 0.75rem;
+		padding-left: 0.5rem;
+		border-left: 1px solid var(--rule);
+	}
+
+	.sections a {
+		padding: 0.25rem 0.5rem;
+		font-size: 0.875rem;
+		font-weight: 400;
+	}
+
+	@media (max-width: 48rem) {
+		.course {
+			grid-template-columns: minmax(0, 1fr);
+		}
+
+		/* Units link to their neighbors at the bottom, and the course page lists everything. */
+		.course-nav {
+			display: none;
+		}
+	}
+</style>

@@ -1,0 +1,37 @@
+---
+import { getEntry, render } from 'astro:content'
+import CourseLayout from '../../layouts/CourseLayout.astro'
+
+const graduates = await getEntry('coursePages', 'graduates')
+if (!graduates) {
+	throw new Error('Missing src/content/course/graduates.md')
+}
+
+const { Content, headings } = await render(graduates)
+const sections = headings
+	.filter((h) => h.depth === 2)
+	.map((h) => ({ slug: h.slug, text: h.text.replace(/#$/, '').trim() }))
+---
+
+<CourseLayout
+	title="Graduates"
+	description="Students who have completed i2's Intro Course, by quarter."
+	headings={sections}
+>
+	<div class="prose graduates">
+		<Content />
+	</div>
+</CourseLayout>
+
+<style>
+	.graduates :global(ul) {
+		columns: 3 12rem;
+		column-gap: 2rem;
+	}
+
+	.graduates :global(li) {
+		break-inside: avoid;
+		margin: 0;
+		padding-block: 0.25rem;
+	}
+</style>

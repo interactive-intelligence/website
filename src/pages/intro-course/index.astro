@@ -1,0 +1,132 @@
+---
+import { getEntry, render } from 'astro:content'
+import { Icon } from 'astro-icon/components'
+import CourseLayout from '../../layouts/CourseLayout.astro'
+import ListCard from '../../components/ListCard.astro'
+import AnnouncementList from '../../components/AnnouncementList.astro'
+import { courseHref, getUnits, unitHref, unitLabel } from '../../lib/course'
+import { getFeed } from '../../lib/feed'
+
+const home = await getEntry('coursePages', 'home')
+if (!home) {
+	throw new Error('Missing src/content/course/home.md')
+}
+
+const [{ Content }, { core, additional }, updates] = await Promise.all([
+	render(home),
+	getUnits(),
+	getFeed({ initiative: 'intro-course', limit: 4 })
+])
+
+// The rail lists these too, but phones hide it, so this page links to everything.
+const pages = [
+	{
+		href: `${courseHref}/schedule`,
+		title: 'Schedule',
+		meta: 'Topics and assignments, week by week'
+	},
+	{
+		href: `${courseHref}/staff`,
+		title: 'Staff',
+		meta: 'Education leads and teaching assistants'
+	},
+	{
+		href: `${courseHref}/graduates`,
+		title: 'Graduates',
+		meta: 'Everyone who has finished the course'
+	}
+]
+---
+
+<CourseLayout
+	title="i2 Intro Course"
+	description="The schedule, units, and staff of i2's Intro Course, a ten-week crash course in NeuroAI."
+>
+	<div class="prose">
+		<Content />
+	</div>
+
+	<section>
+		<h2 id="course">Course</h2>
+		<ul class="list-reset cards pages">
+			{
+				pages.map((page) => (
+					<li>
+						<ListCard {...page} />
+					</li>
+				))
+			}
+		</ul>
+	</section>
+
+	<section>
+		<h2 id="core-units">Core units</h2>
+		<ul class="list-reset cards">
+			{
+				core.map((unit) => (
+					<li>
+						<ListCard
+							href={unitHref(unit)}
+							title={unitLabel(unit)}
+							meta={unit.data.description}
+						/>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+
+	{
+		additional.length > 0 && (
+			<section>
+				<h2 id="additional-units">Additional units</h2>
+				<ul class="list-reset cards">
+					{additional.map((unit) => (
+						<li>
+							<ListCard
+								href={unitHref(unit)}
+								title={unitLabel(unit)}
+								meta={unit.data.description}
+							/>
+						</li>
+					))}
+				</ul>
+			</section>
+		)
+	}
+
+	{
+		updates.length > 0 && (
+			<section>
+				<div class="section-head">
+					<h2 id="updates">Updates</h2>
+					<a href="/announcements" class="link-arrow">
+						All announcements
+						<Icon
+							aria-hidden="true"
+							name="mingcute:arrow-right-line"
+							class="arrow-right"
+						/>
+					</a>
+				</div>
+				<AnnouncementList items={updates} headingLevel="h3" />
+			</section>
+		)
+	}
+</CourseLayout>
+
+<style>
+	.cards {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 26rem), 1fr));
+		gap: 0.5rem;
+	}
+
+	.pages {
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+	}
+
+	.cards li > :global(a) {
+		height: 100%;
+	}
+</style>

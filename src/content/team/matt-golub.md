@@ -2,7 +2,7 @@
 name: Dr. Matt Golub
 role: Advisor
 active: true
-image: ./matt-golub.jpg
+image: ./photos/matt-golub.jpg
 email: mgolub@cs.washington.edu
 website: https://homes.cs.washington.edu/~mgolub/
 tags: ["Advisor"]

@@ -3,12 +3,16 @@ import { Image } from 'astro:assets'
 import { closesAttr, getOpenLinks, getPublished, linksFor } from '../../lib/content'
 import Layout from '../../layouts/Layout.astro'
 import LinkButton from '../../components/LinkButton.astro'
+import { courseHref } from '../../lib/course'
 
 const initiatives = (await getPublished('initiatives')).sort((a, b) => a.data.order - b.data.order)
 const links = await getOpenLinks()
 
 const learnMoreHref = (data: { external_url?: string }, id: string) =>
 	data.external_url ?? `/initiatives/${id}`
+
+// With no sign-up open, the Intro Course card links to the course homepage instead.
+const showCourseHome = (id: string) => id === 'intro-course' && linksFor(links, id).length === 0
 ---
 
 <Layout
@@ -46,6 +50,9 @@ const learnMoreHref = (data: { external_url?: string }, id: string) =>
 									{link.data.title}
 								</LinkButton>
 							))}
+							{showCourseHome(item.id) && (
+								<LinkButton href={courseHref}>Course homepage</LinkButton>
+							)}
 						</div>
 					</div>
 				</article>

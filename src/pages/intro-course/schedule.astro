@@ -1,0 +1,109 @@
+---
+import { render } from 'astro:content'
+import CourseLayout from '../../layouts/CourseLayout.astro'
+import { getPublished } from '../../lib/content'
+
+const weeks = await Promise.all(
+	(await getPublished('courseWeeks'))
+		.sort((a, b) => a.data.week - b.data.week)
+		.map(async (week) => ({ ...week.data, slug: `week-${week.data.week}`, ...(await render(week)) }))
+)
+---
+
+<CourseLayout
+	title="Schedule"
+	description="The Intro Course week by week: each week's topic, resources, and assignment."
+	lede="What we cover each week, with the resources and assignment for it."
+	headings={weeks.map((w) => ({ slug: w.slug, text: `Week ${w.week}` }))}
+>
+	<div class="weeks">
+		{
+			weeks.map(({ week, title, slug, Content }) => (
+				<details class="week">
+					<summary>
+						<h2 id={slug}>
+							Week {week}: {title}
+						</h2>
+						<span class="indicator" aria-hidden="true" />
+					</summary>
+					<div class="prose">
+						<Content />
+					</div>
+				</details>
+			))
+		}
+	</div>
+</CourseLayout>
+
+<script>
+	// Weeks start closed. Following a link to one, like those in the rail, opens it.
+	const openLinkedWeek = () => {
+		const id = decodeURIComponent(location.hash.slice(1))
+		document.getElementById(id)?.closest('details')?.setAttribute('open', '')
+	}
+	openLinkedWeek()
+	addEventListener('hashchange', openLinkedWeek)
+</script>
+
+<style>
+	.weeks {
+		display: grid;
+		gap: 0.75rem;
+	}
+
+	.week {
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+	}
+
+	summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 1rem;
+	}
+
+	summary h2 {
+		margin: 0;
+		font-size: 1.125rem;
+		font-weight: 600;
+	}
+
+	.prose {
+		padding: 0 1rem 1rem;
+	}
+
+	/* Each week's Purpose, Resources, etc. sit below its title in size. */
+	.prose :global(h3) {
+		font-size: 1rem;
+	}
+
+	.prose > :global(:first-child) {
+		margin-top: 0;
+	}
+
+	.prose > :global(:last-child) {
+		margin-bottom: 0;
+	}
+
+	/* Slide open and closed where the browser can animate to `auto` height. Elsewhere it just snaps. */
+	@media (prefers-reduced-motion: no-preference) {
+		.week {
+			interpolate-size: allow-keywords;
+		}
+
+		.week::details-content {
+			block-size: 0;
+			overflow-y: clip;
+			transition:
+				block-size var(--duration-slow) var(--ease),
+				content-visibility var(--duration-slow) allow-discrete;
+		}
+
+		.week[open]::details-content {
+			block-size: auto;
+		}
+	}
+</style>

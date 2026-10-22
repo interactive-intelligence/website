@@ -47,10 +47,15 @@ Most content is Markdown with frontmatter under `src/content/`. Field definition
 | Announcements | `src/content/announcements/` | Copy `example-announcement.md` (or the short variant). Shown on the announcements page and the home page. Tag one with `initiatives` to also show it on those initiative pages. An announcement with a body gets its own page; a `link_url` adds a button there. |
 | Talks | `src/content/talks/` | Copy `example-talk.md`. Talks display on the announcements page, the Talks initiative page, and the schedule page. |
 | Links | `src/content/links/` | Copy `example-link.md`. Anything people can act on right now: applications, signups, interest forms. Every open link is listed on the Join page. Tag one with an `initiative` to also show it as a button on that initiative's card and page. An optional `closes` date hides it automatically the day after; `closes` with a time (`2026-06-07 23:59`, Pacific) hides it at that minute and shows the time. |
-| Team | `src/content/team/` | One file per person. Put the photo in the same folder and reference it with `image: ./photo.jpg`. Set `active: false` for alumni. |
+| Team | `src/content/team/` | One file per person. Put the photo in `photos/` and reference it with `image: ./photos/photo.jpg`. Set `active: false` for alumni. |
 | Initiatives | `src/content/initiatives/` | One file per program. Photos go in `photos/`. `order` sets the display order. `external_url` sends the initiative's links off-site instead of to a page here. Apply buttons come from the links folder, not from this file. |
 | Schedule | `src/content/schedule/` | One file per academic year with three quarters. Initiative `id`s are filenames from the initiatives folder. |
 | Constitution | `src/content/constitution.md` | |
+| Intro Course home | `src/content/course/home.md` | The welcome text at the top of `/intro-course`, where students find the course materials. The initiative page at `/initiatives/intro-course` is the course's public description. |
+| Intro Course units | `src/content/course/units/` | Copy `example-unit.md`. Each unit is a page under `/intro-course/`. Core units have a `unit` number; additional units leave it out. Images go in `images/<unit>/`. Math is written in LaTeX (`$x$` inline, or between `$$` lines for a block), and a `mermaid` code block becomes a diagram. |
+| Intro Course schedule | `src/content/course/weeks/` | Copy `example-week.md`. One file per week, shown in order on the course schedule page. |
+| Intro Course staff | `src/content/course/staff/` | Copy `example-staff.md`. One file per person per role. Photos go in `photos/`. Set `active: false` once someone's quarter is over. |
+| Intro Course graduates | `src/content/course/graduates.md` | Add a `##` heading for the quarter and list the names. |
 | Projects, Publications | `src/content/projects/`, `src/content/publications/` | Defined but not shown anywhere yet. Only the unpublished research page draft (`src/pages/_research.astro`) reads them. |
 
 Every type accepts `published: false` to keep an entry out of the site, for example a draft or an outdated schedule. Entries are published by default.

@@ -1,0 +1,93 @@
+---
+import { render } from 'astro:content'
+import { Icon } from 'astro-icon/components'
+import CourseLayout from '../../layouts/CourseLayout.astro'
+import { getUnits, unitHref, unitLabel } from '../../lib/course'
+
+export async function getStaticPaths() {
+	const { core, additional } = await getUnits()
+	const units = [...core, ...additional]
+	return units.map((entry, i) => ({
+		params: { unit: entry.id },
+		props: { entry, prev: units[i - 1], next: units[i + 1] }
+	}))
+}
+
+const { entry, prev, next } = Astro.props
+const { Content, headings } = await render(entry)
+
+// Heading text includes the trailing "#" of its anchor link.
+const sections = headings
+	.filter((h) => h.depth === 2)
+	.map((h) => ({ slug: h.slug, text: h.text.replace(/#$/, '').trim() }))
+---
+
+<CourseLayout title={entry.data.title} description={entry.data.description} headings={sections}>
+	<div class="prose">
+		<Content />
+	</div>
+
+	<nav class="pager" aria-label="Units">
+		{
+			prev && (
+				<a href={unitHref(prev)} class="btn btn-surface prev">
+					<Icon aria-hidden="true" name="mingcute:arrow-left-line" class="arrow-left" />
+					<span>
+						<span class="pager-label">Previous</span>
+						{unitLabel(prev)}
+					</span>
+				</a>
+			)
+		}
+		{
+			next && (
+				<a href={unitHref(next)} class="btn btn-surface next">
+					<span>
+						<span class="pager-label">Next</span>
+						{unitLabel(next)}
+					</span>
+					<Icon aria-hidden="true" name="mingcute:arrow-right-line" class="arrow-right" />
+				</a>
+			)
+		}
+	</nav>
+</CourseLayout>
+
+<style>
+	.pager {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+		margin-top: 3rem;
+	}
+
+	.pager a {
+		gap: 0.75rem;
+		padding: 1rem 1.25rem;
+		white-space: normal;
+		font-weight: 600;
+	}
+
+	.next {
+		grid-column: 2;
+		justify-content: flex-end;
+		text-align: right;
+	}
+
+	.pager-label {
+		display: block;
+		font-size: 0.875rem;
+		font-weight: 400;
+		color: var(--text-accent);
+	}
+
+	@media (max-width: 32rem) {
+		.pager {
+			grid-template-columns: minmax(0, 1fr);
+		}
+
+		.next {
+			grid-column: 1;
+		}
+	}
+</style>

@@ -2,7 +2,7 @@
 name: Chanh Truong
 role: Alumni
 active: false
-image: ./chanh.jpg
+image: ./photos/chanh.jpg
 email: chanht1@uw.edu
 website: https://www.instagram.com/chanh._.t/
 tags: ["CS"]

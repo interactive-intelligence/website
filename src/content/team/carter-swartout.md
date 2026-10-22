@@ -2,7 +2,7 @@
 name: Carter Swartout
 role: Alumni
 active: false
-image: ./carter.jpg
+image: ./photos/carter.jpg
 email: swartout@uw.edu
 website: https://cswartout.com
 tags: ["Founding Member", "CS"]

@@ -34,7 +34,7 @@ const fmt = new Intl.DateTimeFormat('en-US', {
 			<BackButton href="/announcements" label="All announcements" />
 			<dl class="meta">
 				<div>
-					<dt>Posted</dt>
+					<dt class="label">Posted</dt>
 					<dd>
 						<time datetime={entry.data.date.toISOString()}
 							>{fmt.format(entry.data.date)}</time
@@ -44,7 +44,7 @@ const fmt = new Intl.DateTimeFormat('en-US', {
 				{
 					initiatives.length > 0 && (
 						<div>
-							<dt>{initiatives.length === 1 ? 'Initiative' : 'Initiatives'}</dt>
+							<dt class="label">{initiatives.length === 1 ? 'Initiative' : 'Initiatives'}</dt>
 							<dd>
 								{initiatives.map((i) => (
 									<a
@@ -107,12 +107,7 @@ const fmt = new Intl.DateTimeFormat('en-US', {
 	}
 
 	.meta dt {
-		margin: 0 0 0.25rem;
-		font-size: 0.75rem;
-		font-weight: 600;
-		letter-spacing: 0.04em;
-		text-transform: uppercase;
-		color: var(--text-accent);
+		margin-bottom: 0.25rem;
 	}
 
 	.meta dd {
@@ -125,17 +120,8 @@ const fmt = new Intl.DateTimeFormat('en-US', {
 		color: var(--text);
 	}
 
-	.page-header {
-		margin-bottom: 2rem;
-	}
-
-	.page-header h1 {
-		margin: 0;
-	}
-
 	.lede {
 		font-size: 1.125rem;
-		margin: 1rem 0 0;
 	}
 
 	.actions {

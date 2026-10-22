@@ -34,7 +34,7 @@ const resources = [{ href: 'https://grimoire.uw-i2.org/', label: 'Textbook' }]
 
 		<div class="col">
 			<div class="label">Site</div>
-			<ul>
+			<ul class="list-reset">
 				{
 					links.map(({ href, label }) => (
 						<li>
@@ -47,7 +47,7 @@ const resources = [{ href: 'https://grimoire.uw-i2.org/', label: 'Textbook' }]
 
 		<div class="col">
 			<div class="label">Follow</div>
-			<ul>
+			<ul class="list-reset">
 				{
 					socials.map(({ href, label }) => (
 						<li>
@@ -60,7 +60,7 @@ const resources = [{ href: 'https://grimoire.uw-i2.org/', label: 'Textbook' }]
 			</ul>
 
 			<div class="label">Learn</div>
-			<ul>
+			<ul class="list-reset">
 				{
 					resources.map(({ href, label }) => (
 						<li>
@@ -195,15 +195,9 @@ const resources = [{ href: 'https://grimoire.uw-i2.org/', label: 'Textbook' }]
 	}
 
 	.col ul {
-		list-style: none;
-		padding: 0;
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
-	}
-
-	.col li {
-		margin-top: 0;
 	}
 
 	.col a {

@@ -1,6 +1,7 @@
 ---
 import LinkButton from './LinkButton.astro'
 import { closesAttr, linksFor, type Link } from '../lib/content'
+import { courseHref } from '../lib/course'
 
 interface InitiativeItem {
 	id: string
@@ -21,6 +22,9 @@ const { items, links = [] } = Astro.props
 
 const learnMoreHref = (item: InitiativeItem) =>
 	item.data.external_url ?? `/initiatives/${item.id}`
+
+// With no sign-up open, the Intro Course links to the course homepage instead.
+const showCourseHome = (id: string) => id === 'intro-course' && linksFor(links, id).length === 0
 ---
 
 <div class="accordion">
@@ -44,6 +48,9 @@ const learnMoreHref = (item: InitiativeItem) =>
 									{link.data.title}
 								</LinkButton>
 							))}
+							{showCourseHome(item.id) && (
+								<LinkButton href={courseHref}>Course homepage</LinkButton>
+							)}
 						</div>
 					</div>
 				</div>
@@ -134,12 +141,6 @@ const learnMoreHref = (item: InitiativeItem) =>
 		align-items: center;
 		gap: 2rem;
 		padding: 1rem 0;
-		cursor: pointer;
-		list-style: none;
-	}
-
-	.accordion summary::-webkit-details-marker {
-		display: none;
 	}
 
 	.accordion .num {
@@ -152,54 +153,6 @@ const learnMoreHref = (item: InitiativeItem) =>
 		font-weight: 600;
 		line-height: 1.5;
 		margin: 0;
-		transition: color var(--duration-fast) var(--ease);
-	}
-
-	.accordion summary:hover .title {
-		color: var(--text-accent);
-	}
-
-	.accordion summary:hover .indicator::before,
-	.accordion summary:hover .indicator::after {
-		background: var(--text-accent);
-	}
-
-	.accordion .indicator {
-		position: relative;
-		width: 1.5rem;
-		height: 1.5rem;
-	}
-
-	.accordion .indicator::before,
-	.accordion .indicator::after {
-		content: '';
-		position: absolute;
-		background: var(--text);
-		border-radius: 999px;
-		top: 50%;
-		left: 50%;
-		transition: background var(--duration-fast) var(--ease);
-	}
-
-	.accordion .indicator::before {
-		width: 68.75%;
-		height: 6.25%;
-		min-height: 1px;
-		transform: translate(-50%, -50%);
-	}
-
-	.accordion .indicator::after {
-		width: 6.25%;
-		height: 68.75%;
-		min-width: 1px;
-		transform: translate(-50%, -50%) scaleY(1);
-		transform-origin: center;
-		transition: transform var(--duration) var(--ease);
-	}
-
-	.accordion details[open] .indicator::after,
-	.accordion details[data-expanded='true'] .indicator::after {
-		transform: translate(-50%, -50%) scaleY(0);
 	}
 
 	.accordion .panel {
@@ -230,7 +183,6 @@ const learnMoreHref = (item: InitiativeItem) =>
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.accordion .indicator::after,
 		.accordion .panel {
 			transition: none;
 		}

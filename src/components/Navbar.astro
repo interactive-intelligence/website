@@ -1,5 +1,6 @@
 ---
 import { getPublished } from '../lib/content'
+import { courseHref } from '../lib/course'
 import logoRaw from '../assets/i2logo.svg?raw'
 import { Icon } from 'astro-icon/components'
 
@@ -23,8 +24,12 @@ const links = [
 
 const initiatives = (await getPublished('initiatives')).sort((a, b) => a.data.order - b.data.order)
 
+// The Intro Course's pages sit outside /initiatives but still belong to it.
 const isActive = (href: string) =>
-	href === '/' ? currentPath === href : currentPath.startsWith(href)
+	href === '/'
+		? currentPath === href
+		: currentPath.startsWith(href) ||
+			(href === '/initiatives' && currentPath.startsWith(courseHref))
 
 const initiativeHref = (data: { external_url?: string }, id: string) =>
 	data.external_url ?? `/initiatives/${id}`
@@ -35,7 +40,7 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 		<Fragment set:html={logoRaw} />
 	</a>
 	<div class="drawer" id="menu">
-		<ul>
+		<ul class="list-reset">
 			{
 				links.map(({ href, label, dropdown, items }) => (
 					<li class:list={[{ 'has-dropdown': dropdown || items }]}>
@@ -46,7 +51,7 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 							{label}
 						</a>
 						{items && (
-							<ul class="submenu">
+							<ul class="list-reset submenu">
 								{items.map((item) => (
 									<li class:list={[{ duplicate: item.href === href }]}>
 										<a href={item.href}>{item.label}</a>
@@ -55,7 +60,7 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 							</ul>
 						)}
 						{dropdown && (
-							<ul class="submenu">
+							<ul class="list-reset submenu">
 								{initiatives.map((init) => (
 									<li>
 										<a
@@ -168,12 +173,6 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 	ul {
 		display: flex;
 		gap: 0.5rem;
-		list-style: none;
-		padding: 0;
-	}
-
-	ul li {
-		margin-top: 0;
 	}
 
 	.has-dropdown {
@@ -213,10 +212,6 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 		visibility: visible;
 		transform: translateX(-50%) translateY(0);
 		display: flex;
-	}
-
-	.submenu li {
-		margin: 0;
 	}
 
 	.submenu a {

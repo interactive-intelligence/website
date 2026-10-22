@@ -1,0 +1,25 @@
+---
+week: 2
+title: Basic Neuroanatomy
+---
+
+### Purpose
+
+Welcome to a beginner's introduction to neuroscience! We will
+
+- Learn several basic regions of the brain
+- Learn fundamentals of the neuron and biological computation
+- Begin to hypothesize about the parallels and divergences of machine learning and the brain
+
+### Resources
+
+- [Unit 2: Basic Neuroanatomy](/intro-course/basic-neuroanatomy)
+
+### Assignment
+
+- Complete Unit 2 (synthesis questions included)
+- Basic Neuroanatomy Project (LaTeX template in github)
+
+### Summary questions
+
+- Synthesis questions in the unit

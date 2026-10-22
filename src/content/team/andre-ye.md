@@ -2,7 +2,7 @@
 name: Andre Ye
 role: Founder
 active: false
-image: ./andre.jpg
+image: ./photos/andre.jpg
 email: andreye@uw.edu
 website: https://andre-ye.github.io
 tags: ["Co-founder", "ML Lead", "Philosophy", "CS"]

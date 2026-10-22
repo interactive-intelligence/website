@@ -30,7 +30,7 @@ const codes = await Promise.all(
 	</head>
 	<body>
 		<h1>interactive intelligence</h1>
-		<ul>
+		<ul class="list-reset">
 			{
 				codes.map((code) => (
 					<li>
@@ -60,8 +60,6 @@ const codes = await Promise.all(
 	ul {
 		display: flex;
 		gap: calc(var(--size) / 5);
-		list-style: none;
-		padding: 0;
 	}
 
 	li :global(svg) {

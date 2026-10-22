@@ -2,7 +2,7 @@
 name: Janna Hong
 role: Founder
 active: false
-image: ./janna.jpg
+image: ./photos/janna.jpg
 email: jannahg@uw.edu
 website: https://www.linkedin.com/in/jannahong/
 tags: ["Co-founder", "Neuroscience Lead", "Neuro", "RL"]

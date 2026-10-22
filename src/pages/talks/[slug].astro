@@ -91,11 +91,11 @@ const embedSrc = youtubeEmbed(entry.data.youtubeUrl)
 			<BackButton href="/announcements" label="All announcements" />
 			<dl class="meta">
 				<div>
-					<dt>Speaker</dt>
+					<dt class="label">Speaker</dt>
 					<dd>{entry.data.speaker}</dd>
 				</div>
 				<div>
-					<dt>{isPast ? 'Held on' : 'When'}</dt>
+					<dt class="label">{isPast ? 'Held on' : 'When'}</dt>
 					<dd>
 						<time datetime={entry.data.date.toISOString()}>
 							{dateFmt.format(entry.data.date)}
@@ -105,7 +105,7 @@ const embedSrc = youtubeEmbed(entry.data.youtubeUrl)
 				{
 					entry.data.location && (
 						<div>
-							<dt>Where</dt>
+							<dt class="label">Where</dt>
 							<dd>{entry.data.location}</dd>
 						</div>
 					)
@@ -165,12 +165,7 @@ const embedSrc = youtubeEmbed(entry.data.youtubeUrl)
 	}
 
 	.meta dt {
-		margin: 0 0 0.25rem;
-		font-size: 0.75rem;
-		font-weight: 600;
-		letter-spacing: 0.04em;
-		text-transform: uppercase;
-		color: var(--text-accent);
+		margin-bottom: 0.25rem;
 	}
 
 	.meta dd {
@@ -178,17 +173,8 @@ const embedSrc = youtubeEmbed(entry.data.youtubeUrl)
 		font-size: 0.9375rem;
 	}
 
-	.page-header {
-		margin-bottom: 2rem;
-	}
-
-	.page-header h1 {
-		margin: 0;
-	}
-
 	.lede {
 		font-size: 1.125rem;
-		margin: 1rem 0 0;
 	}
 
 	.video {
