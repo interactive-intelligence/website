@@ -17,6 +17,8 @@ interface Props {
 const { title, description, lede, headings = [] } = Astro.props
 const { core, additional } = await getUnits()
 const current = Astro.url.pathname.replace(/\/$/, '')
+// The home page's heading is the course name, so its title says "Home" instead.
+const pageTitle = `${current === courseHref ? 'Home' : title} - Intro Course - i2`
 
 const groups = [
 	{
@@ -38,7 +40,7 @@ const groups = [
 ]
 ---
 
-<Layout title={`${title} - Intro Course - i2`} description={description}>
+<Layout title={pageTitle} description={description}>
 	<div class="course">
 		<aside class="rail">
 			<BackButton href={courseInitiativeHref} label="Intro Course" />
