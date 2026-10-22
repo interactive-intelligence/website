@@ -17,6 +17,6 @@ title: Convolutional Neural Networks
 - Complete Unit 4 (synthesis questions included)
 - ConvNet Project (in the unit)
 
-### Summary questions
+### Summary Questions
 
 - Synthesis questions in the unit

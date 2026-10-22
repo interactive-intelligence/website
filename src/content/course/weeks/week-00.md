@@ -49,6 +49,6 @@ Math Assignments:
 - Read/Watch provided resources to learn/refresh your math knowledge.
 - If you are already familiar with the concepts listed above, feel free to skip them. I would, however, reccomend you explore linear algebra in high dimensional spaces (specifically **hyperplanes**) and revisit **partial derivatives**.
 
-### Summary questions
+### Summary Questions
 
 - What topics did you learn this week (Python or math)?

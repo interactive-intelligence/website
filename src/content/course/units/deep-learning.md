@@ -6,7 +6,7 @@ unit: 3
 
 Hello and welcome to the _Deep Learning_ section of the I2 course! Like the machine learning unit, we're going to split our content into literacy and technical understanding.
 
-## Technical track content
+## Technical Track Content
 
 ### Task 1
 
@@ -33,7 +33,9 @@ Remember that this is all for your learning, so do your best and don’t stress!
 
 Congratulations! You now understand the basics of Deep Neural Network structure, how they learn, and how to create one using Python!
 
-## Literacy track content
+---
+
+## Literacy Track Content
 
 ### Task 1
 
@@ -89,7 +91,7 @@ This was a good introduction. Now lets turn to some amazing videos on the topic 
 
 <iframe src="https://www.youtube-nocookie.com/embed/aircAruvnKk" title="But what is a neural network? | Chapter 1, Deep learning" loading="lazy" allowfullscreen></iframe>
 
-### Synthesis questions
+### Synthesis Questions
 
 * What is a neuron (in terms of Neural Networks) and what does its "activation" represent?
     * Bonus: Research and consider the correlation between a biological neuron and an artificial neuron. How are they similar/different?
@@ -104,7 +106,7 @@ This was a good introduction. Now lets turn to some amazing videos on the topic 
 
 <iframe src="https://www.youtube-nocookie.com/embed/IHZwWFHWa-w" title="Gradient descent, how neural networks learn | Chapter 2, Deep learning" loading="lazy" allowfullscreen></iframe>
 
-### Synthesis questions
+### Synthesis Questions
 
 * Why is there a need for a train/test split for a neural network? Why is it important for a NN to be able to generalize to examples it has not seen?
 * Describe the Mean Squared Error (MSE) cost function. What does a higher value mean? What does a lower value mean? (For one training example)
@@ -117,7 +119,7 @@ This was a good introduction. Now lets turn to some amazing videos on the topic 
 
 <iframe src="https://www.youtube-nocookie.com/embed/oV3ZY6tJiA0" title="Neural Networks and Deep Learning | Crash Course AI #3" loading="lazy" allowfullscreen></iframe>
 
-### Synthesis questions
+### Synthesis Questions
 
 * Why was ImageNet significant to the development of neural networks? What about AlexNet?
 * What are some real-world applications of neural networks? What are some ethical considerations associated with them?

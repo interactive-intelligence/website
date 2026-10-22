@@ -21,6 +21,6 @@ title: Introduction to Machine Learning
 
 - Complete Unit 1 (synthesis questions included)
 
-### Summary questions
+### Summary Questions
 
 - Synthesis questions in the unit

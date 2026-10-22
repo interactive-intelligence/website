@@ -9,7 +9,7 @@ It would be negligent not to begin by acknowledging the inadequacy of this chapt
 
 [10. Development, Nature & Nurture I](https://www.youtube.com/watch?v=kAX_PRnliMo&list=PLUl4u3cNGP60IKRN_pFptIBxeiMc0MCJP&index=11)
 
-### Synthesis questions
+### Synthesis Questions
 
 * What is one possible mechanism for building knowledge from parts of the brain present at birth? What kinds of knowledge might be innate and "precursory"?
     * Why might it be useful for those precursors of knowledge to be innate rather than learned?
@@ -26,7 +26,7 @@ Start watching at 8:40, [21. Brain Networks](https://www.youtube.com/watch?v=Sch
 
 For your reference, a voxel is a 3D pixel. Think of it as a minecraft block of the brain. Also a term used in computer graphics.
 
-### Synthesis questions
+### Synthesis Questions
 
 * What is white matter? Why does it matter?
 * What is a connectivity fingerprint?
@@ -36,7 +36,9 @@ For your reference, a voxel is a 3D pixel. Think of it as a minecraft block of t
     * If you were to build an analog of the DMN in a machine learning network placed in your favorite video game as an environment, what function would you design it to serve?
 * Hypothesize how multiple demand regions might work and why they might be necessary. I don't know the right answer here so go nuts.
 
-## Project spec
+---
+
+## Project Spec
 
 **There is no programming for this project. Instead, we have provided a LaTeX template for you to fill out.**
 

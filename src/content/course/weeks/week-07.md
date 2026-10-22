@@ -15,6 +15,6 @@ title: AI Ethics
 
 - Create a slideshow, details in the unit
 
-### Summary questions
+### Summary Questions
 
 - Synthesis questions in the unit

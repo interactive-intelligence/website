@@ -12,7 +12,7 @@ Welcome to the AI Ethics section of the I2 course! In this pivotal module, we'll
 - Ethics in AI Research and Applications
 - Global Perspectives on AI Ethics
 
-## Literacy & technical track content
+## Literacy & Technical Track Content
 
 ### Task 1
 
@@ -24,7 +24,7 @@ Welcome to the AI Ethics section of the I2 course! In this pivotal module, we'll
 
 ### Article: [Principles of AI Ethics](https://www.prolific.com/blog/what-are-ai-ethics-5-principles-explained) (3 min)
 
-### Synthesis questions
+### Synthesis Questions
 
 * How have the core principles of AI ethics evolved over time?
 * In what ways does AI ethics differ from ethics in traditional technologies?
@@ -36,7 +36,7 @@ Welcome to the AI Ethics section of the I2 course! In this pivotal module, we'll
 
 <iframe src="https://www.youtube-nocookie.com/embed/bWOUw8omUVg" title="Bias Explained" loading="lazy" allowfullscreen></iframe>
 
-### Synthesis questions
+### Synthesis Questions
 
 * How has bias in AI affected real-world decision-making in sectors like finance or healthcare?
 * In what ways might biased data skew the outcomes of an AI system?
@@ -50,7 +50,7 @@ Welcome to the AI Ethics section of the I2 course! In this pivotal module, we'll
 
 ### Article: [Social Impact of AI and Data Privacy Issues](https://www.red-gate.com/simple-talk/development/data-science-development/the-social-impact-of-artificial-intelligence-and-data-privacy-issues) (8 min)
 
-### Synthesis questions
+### Synthesis Questions
 
 * How has AI impacted personal privacy in the age of social media?
 * Contrast traditional data breaches with the potential dangers posed by AI-driven breaches.
@@ -64,7 +64,7 @@ Welcome to the AI Ethics section of the I2 course! In this pivotal module, we'll
 
 ### Article: [Case Study: Ethical Pitfalls in Healthcare AI](https://www.facs.org/for-medical-professionals/news-publications/news-and-articles/bulletin/2023/february-2023-volume-108-issue-2/ethical-concerns-grow-as-ai-takes-on-greater-decision-making-role/) (8 min)
 
-### Synthesis questions
+### Synthesis Questions
 
 * How do self-driving cars display the ethical challenges posed by AI?
 * Do you think an increase in self driving vehicles would be beneficial or not?
@@ -78,7 +78,7 @@ Welcome to the AI Ethics section of the I2 course! In this pivotal module, we'll
 
 ### Article: [The Dual-Use Dilemma in AI Research](https://www.adalovelaceinstitute.org/blog/ai-research-ethics-collective-problem/) (7 min - Only Read First Half)
 
-### Synthesis questions
+### Synthesis Questions
 
 * How does the potential use of AI in warfare raise ethical red flags?
 * Where should the line be drawn between research and application in contentious AI areas?
@@ -90,7 +90,7 @@ Welcome to the AI Ethics section of the I2 course! In this pivotal module, we'll
 
 <iframe src="https://www.youtube-nocookie.com/embed/AiK0iYZuNS0" title="Cultural Nuances in AI Ethics" loading="lazy" allowfullscreen></iframe>
 
-### Synthesis questions
+### Synthesis Questions
 
 * How might Western and Eastern perspectives on AI ethics differ?
 * Describe a cultural or societal factor that could influence AI ethics in a particular region.

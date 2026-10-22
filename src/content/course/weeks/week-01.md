@@ -21,6 +21,6 @@ An introduction to the foundation of modern AI!
 - _Either_ Scikit-Learn ML Technical-Project (in the unit)
 - _Or_ Non-Technical Writing Project (bottom of the unit)
 
-### Summary questions
+### Summary Questions
 
 - Synthesis questions in the unit

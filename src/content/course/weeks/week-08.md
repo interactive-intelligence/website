@@ -21,6 +21,6 @@ title: Language Modeling
 - HuggingFace Project Part 1 (in the unit)
 - HuggingFace Project Part 2 (in the unit)
 
-### Summary questions
+### Summary Questions
 
 - Synthesis questions in the unit

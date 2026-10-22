@@ -9,7 +9,7 @@ about the core concepts underlying textual GenAI tools that took the world by
 storm. Hopefully you can reason about these models better after learning more
 about how they work!
 
-## Technical track content
+## Technical Track Content
 
 ### Task 1
 
@@ -39,7 +39,9 @@ Remember that this is all for your learning, so do your best and don’t stress!
 
 Congratulations! You now understand the basics of HuggingFace and Language Modeling!
 
-## Literacy track content
+---
+
+## Literacy Track Content
 
 ### Task 1
 
@@ -70,7 +72,7 @@ We’ll continue to discuss neural language models in greater detail through the
 
 <iframe src="https://www.youtube-nocookie.com/embed/LHXXI4-IEns" title="Illustrated Guide to Recurrent Neural Networks: Understanding the Intuition" loading="lazy" allowfullscreen></iframe>
 
-### Synthesis questions
+### Synthesis Questions
 
 * How does an RNN interact with a feed-forward neural network? What role does the RNN play in this process?
 * Describe the vanishing gradient problem in your own words. Does it relate to the drawbacks of statistical language models?
@@ -80,7 +82,7 @@ We’ll continue to discuss neural language models in greater detail through the
 
 <iframe src="https://www.youtube-nocookie.com/embed/SZorAJ4I-sA" title="Transformers, explained: Understand the model behind GPT, BERT, and T5" loading="lazy" allowfullscreen></iframe>
 
-### Synthesis questions
+### Synthesis Questions
 
 * What are some of the limitations of previous NLP models, and how did transformers address these?
 * Describe the ideas of positional encoding and attention in your own words.

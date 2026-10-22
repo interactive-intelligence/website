@@ -6,7 +6,7 @@ unit: 4
 
 Hello and welcome to the _Computer Vision_ section of the I2 course! Here we will approach CV from a deep learning perspective, to connect better with other units.
 
-## Technical track content
+## Technical Track Content
 
 ### Task 1
 
@@ -32,7 +32,9 @@ Remember that this is all for your learning, so do your best and don’t stress!
 
 Congratulations! You now understand the basics of Convolutional Neural networks!
 
-## Literacy track content
+---
+
+## Literacy Track Content
 
 ### Task 1
 
@@ -110,7 +112,7 @@ This was a lot of information, so please reach out to someone if you’re having
 
 <iframe src="https://www.youtube-nocookie.com/embed/FmpDIaiMIeA?start=834" title="How Convolutional Neural Networks work" loading="lazy" allowfullscreen></iframe>
 
-### Synthesis questions
+### Synthesis Questions
 
 * How is backpropagation used in CNNs, and how does it differ from backpropagation in standard neural networks?
 * What outcomes can a designer achieve from adjusting the hyperparameters or architecture of a CNN?
@@ -122,7 +124,7 @@ This was a lot of information, so please reach out to someone if you’re having
 
 <iframe src="https://www.youtube-nocookie.com/embed/KuXjwB4LzSA" title="But what is a convolution?" loading="lazy" allowfullscreen></iframe>
 
-### Synthesis questions
+### Synthesis Questions
 
 * What is the name for the smaller grid that convolves over a larger image?
     * Hint: Starts with a "k"

@@ -13,7 +13,7 @@ Complete the following lecture and synthesis questions.
 
 <iframe src="https://www.youtube-nocookie.com/embed/pfZY5aDJazA" title="Theory of Mind &amp; Mentalizing" loading="lazy" allowfullscreen></iframe>
 
-### Synthesis questions
+### Synthesis Questions
 
 * Describe the false belief paradigm and what function it serves.
 * What part of the brain is/are specifically involved in thinking about others' thoughts? Where is it located? What are several close by modules and their functions?
@@ -41,7 +41,7 @@ For a deeper dive, feel free to take a look at the Language Modeling chapter of 
 
 <iframe src="https://www.youtube-nocookie.com/embed/B4a0WdGp52g" title="Attention and Awareness" loading="lazy" allowfullscreen></iframe>
 
-### Synthesis questions
+### Synthesis Questions
 
 * Describe the brain's ability to multitask? What are some scenarios where parallel processing is feasible and some where it is not?
 * Describe covert and overt attention.
@@ -50,7 +50,9 @@ For a deeper dive, feel free to take a look at the Language Modeling chapter of 
 * Describe the role of the Fronto-Parietal Attention Network
 * If familiar with Attention in ML: Research some machine learning attention mechanisms. Compare and contrast the mechanism and the capabilities of one with what you learned about our biological attention mechanism.
 
-## Project spec
+---
+
+## Project Spec
 
 Consider, for a moment, the ways in which there are or are not parallels between our current mechanisms of machine learning and the various modules and functions of the brain that we have learned about. In your opinion, are some crucial for intelligence? Which, if any, have we managed to emulate with algorithms?
 

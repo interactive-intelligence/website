@@ -6,7 +6,7 @@ unit: 5
 
 Welcome to the visual system. Before we dive into how computer scientists have hacked together mathematical filters and matrix multiplication to process visual information and extract meaningful output, we will take a hard look at how your eyes and neurons process a continuous bombardment of photons.
 
-## Literacy & technical track content
+## Literacy & Technical Track Content
 
 ### Task 1
 
@@ -26,7 +26,7 @@ Watch the following videos and answer the questions! You know the drill. The fir
 
 <iframe src="https://www.youtube-nocookie.com/embed/o0DYP-u1rNM" title="Vision: Crash Course Anatomy & Physiology # 18" loading="lazy" allowfullscreen></iframe>
 
-#### Synthesis questions
+#### Synthesis Questions
 
 * Where in the brain do signals from the retina go before reaching the visual cortex?
 * What are some differences between rods and cones?
@@ -38,7 +38,7 @@ The next video will describe the path of information flow through the visual cor
 
 <iframe src="https://www.youtube-nocookie.com/embed/rrG-Y41Omi4" title="Perception: 3.2 Primary Visual Cortex" loading="lazy" allowfullscreen></iframe>
 
-#### Synthesis questions
+#### Synthesis Questions
 
 * What wavelengths of light can humans detect? Why might we only be able to detect such a narrow band of light wavelengths? What would be an advantage and downside of processing more?
 * What is V1 in the visual cortex? What are those cells most sensitive to?
@@ -53,7 +53,7 @@ This final video gives a swift overview of many functional modules of visual pro
 
 <iframe src="https://www.youtube-nocookie.com/embed/vTIxvw9QAY8" title="Perception: 3.3 Functional Areas, Pathways, and Modules" loading="lazy" allowfullscreen></iframe>
 
-#### Synthesis questions
+#### Synthesis Questions
 
 * Describe at least 5 functional parts of the visual system
 * Explain the hierarchical model of the visual system

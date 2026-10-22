@@ -7,7 +7,7 @@ unit: 6
 Welcome to the Reinforcement Learning section of the I2 Course! The topics in this unit should get you really
 thinking about NeuroAI. Be sure to ask lots of questions!
 
-## Technical track content
+## Technical Track Content
 
 ### Task 1
 
@@ -33,7 +33,9 @@ Remember that this is all for your learning, so do your best and don’t stress!
 
 Congratulations! You now understand the (_incredibly basic)_ basics of Deep RL!
 
-## Literacy track content
+---
+
+## Literacy Track Content
 
 ### Task 1
 
@@ -89,7 +91,7 @@ Now let's watch some videos on RL.
 
 <iframe src="https://www.youtube-nocookie.com/embed/nIgIv4IfJ6s" title="Reinforcement Learning: Crash Course AI #9" loading="lazy" allowfullscreen></iframe>
 
-### Synthesis questions
+### Synthesis Questions
 
 * When does it make sense to use reinforcement learning vs. other methods of machine learning to accomplish a task?
 * How do the agent, action, and environment interact in reinforcement learning?
@@ -99,7 +101,7 @@ Now let's watch some videos on RL.
 
 <iframe src="https://www.youtube-nocookie.com/embed/vXtfdGphr3c" title="Reinforcement Learning from scratch" loading="lazy" allowfullscreen></iframe>
 
-### Synthesis questions
+### Synthesis Questions
 
 * What is the purpose of a sigmoid function, and what does its value tell us? What about an error function?
 * Describe the idea of gradient descent and how we use it in reinforcement learning.

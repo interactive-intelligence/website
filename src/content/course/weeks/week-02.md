@@ -20,6 +20,6 @@ Welcome to a beginner's introduction to neuroscience! We will
 - Complete Unit 2 (synthesis questions included)
 - Basic Neuroanatomy Project (LaTeX template in github)
 
-### Summary questions
+### Summary Questions
 
 - Synthesis questions in the unit

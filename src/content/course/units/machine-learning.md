@@ -6,7 +6,7 @@ unit: 1
 
 Hello and welcome to the _Machine Learning_ section of the I2 course! Our content will be split into two categories: literacy and technical tracks. These topics are fundamental to the entire rest of our course, so please don't hesitate to reach out to the course staff if you have any questions!
 
-## Technical track content
+## Technical Track Content
 
 ### Task 1
 
@@ -44,7 +44,9 @@ Remember that this is all for your learning, so do your best and don’t stress!
 
 Congratulations! You now understand the basics of Clustering and PCA!
 
-## Literacy track content
+---
+
+## Literacy Track Content
 
 ### Task 1
 
@@ -96,14 +98,14 @@ But what does it mean for a computer to “learn”? How does a machine “learn
 
 These are exactly the questions that this course aims to answer. We’ll learn how humans learn, how machines learn, and how our understanding of one allows us to develop our understanding of the other. We’ll also learn how humans interpret images and pictures, and how we can use that information to get computers to do the same thing.
 
-#### Synthesis questions
+#### Synthesis Questions
 
 * What are the limitations of early “if this, then that” logic?
 * Why do we need a teach-build cycle to get our machine to learn?
 * Why does this teach-build-teach-build cycle work? How do the "bots" get better over time?
 * Why is it so important for companies to use a good dataset to teach their bots?
 
-#### Data splitting: train and test sets
+#### Data Splitting: Train and Test Sets
 
 Consider the following scenario. We train a model to recognize whether an image is of a dog or cat. However,
 the model is a huge model and picks up on every little detail, every single noise pixel of every image. It is *really* good,
@@ -133,7 +135,7 @@ In some cases, a third subset called a validation set is also used. The validati
 set helps tune hyperparameters and prevent overfitting before final testing on the
 test set.
 
-#### Regression vs classification
+#### Regression vs Classification
 
 Machine learning generally tackles two major types of problems: regression and
 classification.
@@ -150,7 +152,7 @@ such as house prices or stock market trends.
 
 In the next two sections, we will look at one example of regression, followed by one example of classification.
 
-#### Linear regression (regression)
+#### Linear Regression (Regression)
 
 In machine learning, linear regression is one of the most fundamental algorithms. It tries to model the relationship
 between input features and the ouput by simply fitting a straight line, something like this:
@@ -159,7 +161,7 @@ between input features and the ouput by simply fitting a straight line, somethin
 
 A key concept is that the line tries to minimize the distance to all of the points.
 
-#### Logistic regression (classification)
+#### Logistic Regression (Classification)
 
 Instead of a straight line, logistic regression takes the form of an $S$-shaped curve, with the outputs bounded between 0 and 1.
 
@@ -173,7 +175,7 @@ there is "regression" in the name.
 There are ways to logistic regression beyond two classes, such as One vs Rest, where we train $k$ separate classifiers for $k$ classes, and take the
 largest value, but that is beyond the scope of this course.
 
-#### More classification: decision trees
+#### More Classification: Decision Trees
 
 Let's move on to a more intuitive type of classification algorithm. Suppose you want to classify animals. One of the most intuitive ways is to group animals by
 features and break them up into small logical decisions. You might end up with a tree like this:
@@ -197,7 +199,7 @@ a series of binary questions ("Does the animal have wings?", or "Is the height g
 There are also ensemble classifiers such as Random Forests, which consists of many different decision trees that "vote" on the answer, leading to greater accuracy
 and better generalization.
 
-#### Synthesis questions
+#### Synthesis Questions
 
 * What is the difference between regression and classification?
 * What kind of function does linear regression use?
@@ -205,7 +207,7 @@ and better generalization.
 * How does a decision tree work?
 * Why does logistic regression have "regression" in the name?
 
-#### K-means: unsupervised learning
+#### K-Means: Unsupervised Learning
 
 In the previous sections, we talked about **supervised learning**, where we had to teach the model with explicit labels for our data. In this section,
 we will explore **unsupervised learning**, where the labels are not provided, and the model aims to find hidden patterns and structure inside of our data.

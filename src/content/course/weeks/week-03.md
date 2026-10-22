@@ -21,6 +21,6 @@ Our first foray into more complex networks and how they learn.
 - Complete Unit 3 (synthesis questions included)
 - Basic MNIST Classifier (in the unit)
 
-### Summary questions
+### Summary Questions
 
 - Synthesis questions in the unit

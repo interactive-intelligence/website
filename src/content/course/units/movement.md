@@ -29,7 +29,7 @@ Then, watch the following brief videos, take notes if you’d like!
 
 <iframe src="https://www.youtube-nocookie.com/embed/phi_13iP4mM" title="Cerebellar Information Flow" loading="lazy" allowfullscreen></iframe>
 
-### Synthesis questions
+### Synthesis Questions
 
 * Explain the difference between mossy fibers and climbing fibers and their respective functions.
 * Which cells or fibers may be responsible for sending error signals to the cerebellum?
@@ -38,7 +38,7 @@ Then, watch the following brief videos, take notes if you’d like!
 
 For more depth on these topics, here are some more fabulous resources.
 
-## Bonus videos
+## Bonus Videos
 
 [19.4 Cerebellar Circuits](https://www.youtube.com/watch?v=V0hLdqaH-7w)
 
@@ -48,6 +48,8 @@ For more depth on these topics, here are some more fabulous resources.
 
 <iframe src="https://www.youtube-nocookie.com/embed/jYD91uxWUys" title="Afferent Tracts to the Cerebellum" loading="lazy" allowfullscreen></iframe>
 
-## Project spec
+---
+
+## Project Spec
 
 There is no project for this unit yet. We hope to make one soon!

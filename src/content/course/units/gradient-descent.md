@@ -23,7 +23,7 @@ Implement and train a small neural network using micrograd. The training, valida
 
 You might want to change the learning rate, size of the network, or Note your training, validation, and test loss for your best network.
 
-### Synthesis questions
+### Synthesis Questions
 
 * In what direction do gradients flow (with regards to loss)?
 * How do gradients flow through addition? How do they flow through the ReLU function?

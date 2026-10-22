@@ -6,7 +6,7 @@ unit: 2
 
 Welcome to the first lesson studying the most powerful and intelligent computer known to date - the brain. We will begin by studying what the brain is exactly. This is called neuroanatomy/brain anatomy. The reason why we start with neuroanatomy is that deep learning does not attempt to model the “mind” itself (yet). However, it closely mirrors how the brain structurally processes the information.
 
-## Literacy & technical track content
+## Literacy & Technical Track Content
 
 ![Labeled diagram of brain structures and the origins of their names](./images/basic-neuroanatomy/brain_diagram.png)
 
@@ -26,7 +26,7 @@ The brain has three major regions: Forebrain, Midbrain, and Hindbrain, and the �
 
 Now, let's talk about each region and its subdivisions.
 
-#### The forebrain
+#### The Forebrain
 
 The Forebrain contains its subdivisions: the **Telecephalon** and **Diencephalon**.
 
@@ -62,12 +62,12 @@ While the **Diencephalon** contains **Thalamas** and **Hypothalamas**, which con
 
 **Hypothalamus** regulates the body’s internal physiological state, such as temperature, hunger, and thirst, and process motivation, arousal, and autonomic nervous system control. It makes sure that our cognition is context-dependent and bodily grounded.
 
-#### Synthesis questions
+#### Synthesis Questions
 
 - You are walking in the forest at night and you suddenly see something that looks like a snake. Your heart rate increases, you start feeling fear, and then later realize it was just a stick. Using the forebrain structures, explain how this entire process unfolds in the role of each part of the forebrain.
 - Explain why Cerebral Cortex, Basal Ganglia, and the Limbic System cannot be understood independently.
 
-#### The midbrain
+#### The Midbrain
 
 The **Midbrain** is divided into **Tectum** and **Tegmentum**; where the **Tectum** is dorsal which contains **Superior colliculus** and **Inferior colliculus**, and the **Tegmentum** is ventral and contains **Substantia nigra**, **VTA(ventral tegmental area)** and **Periaqueductal** **gray**.
 
@@ -82,13 +82,13 @@ The **Midbrain** is divided into **Tectum** and **Tegmentum**; where the **Tectu
 * The **Tegmentum** contains the **VTA, a.k.a ventral tegmental area,** which is another dopaminergic nucleus within the tegmentum. It involves motivation and reward processing, learning, assigning value to stimuli and actions (also connected with reinforcement learning).
 * The **Tegmentum** contains the **Periaqueductal gray,** which surrounds the cerebral aqueduct and is involved in defensive, autonomic responses to threat.
 
-#### Synthesis questions
+#### Synthesis Questions
 
 - How does Mesencephalon integrate sensory information, motor responses and reward processes into coordinated behavior systems?
 - What does it mean that the Midbrain combines a reflex system and a learning system? Define this integration in terms of neural function.
 - What is the role of neural communication in the Midbrain in linking sensory processing, motor responses, and reward-based learning?
 
-#### The hindbrain
+#### The Hindbrain
 
 The Hindbrain contains its subdivisions: the **Metencephalon** and **Myelencephalon**.
 
@@ -101,7 +101,7 @@ The **Myelencephalon** contains the **Medulla**.
 
 * The **Medulla** controls vital autonomic functions like the respiratory system, heart rate, and blood pressure
 
-#### Synthesis questions
+#### Synthesis Questions
 
 - Define how the Pons, Cerebellum, and Medulla work together to keep stable bodily function.
 - Why is the cerebellum referred to as the “little brain”? Define in terms of its structure, functions, and role in neural communication.
@@ -110,14 +110,14 @@ Congratulations! That was a lot of neuroscience! On to some more creative ways o
 
 [BrainFacts 3D Interactive Model](https://www.brainfacts.org/3d-brain#intro=false&focus=Brain-corpus_callosum)
 
-#### Synthesis questions
+#### Synthesis Questions
 
 - Based on the 3D brain model, how do different brain regions appear to be spatially organized to support communication and integration rather than isolated processing?
 - Where is the Hippocampus located in the 3D model, and how might its location support its role in memory and spatial navigation?
 
 Now, let’s move on to memory and how memory works within brain anatomy.
 
-#### Types of memory in human cognition
+#### Types of Memory in Human Cognition
 
 Memory is not just regulated by a certain part of the brain. It is a network, just like this:
 
@@ -125,7 +125,7 @@ Memory is not just regulated by a certain part of the brain. It is a network, ju
 
 The **hippocampus** in the medial temporal lobe is critical for forming new episodic memories and converting short-term memories into long-term storage. The **amygdala** strengthens memories that are emotionally significant, such as fear or stressful events. The **prefrontal cortex** supports **working memory** and helps retrieve and organize stored information during thinking and decision-making. In contrast, **procedural memories** (skills and habits) rely more on the **basal ganglia** and **cerebellum**, which support motor learning and automatic behaviors.
 
-#### Synthesis questions
+#### Synthesis Questions
 
 - Why might a traumatic event be remembered more vividly than a routine daily occurrence?
 - Name two types of memories and identify which brain structure supports each one.

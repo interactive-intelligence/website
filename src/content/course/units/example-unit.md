@@ -11,11 +11,11 @@ description: What machine learning is, how models learn from data, and the math 
 unit: 1
 ---
 
-<!-- The title is already shown as the page heading, so start with an intro paragraph, not a `#` heading. Use `##` for the main sections (they are listed beside the unit) and `###` below that. -->
+<!-- The title is already shown as the page heading, so start with an intro paragraph, not a `#` heading. Use `##` for the main sections (they are listed beside the unit) and `###` below that. Headings are in Title Case, and a `---` line goes between the tracks. -->
 
 Welcome to the Machine Learning unit! This unit has a technical track and a literacy track.
 
-## Technical track
+## Technical Track
 
 ### Task 1
 
@@ -53,6 +53,8 @@ flowchart LR
 
 > **Warning:** You should never train on your test data. Use a blockquote for notes and warnings.
 
-## Literacy track
+---
+
+## Literacy Track
 
 Link other units by their path, like the [Deep Learning unit](/intro-course/deep-learning).

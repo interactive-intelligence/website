@@ -28,7 +28,7 @@ It is recommended to read the listed papers in order, and to at least skim each 
 13. Bonus: [A Mathematical Framework for Transformer Circuits](https://transformer-circuits.pub/2021/framework/index.html). Think you know how transformers work? Think again!
 14. Bonus: [Why language models hallucinate](https://openai.com/index/why-language-models-hallucinate/). An interesting analysis on how the training objective during training incentivizes hallucinations.
 
-## Fairness, responsibility, safety
+## Fairness, Responsibility, Safety
 
 1. [A Survey on Bias and Fairness in Machine Learning](https://arxiv.org/pdf/1908.09635.pdf). A good and comprehensive survey of general concerns and approaches to addressing bias in machine learning problems.
 2. [On the (im)possibility of fairness](https://arxiv.org/pdf/1609.07236.pdf). No need to read it too in detail; skimming it and understanding the main result is fine. Argues that different mathematized components of algorithmic fairness are fundamentally incompatible with each other in the ideal.
