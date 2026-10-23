@@ -2,7 +2,7 @@
 name: Sophie Li
 role: Teaching Assistant
 quarter: Spring 2026
-active: true
+active: false
 image: ./photos/sophie-li.jpg
 email: yunsoph@uw.edu
 ---

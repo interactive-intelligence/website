@@ -2,7 +2,7 @@
 name: Kanishka Singh
 role: Teaching Assistant
 quarter: Spring 2026
-active: true
+active: false
 image: ./photos/kanishka-singh.jpg
 email: ksingh27@uw.edu
 ---

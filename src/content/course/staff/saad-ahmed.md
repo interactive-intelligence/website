@@ -2,7 +2,7 @@
 name: Saad Ahmed
 role: Teaching Assistant
 quarter: Spring 2026
-active: true
+active: false
 image: ./photos/saad-ahmed.png
 email: saad2025@uw.edu
 ---

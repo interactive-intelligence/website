@@ -2,7 +2,7 @@
 name: Chendur Jayavelu
 role: Teaching Assistant
 quarter: Spring 2026
-active: true
+active: false
 image: ./photos/chendur-jayavelu.png
 email: chendurj@uw.edu
 ---

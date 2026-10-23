@@ -2,7 +2,7 @@
 name: Nirav Nemali
 role: Teaching Assistant
 quarter: Spring 2026
-active: true
+active: false
 image: ./photos/nirav-nemali.png
 email: niravn6@uw.edu
 ---
