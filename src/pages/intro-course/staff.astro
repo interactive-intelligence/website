@@ -43,7 +43,8 @@ const groups = [
 	}))
 ].filter((g) => g.people.length > 0)
 
-const roleLine = (s: (typeof staff)[number]) => (s.quarter ? `${s.role}, ${s.quarter}` : s.role)
+// Only TAs have a quarter; "TA" keeps the line short enough not to wrap.
+const roleLine = (s: (typeof staff)[number]) => (s.quarter ? `TA, ${s.quarter}` : s.role)
 ---
 
 <CourseLayout
