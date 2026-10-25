@@ -277,12 +277,9 @@ h4 {
 		border-radius: var(--radius-sm);
 		overflow-x: auto;
 	}
-	/* Images are centered and scaled down to fit a reading-sized box. */
+	/* Images fill the column, or keep their own size when they're smaller. */
 	img {
-		width: auto;
 		height: auto;
-		max-width: min(100%, 36rem);
-		max-height: 28rem;
 		margin: 1.5rem auto;
 		border-radius: var(--radius-sm);
 	}
@@ -303,10 +300,9 @@ h4 {
 	iframe {
 		display: block;
 		width: 100%;
-		max-width: 40rem;
 		height: auto;
 		aspect-ratio: 16 / 9;
-		margin: 1.5rem auto;
+		margin: 1.5rem 0;
 		border: 0;
 		border-radius: var(--radius);
 	}
