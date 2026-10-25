@@ -76,7 +76,7 @@ const twitterCard = image ? 'summary_large_image' : 'summary'
 	</head>
 	<body>
 		<a href="#main" class="btn btn-primary skip-link">Skip to content</a>
-		<Navbar />
+		<Navbar><slot name="navbar" /></Navbar>
 		<main id="main">
 			<slot />
 		</main>

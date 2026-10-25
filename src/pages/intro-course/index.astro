@@ -18,7 +18,7 @@ const [{ Content }, { core, optional }, updates] = await Promise.all([
 	getFeed({ initiative: 'intro-course', limit: 4 })
 ])
 
-// The rail lists these too, but phones hide it, so this page links to everything.
+// The rail lists these too. As the course's front page, this page also links to everything.
 const pages = [
 	{
 		href: `${courseHref}/schedule`,

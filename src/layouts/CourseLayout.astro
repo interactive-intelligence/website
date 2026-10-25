@@ -1,10 +1,12 @@
 ---
 import 'katex/dist/katex.min.css'
+import { Icon } from 'astro-icon/components'
 import Layout from './Layout.astro'
 import { courseHref, getUnits, unitHref } from '../lib/course'
 
 // Intro Course pages: a rail with the course contents beside the page.
 // The current page's sections (`headings`) are listed under it in the rail.
+// On phones the rail is a popover, opened from a button in the header.
 interface Props {
 	title: string
 	description: string
@@ -39,9 +41,14 @@ const groups = [
 ---
 
 <Layout title={pageTitle} description={description}>
+	<button slot="navbar" class="btn btn-surface contents-toggle" popovertarget="course-nav">
+		<span class="long-label">Course contents</span>
+		<span class="short-label">Contents</span>
+		<Icon aria-hidden="true" name="mingcute:down-line" />
+	</button>
 	<div class="course">
 		<aside class="rail">
-			<nav class="course-nav" aria-label="Intro Course">
+			<nav class="course-nav" id="course-nav" aria-label="Intro Course" popover>
 				{
 					groups.map((group) => (
 						<div class="group">
@@ -85,6 +92,22 @@ const groups = [
 </Layout>
 
 <script>
+	const nav = document.getElementById('course-nav')!
+
+	// Close after following a link, including one to a section of this page.
+	nav.addEventListener('click', (e) => {
+		if ((e.target as HTMLElement).closest('a') && nav.matches(':popover-open')) nav.hidePopover()
+	})
+
+	// Only one menu at a time: opening the contents closes the site menu.
+	nav.addEventListener('toggle', (e) => {
+		if ((e as ToggleEvent).newState === 'open' && document.body.classList.contains('menu-open')) {
+			document.querySelector<HTMLButtonElement>('.menu-toggle')!.click()
+		}
+	})
+</script>
+
+<script>
 	// Draw ```mermaid code blocks as diagrams, themed from the site's colors.
 	// The library is only downloaded on pages that have one.
 	const diagrams = [...document.querySelectorAll('pre > code.language-mermaid')].map((code) => {
@@ -125,8 +148,16 @@ const groups = [
 		column-gap: 3rem;
 	}
 
+	/* Wide screens show the rail in place, so undo the browser's popover styles. */
 	.course-nav {
 		display: grid;
+		position: static;
+		inset: auto;
+		width: auto;
+		height: auto;
+		margin: 0;
+		overflow: visible;
+		color: inherit;
 		gap: 1rem;
 		padding: 0.5rem;
 		background: var(--surface);
@@ -181,14 +212,58 @@ const groups = [
 		font-weight: 400;
 	}
 
+	.contents-toggle {
+		display: none;
+	}
+
 	@media (max-width: 48rem) {
 		.course {
 			grid-template-columns: minmax(0, 1fr);
 		}
 
-		/* Units link to their neighbors at the bottom, and the course page lists everything. */
-		.course-nav {
+		.contents-toggle {
+			display: inline-flex;
+			margin-left: auto;
+		}
+
+		.contents-toggle :global(svg) {
+			transition: rotate var(--duration) var(--ease);
+		}
+
+		:global(body:has(#course-nav:popover-open)) .contents-toggle :global(svg) {
+			rotate: 180deg;
+		}
+
+		.short-label {
 			display: none;
+		}
+
+		.course-nav:not(:popover-open) {
+			display: none;
+		}
+
+		/* A floating card under the header, like the site menu. */
+		.course-nav:popover-open {
+			position: fixed;
+			inset: 6rem var(--gutter) auto;
+			max-height: calc(100dvh - 8rem);
+			padding: 0.75rem;
+			overflow-y: auto;
+			overscroll-behavior: contain;
+			background: var(--bg);
+			border-radius: calc(var(--radius-lg) - 0.25rem);
+			box-shadow: var(--shadow);
+		}
+	}
+
+	/* The smallest phones only have room for a shorter label beside the logo and menu button. */
+	@media (max-width: 22rem) {
+		.long-label {
+			display: none;
+		}
+
+		.short-label {
+			display: inline;
 		}
 	}
 </style>

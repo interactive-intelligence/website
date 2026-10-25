@@ -88,6 +88,8 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 		</ul>
 		<a href="/join" class="btn btn-primary">Join Us</a>
 	</div>
+	<!-- Pages can add their own buttons beside the menu toggle. -->
+	<slot />
 	<button
 		class="btn btn-surface menu-toggle"
 		aria-label="Menu"
