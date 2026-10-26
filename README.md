@@ -52,7 +52,7 @@ Most content is Markdown with frontmatter under `src/content/`. Field definition
 | Schedule | `src/content/schedule/` | One file per academic year with three quarters. Initiative `id`s are filenames from the initiatives folder. |
 | Constitution | `src/content/constitution.md` | |
 | Intro Course home | `src/content/course/home.md` | The welcome text at the top of `/intro-course`, where students find the course materials. The initiative page at `/initiatives/intro-course` is the course's public description. |
-| Intro Course units | `src/content/course/units/` | Copy `example-unit.md`. Each unit is a page under `/intro-course/`. Core units have a `unit` number; optional units leave it out. Images go in `images/<unit>/`. Math is written in LaTeX (`$x$` inline, or between `$$` lines for a block), and a `mermaid` code block becomes a diagram. |
+| Intro Course units | `src/content/course/units/` | Copy `example-unit.md`. Each unit is a page under `/intro-course/`. Core units have a `unit` number; optional units leave it out. Images go in `images/<unit>/`. Math is written in LaTeX (`$x$` inline, or between `$$` lines for a block), and a `mermaid` code block becomes a diagram. A `Synthesis Questions` heading and the list right after it are shown in a box. |
 | Intro Course schedule | `src/content/course/weeks/` | Copy `example-week.md`. One file per week, shown in order on the course schedule page. |
 | Intro Course staff | `src/content/course/staff/` | Copy `example-staff.md`. One file per person per role. Photos go in `photos/`. Set `active: false` once someone's quarter is over. |
 | Intro Course graduates | `src/content/course/graduates.md` | Add a `##` heading for the quarter and list the names. |

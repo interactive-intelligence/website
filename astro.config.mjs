@@ -30,6 +30,44 @@ function remarkMathOnlyInCourse() {
 	};
 }
 
+// In course content, each "Synthesis Questions" heading and the list of questions after it go in
+// a box so the questions stand out.
+/** @type {import('@astrojs/markdown-remark').RehypePlugin} */
+function rehypeSynthesisBoxes() {
+	/** @param {import('hast').RootContent} node @returns {string} */
+	const text = (node) =>
+		node.type === 'text' ? node.value : 'children' in node ? node.children.map(text).join('') : '';
+	/** @param {import('hast').RootContent} node */
+	const isHeading = (node) => node.type === 'element' && /^h[1-6]$/.test(node.tagName);
+	/** @param {import('hast').RootContent} node */
+	const isListOrSpace = (node) =>
+		(node.type === 'element' && /^(ul|ol)$/.test(node.tagName)) ||
+		(node.type === 'text' && !node.value.trim());
+
+	return (tree, file) => {
+		if (!file.path?.includes('/src/content/course/')) return;
+		/** @type {import('hast').RootContent[]} */
+		const children = [];
+		for (let i = 0; i < tree.children.length; i++) {
+			const node = tree.children[i];
+			if (!(isHeading(node) && text(node).trim().toLowerCase() === 'synthesis questions')) {
+				children.push(node);
+				continue;
+			}
+			let end = i + 1;
+			while (end < tree.children.length && isListOrSpace(tree.children[end])) end++;
+			children.push({
+				type: 'element',
+				tagName: 'div',
+				properties: { className: ['synthesis'] },
+				children: /** @type {import('hast').ElementContent[]} */ (tree.children.slice(i, end)),
+			});
+			i = end - 1;
+		}
+		tree.children = children;
+	};
+}
+
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://uw-i2.org',
@@ -75,6 +113,7 @@ export default defineConfig({
 		processor: unified({
 			remarkPlugins: [remarkMath, remarkMathOnlyInCourse],
 			rehypePlugins: [
+				rehypeSynthesisBoxes,
 				rehypeSlug,
 				[
 					rehypeAutolinkHeadings,

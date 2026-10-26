@@ -255,6 +255,21 @@ h4 {
 			margin-bottom: 0;
 		}
 	}
+	/* A unit's synthesis questions, boxed so they stand out from the reading around them. */
+	.synthesis {
+		margin: 1.5rem 0;
+		padding: 1rem 1.25rem;
+		background: var(--surface);
+		border: 1px solid var(--accent-light-border);
+		border-radius: var(--radius-sm);
+
+		> :first-child {
+			margin-top: 0;
+		}
+		> :last-child {
+			margin-bottom: 0;
+		}
+	}
 	mark {
 		padding: 0 0.125em;
 		background: var(--accent-light);
