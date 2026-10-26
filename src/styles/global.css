@@ -277,9 +277,11 @@ h4 {
 		border-radius: var(--radius-sm);
 		overflow-x: auto;
 	}
-	/* Images fill the column, or keep their own size when they're smaller. */
+	/* Images fill the column, or keep their own size when smaller. Tall ones are capped so they don't fill the screen. */
 	img {
+		width: auto;
 		height: auto;
+		max-height: 32rem;
 		margin: 1.5rem auto;
 		border-radius: var(--radius-sm);
 	}
