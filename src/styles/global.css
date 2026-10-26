@@ -137,6 +137,13 @@ a.btn [data-icon] {
 	transform: translate(2px, -2px);
 }
 
+code,
+kbd,
+pre,
+samp {
+	font-family: var(--font-mono);
+}
+
 button {
 	font: inherit;
 	cursor: pointer;
@@ -223,14 +230,24 @@ h4 {
 .prose {
 	overflow-wrap: break-word;
 
+	> :first-child {
+		margin-top: 0;
+	}
+	> :last-child {
+		margin-bottom: 0;
+	}
+	p,
+	li {
+		text-wrap: pretty;
+	}
 	h2 {
-		margin-top: 2rem;
+		margin-top: 2.5rem;
 	}
 	h3 {
-		margin-top: 1.5rem;
+		margin-top: 2rem;
 	}
 	h4 {
-		margin-top: 1rem;
+		margin-top: 1.5rem;
 	}
 	ul,
 	ol {

@@ -96,6 +96,13 @@ export default defineConfig({
 				],
 			},
 		},
+		{
+			provider: fontProviders.fontsource(),
+			name: 'IBM Plex Mono',
+			cssVariable: '--font-mono',
+			fallbacks: ['ui-monospace', 'monospace'],
+			display: 'swap',
+		},
 	],
 	vite: {
 		// Mermaid is imported lazily (see CourseLayout.astro), so the dev server only finds it mid-session

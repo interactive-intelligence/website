@@ -80,14 +80,6 @@ const weeks = await Promise.all(
 		font-size: 1rem;
 	}
 
-	.prose > :global(:first-child) {
-		margin-top: 0;
-	}
-
-	.prose > :global(:last-child) {
-		margin-bottom: 0;
-	}
-
 	/* Slide open and closed where the browser can animate to `auto` height. Elsewhere it just snaps. */
 	@media (prefers-reduced-motion: no-preference) {
 		.week {
