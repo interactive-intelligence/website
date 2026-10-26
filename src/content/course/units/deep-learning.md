@@ -6,6 +6,8 @@ unit: 3
 
 Hello and welcome to the _Deep Learning_ section of the i2 course! Like the machine learning unit, we're going to split our content into literacy and technical understanding.
 
+---
+
 ## Technical Track Content
 
 ### Task 1

@@ -5,6 +5,8 @@ description: What may make the human brain unique.
 
 Several traits of humans appear to be unique to our species and may be essential in designing an intelligence similar to our own. This chapter is dedicated to the study of these phenomena of our brains. We begin by trying to peel back the layers of humans’ strong social tendencies:
 
+---
+
 ## Task 1
 
 Complete the following lecture and synthesis questions.

@@ -12,6 +12,8 @@ Welcome to the AI Ethics section of the i2 course! In this pivotal module, we'll
 - Ethics in AI Research and Applications
 - Global Perspectives on AI Ethics
 
+---
+
 ## Literacy & Technical Track Content
 
 ### Task 1

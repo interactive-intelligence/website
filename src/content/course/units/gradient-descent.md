@@ -5,6 +5,8 @@ description: Implement backpropagation yourself with micrograd.
 
 A deeper dive into Gradient Descent where you will be implementing backpropagation on your own! This is an involved unit that, while technically not required, will push your understanding of neural networks to the max.
 
+---
+
 ## Task 1
 
 Watch the following video and implement _micrograd_ as specified:

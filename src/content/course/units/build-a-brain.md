@@ -5,6 +5,8 @@ description: How brains develop and connect, then design your own.
 
 It would be negligent not to begin by acknowledging the inadequacy of this chapter. The connectivity and wiring of the brain as well as the genetics and epigenetics that comprise it are far from fully understood, and these resources are merely scratching the surface of a profound ocean of literature and undiscovered territory of building the systems of a mind. Nonetheless, we begin with a lecture investigating the genetic and learned nature of human behaviors.
 
+---
+
 ## Task 1
 
 [10. Development, Nature & Nurture I](https://www.youtube.com/watch?v=kAX_PRnliMo&list=PLUl4u3cNGP60IKRN_pFptIBxeiMc0MCJP&index=11)

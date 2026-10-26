@@ -6,6 +6,8 @@ unit: 1
 
 Hello and welcome to the _Machine Learning_ section of the i2 course! Our content will be split into two categories: literacy and technical tracks. These topics are fundamental to the entire rest of our course, so please don't hesitate to reach out to the course staff if you have any questions!
 
+---
+
 ## Technical Track Content
 
 ### Task 1

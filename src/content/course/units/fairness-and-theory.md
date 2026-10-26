@@ -7,6 +7,8 @@ Machine learning models are interesting, but they have substantive effects on th
 
 It is recommended to read the listed papers in order, and to at least skim each one.
 
+---
+
 ## Theory
 
 1. [Universal Approximation Theorem](https://en.wikipedia.org/wiki/Universal_approximation_theorem). While it’s not necessary to completely understand the proof, make sure you understand at least what the theorem is stating and why it is an interesting result.

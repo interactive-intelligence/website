@@ -6,6 +6,8 @@ unit: 2
 
 Welcome to the first lesson studying the most powerful and intelligent computer known to date - the brain. We will begin by studying what the brain is exactly. This is called neuroanatomy/brain anatomy. The reason why we start with neuroanatomy is that deep learning does not attempt to model the “mind” itself (yet). However, it closely mirrors how the brain structurally processes the information.
 
+---
+
 ## Literacy & Technical Track Content
 
 ![Labeled diagram of brain structures and the origins of their names](./images/basic-neuroanatomy/brain_diagram.png)

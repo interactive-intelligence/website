@@ -7,6 +7,8 @@ unit: 6
 Welcome to the Reinforcement Learning section of the i2 Course! The topics in this unit should get you really
 thinking about NeuroAI. Be sure to ask lots of questions!
 
+---
+
 ## Technical Track Content
 
 ### Task 1

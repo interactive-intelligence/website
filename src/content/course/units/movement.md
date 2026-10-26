@@ -13,6 +13,8 @@ First, a few useful vocab words:
 
 > Efferent: Conducting away from something
 
+---
+
 ## Task 1
 
 Read the sections entitled “Feed forward control systems” and “The cerebellum may be a feedforward control system” from the notes here to get a sense for the purpose of the cerebellum.

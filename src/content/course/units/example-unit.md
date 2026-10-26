@@ -11,9 +11,11 @@ description: Machine learning basics and linear regression.
 unit: 1
 ---
 
-<!-- The title is already shown as the page heading, so start with an intro paragraph, not a `#` heading. Use `##` for the main sections (they are listed beside the unit) and `###` below that. Headings are in Title Case, and a `---` line goes between the tracks. -->
+<!-- The title is already shown as the page heading, so start with an intro paragraph, not a `#` heading. Use `##` for the main sections (they are listed beside the unit) and `###` below that. Headings are in Title Case, and a `---` line goes after the intro and between the tracks. -->
 
 Welcome to the Machine Learning unit! This unit has a technical track and a literacy track.
+
+---
 
 ## Technical Track
 

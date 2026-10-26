@@ -6,6 +6,8 @@ unit: 5
 
 Welcome to the visual system. Before we dive into how computer scientists have hacked together mathematical filters and matrix multiplication to process visual information and extract meaningful output, we will take a hard look at how your eyes and neurons process a continuous bombardment of photons.
 
+---
+
 ## Literacy & Technical Track Content
 
 ### Task 1

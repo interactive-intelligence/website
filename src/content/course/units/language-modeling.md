@@ -9,6 +9,8 @@ about the core concepts underlying textual GenAI tools that took the world by
 storm. Hopefully you can reason about these models better after learning more
 about how they work!
 
+---
+
 ## Technical Track Content
 
 ### Task 1

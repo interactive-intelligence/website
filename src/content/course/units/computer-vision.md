@@ -6,6 +6,8 @@ unit: 4
 
 Hello and welcome to the _Computer Vision_ section of the i2 course! Here we will approach CV from a deep learning perspective, to connect better with other units.
 
+---
+
 ## Technical Track Content
 
 ### Task 1
