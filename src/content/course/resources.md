@@ -10,7 +10,7 @@ links:
   - title: Weekly Slides
     url: https://drive.google.com/drive/folders/1n522lVll5g4XIgMs2Y9eLwsNAnKFjLGj
   - title: Lecture Recordings
-    url: https://www.youtube.com/playlist?list=PLhxso2rs7Lye5AeTJyZw19oTXFaiA-TAI
+    url: https://www.youtube.com/playlist?list=PLEUv6R9Qm66k
   - title: Lecture Verification Forms
     url: https://drive.google.com/drive/folders/1__mCzCYWws6k2-1A9xWBcPmtZuyexmoD
 ---
