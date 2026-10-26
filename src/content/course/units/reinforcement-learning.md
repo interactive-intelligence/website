@@ -1,6 +1,6 @@
 ---
 title: Reinforcement Learning
-description: How an agent learns to act in an environment through actions, states, rewards, and policies, with an introduction to deep reinforcement learning and Q-learning.
+description: How agents learn to act from rewards.
 unit: 6
 ---
 

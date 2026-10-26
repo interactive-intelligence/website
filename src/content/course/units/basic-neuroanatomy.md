@@ -1,6 +1,6 @@
 ---
 title: Basic Neuroanatomy
-description: The major regions of the brain from the forebrain to the hindbrain, what each structure does, and how memory is spread across brain structures.
+description: The brain's major regions and what each one does.
 unit: 2
 ---
 

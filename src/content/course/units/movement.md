@@ -1,6 +1,6 @@
 ---
 title: Movement
-description: How the brain controls movement, starting with the structure of the cerebellum and its role as a feedforward control system.
+description: How the brain controls movement.
 ---
 
 We are now going to be learning about how your brain makes you act and move in your environment. We start by investigating the cerebellum. This will tie into Reinforcement Learning (RL), so pay attention!

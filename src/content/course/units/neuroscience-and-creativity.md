@@ -1,6 +1,6 @@
 ---
 title: Neuroscience & Creativity
-description: What neuroscience can tell us about creativity, explored through a Huberman Lab podcast episode on the science of creative innovation.
+description: What neuroscience says about creativity.
 ---
 
 Are you curious about the mysterious force of invention, art, mathematics, and more that seems to allow the mind to expand beyond the information it was given to create beautiful new ideas? This is creativity, and with neuroscience, we can begin to dissect it such that we can begin to recreate it.

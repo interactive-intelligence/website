@@ -1,6 +1,6 @@
 ---
 title: Visual System
-description: How the eyes and visual cortex process light, from the retina and primary visual cortex to the functional areas and pathways of visual processing.
+description: How the eyes and visual cortex process light.
 unit: 5
 ---
 

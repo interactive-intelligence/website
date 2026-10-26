@@ -1,6 +1,6 @@
 ---
 title: Gradient Descent
-description: A deeper look at gradient descent in which you implement backpropagation yourself by building micrograd and training a small neural network with it.
+description: Implement backpropagation yourself with micrograd.
 ---
 
 A deeper dive into Gradient Descent where you will be implementing backpropagation on your own! This is an involved unit that, while technically not required, will push your understanding of neural networks to the max.

@@ -1,6 +1,6 @@
 ---
 title: Deinforcement Learning
-description: The cognitive science and psychology of reward and pain, covered through a paper that builds on reinforcement learning.
+description: The psychology of reward and pain.
 ---
 
 **Task:** This unit is very simple. Read our paper! **(1 hr)**

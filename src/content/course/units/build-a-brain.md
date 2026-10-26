@@ -1,6 +1,6 @@
 ---
 title: Build a Brain
-description: How the brain develops through nature and nurture and how its regions connect into large-scale networks, ending with a written project designing the brain of an organism for a new planet.
+description: How brains develop and connect, then design your own.
 ---
 
 It would be negligent not to begin by acknowledging the inadequacy of this chapter. The connectivity and wiring of the brain as well as the genetics and epigenetics that comprise it are far from fully understood, and these resources are merely scratching the surface of a profound ocean of literature and undiscovered territory of building the systems of a mind. Nonetheless, we begin with a lecture investigating the genetic and learned nature of human behaviors.

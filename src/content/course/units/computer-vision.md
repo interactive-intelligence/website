@@ -1,6 +1,6 @@
 ---
 title: Computer Vision
-description: How convolutional neural networks use filters, feature maps, pooling, and fully connected layers to classify images.
+description: How convolutional neural networks classify images.
 unit: 4
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Language Modeling
-description: How language models predict the next word, from statistical n-gram models to recurrent neural networks and transformers, with a hands-on project using HuggingFace.
+description: How language models predict the next word.
 unit: 8
 ---
 

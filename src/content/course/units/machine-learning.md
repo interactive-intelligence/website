@@ -1,6 +1,6 @@
 ---
 title: Machine Learning
-description: What machine learning is, how models learn from data, and core methods like linear and logistic regression, decision trees, and k-means clustering.
+description: Core machine learning methods, from regression to clustering.
 unit: 1
 ---
 

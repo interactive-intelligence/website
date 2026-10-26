@@ -1,6 +1,6 @@
 ---
 title: Human Brain Characteristics
-description: Traits that may be unique to the human brain, including theory of mind and attention, and how biological attention compares to attention mechanisms in machine learning.
+description: What may make the human brain unique.
 ---
 
 Several traits of humans appear to be unique to our species and may be essential in designing an intelligence similar to our own. This chapter is dedicated to the study of these phenomena of our brains. We begin by trying to peel back the layers of humans’ strong social tendencies:

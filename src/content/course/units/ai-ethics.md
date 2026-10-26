@@ -1,6 +1,6 @@
 ---
 title: AI Ethics
-description: Ethical issues in AI, including bias, privacy, autonomous systems, dual-use research, and global perspectives, ending with an ethical analysis of a real AI system.
+description: Bias, privacy, and other ethical issues in AI.
 unit: 7
 ---
 

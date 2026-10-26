@@ -1,6 +1,6 @@
 ---
 title: Deep Learning
-description: How neural networks are structured, how they learn through gradient descent and backpropagation, and how to build one that recognizes handwritten digits.
+description: How neural networks are built and trained.
 unit: 3
 ---
 
