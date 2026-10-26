@@ -1,0 +1,20 @@
+---
+import { getEntry, render } from 'astro:content'
+import CourseLayout from '../../layouts/CourseLayout.astro'
+
+const resources = await getEntry('coursePages', 'resources')
+if (!resources) {
+	throw new Error('Missing src/content/course/resources.md')
+}
+
+const { Content } = await render(resources)
+---
+
+<CourseLayout
+	title="Resources"
+	description="Forms, slides, and lecture recordings for i2's Intro Course."
+>
+	<div class="prose">
+		<Content />
+	</div>
+</CourseLayout>

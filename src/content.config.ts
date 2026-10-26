@@ -180,7 +180,7 @@ const courseStaff = defineCollection({
     }),
 });
 
-// Single pages of course text: home.md (the course home) and graduates.md.
+// Single pages of course text: home.md (the course home), resources.md, and graduates.md.
 const coursePages = defineCollection({
   loader: glob({ pattern: "*.md", base: "./src/content/course" }),
   schema: z.object({}),
