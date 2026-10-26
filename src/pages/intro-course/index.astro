@@ -127,8 +127,9 @@ const pages = [
 		gap: 0.5rem;
 	}
 
+	/* Two columns at most, so the four pages form a 2x2 grid; one column when there isn't room for two. */
 	.pages {
-		grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(max(14rem, calc(50% - 0.25rem)), 1fr));
 	}
 
 	.cards li > :global(a) {
