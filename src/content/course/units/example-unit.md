@@ -19,7 +19,7 @@ Welcome to the Machine Learning unit! This unit has a technical track and a lite
 
 ### Task 1
 
-Read the [I2 Grimoire chapter](https://grimoire.uw-i2.org/units/Machine%20Learning.pdf) and answer the synthesis questions.
+Read the [i2 Grimoire chapter](https://grimoire.uw-i2.org/units/Machine%20Learning.pdf) and answer the synthesis questions.
 
 <!-- Images go in images/<unit slug>/ next to this file and are added like this, with a short description of the image as the alt text:
 

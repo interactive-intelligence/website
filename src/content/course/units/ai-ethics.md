@@ -4,7 +4,7 @@ description: Ethical issues in AI, including bias, privacy, autonomous systems, 
 unit: 7
 ---
 
-Welcome to the AI Ethics section of the I2 course! In this pivotal module, we'll journey through the ethical maze of AI, grounding our understanding in real-world applications and dilemmas. We will cover the following subsections of AI Ethics:
+Welcome to the AI Ethics section of the i2 course! In this pivotal module, we'll journey through the ethical maze of AI, grounding our understanding in real-world applications and dilemmas. We will cover the following subsections of AI Ethics:
 - Introduction to AI Ethics
 - Key Ethical Issues in AI - From Bias to Accountability
 - AI, Privacy, and Security

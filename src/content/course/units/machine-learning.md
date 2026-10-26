@@ -4,15 +4,15 @@ description: What machine learning is, how models learn from data, and core meth
 unit: 1
 ---
 
-Hello and welcome to the _Machine Learning_ section of the I2 course! Our content will be split into two categories: literacy and technical tracks. These topics are fundamental to the entire rest of our course, so please don't hesitate to reach out to the course staff if you have any questions!
+Hello and welcome to the _Machine Learning_ section of the i2 course! Our content will be split into two categories: literacy and technical tracks. These topics are fundamental to the entire rest of our course, so please don't hesitate to reach out to the course staff if you have any questions!
 
 ## Technical Track Content
 
 ### Task 1
 
-*Navigate to the relevant section of the I2 Grimoire using the link below. Read the textbook and answer all synthesis questions to the best of your ability. Be sure to save these somewhere for future reference.*
+*Navigate to the relevant section of the i2 Grimoire using the link below. Read the textbook and answer all synthesis questions to the best of your ability. Be sure to save these somewhere for future reference.*
 
-[I2 Grimoire: Machine Learning](https://grimoire.uw-i2.org/units/Machine%20Learning.pdf)
+[i2 Grimoire: Machine Learning](https://grimoire.uw-i2.org/units/Machine%20Learning.pdf)
 
 ---
 

@@ -4,16 +4,16 @@ description: How an agent learns to act in an environment through actions, state
 unit: 6
 ---
 
-Welcome to the Reinforcement Learning section of the I2 Course! The topics in this unit should get you really
+Welcome to the Reinforcement Learning section of the i2 Course! The topics in this unit should get you really
 thinking about NeuroAI. Be sure to ask lots of questions!
 
 ## Technical Track Content
 
 ### Task 1
 
-*Navigate to the relevant section of the I2 Grimoire using the link below. Read the textbook and answer all synthesis questions to the best of your ability. Be sure to save these somewhere for future reference.*
+*Navigate to the relevant section of the i2 Grimoire using the link below. Read the textbook and answer all synthesis questions to the best of your ability. Be sure to save these somewhere for future reference.*
 
-[I2 Grimoire: Reinforcement Learning](https://grimoire.uw-i2.org/units/Reinforcement%20Learning.pdf)
+[i2 Grimoire: Reinforcement Learning](https://grimoire.uw-i2.org/units/Reinforcement%20Learning.pdf)
 
 ---
 

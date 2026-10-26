@@ -4,7 +4,7 @@ description: How language models predict the next word, from statistical n-gram 
 unit: 8
 ---
 
-Welcome to the Language Modeling section of the I2 Course! Here you will learn
+Welcome to the Language Modeling section of the i2 Course! Here you will learn
 about the core concepts underlying textual GenAI tools that took the world by
 storm. Hopefully you can reason about these models better after learning more
 about how they work!
@@ -13,9 +13,9 @@ about how they work!
 
 ### Task 1
 
-*Navigate to the relevant section of the I2 Grimoire using the link below. Read the textbook and answer all synthesis questions to the best of your ability. Be sure to save these somewhere for future reference.*
+*Navigate to the relevant section of the i2 Grimoire using the link below. Read the textbook and answer all synthesis questions to the best of your ability. Be sure to save these somewhere for future reference.*
 
-[I2 Grimoire: Language Modeling](https://grimoire.uw-i2.org/units/Language%20Modeling.pdf)
+[i2 Grimoire: Language Modeling](https://grimoire.uw-i2.org/units/Language%20Modeling.pdf)
 
 ---
 

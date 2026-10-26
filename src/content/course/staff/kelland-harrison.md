@@ -7,4 +7,4 @@ image: ./photos/kelland-harrison.jpg
 email: knyo@uw.edu
 ---
 
-My name is Kelland. I read a lot of sci-fi as a kid, so I've been thinking about AI for a while. I2 has been a great place for me to explore these ideas, and I hope to give you the same experience. I also like electronic music and german poetry.
+My name is Kelland. I read a lot of sci-fi as a kid, so I've been thinking about AI for a while. i2 has been a great place for me to explore these ideas, and I hope to give you the same experience. I also like electronic music and german poetry.

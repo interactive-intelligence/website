@@ -4,15 +4,15 @@ description: How neural networks are structured, how they learn through gradient
 unit: 3
 ---
 
-Hello and welcome to the _Deep Learning_ section of the I2 course! Like the machine learning unit, we're going to split our content into literacy and technical understanding.
+Hello and welcome to the _Deep Learning_ section of the i2 course! Like the machine learning unit, we're going to split our content into literacy and technical understanding.
 
 ## Technical Track Content
 
 ### Task 1
 
-*Navigate to the relevant section of the I2 Grimoire using the link below. Read the textbook and answer all synthesis questions to the best of your ability. Be sure to save these somewhere for future reference.*
+*Navigate to the relevant section of the i2 Grimoire using the link below. Read the textbook and answer all synthesis questions to the best of your ability. Be sure to save these somewhere for future reference.*
 
-[I2 Grimoire: Deep Learning](https://grimoire.uw-i2.org/units/Deep%20Learning.pdf)
+[i2 Grimoire: Deep Learning](https://grimoire.uw-i2.org/units/Deep%20Learning.pdf)
 
 ---
 

@@ -4,15 +4,15 @@ description: How convolutional neural networks use filters, feature maps, poolin
 unit: 4
 ---
 
-Hello and welcome to the _Computer Vision_ section of the I2 course! Here we will approach CV from a deep learning perspective, to connect better with other units.
+Hello and welcome to the _Computer Vision_ section of the i2 course! Here we will approach CV from a deep learning perspective, to connect better with other units.
 
 ## Technical Track Content
 
 ### Task 1
 
-*Navigate to the relevant section of the I2 Grimoire using the link below. Read the textbook and answer all synthesis questions to the best of your ability. Be sure to save these somewhere for future reference.*
+*Navigate to the relevant section of the i2 Grimoire using the link below. Read the textbook and answer all synthesis questions to the best of your ability. Be sure to save these somewhere for future reference.*
 
-[I2 Grimoire: Computer Vision](https://grimoire.uw-i2.org/units/Computer%20Vision.pdf)
+[i2 Grimoire: Computer Vision](https://grimoire.uw-i2.org/units/Computer%20Vision.pdf)
 
 ---
 
