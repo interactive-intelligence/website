@@ -100,8 +100,6 @@ Welcome to the AI Ethics section of the i2 course! In this pivotal module, we'll
 * Why is it essential for AI ethics to be globally inclusive?
 * Reflect on the challenges of implementing a universal ethical framework for AI.
 
----
-
 ### Task 2
 
 *Create the following small presentation, with the expectation of presenting to a group.*

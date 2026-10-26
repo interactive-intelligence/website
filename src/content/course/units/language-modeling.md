@@ -19,8 +19,6 @@ about how they work!
 
 [i2 Grimoire: Language Modeling](https://grimoire.uw-i2.org/units/Language%20Modeling.pdf)
 
----
-
 ### Task 2
 
 *Solve the coding challenges within the Jupyter notebook linked below (through Colab). If you encounter any issues with the notebook not functioning as described, please let us know!*
@@ -95,8 +93,6 @@ We’ll continue to discuss neural language models in greater detail through the
 **Great resource if you're still having trouble with NLP!**
 
 <iframe src="https://www.youtube-nocookie.com/embed/oi0JXuL19TA" title="Natural Language Processing: Crash Course AI #7" loading="lazy" allowfullscreen></iframe>
-
----
 
 ### Task 2
 

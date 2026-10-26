@@ -133,8 +133,6 @@ The **hippocampus** in the medial temporal lobe is critical for forming new epis
 - Name two types of memories and identify which brain structure supports each one.
 - According to the passage, why is memory described as a "network" rather than being controlled by a single brain structure?
 
----
-
 ### Task 2
 
 *Complete the following writing activity.*

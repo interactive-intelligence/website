@@ -16,8 +16,6 @@ Hello and welcome to the _Deep Learning_ section of the i2 course! Like the mach
 
 [i2 Grimoire: Deep Learning](https://grimoire.uw-i2.org/units/Deep%20Learning.pdf)
 
----
-
 ### Task 2
 
 *Solve the coding challenges within the Jupyter notebook linked below (through Colab). If you encounter any issues with the notebook not functioning as described, please let us know!*
@@ -125,8 +123,6 @@ This was a good introduction. Now lets turn to some amazing videos on the topic 
 
 * Why was ImageNet significant to the development of neural networks? What about AlexNet?
 * What are some real-world applications of neural networks? What are some ethical considerations associated with them?
-
----
 
 ### Task 2
 

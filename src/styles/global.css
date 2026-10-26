@@ -260,7 +260,7 @@ h4 {
 		margin: 1.5rem 0;
 		padding: 1rem 1.25rem;
 		background: var(--surface);
-		border: 1px solid var(--accent-light-border);
+		border: 1px solid var(--border);
 		border-radius: var(--radius-sm);
 
 		> :first-child {

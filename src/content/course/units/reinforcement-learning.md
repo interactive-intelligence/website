@@ -17,8 +17,6 @@ thinking about NeuroAI. Be sure to ask lots of questions!
 
 [i2 Grimoire: Reinforcement Learning](https://grimoire.uw-i2.org/units/Reinforcement%20Learning.pdf)
 
----
-
 ### Task 2
 
 *Solve the coding challenges within the Jupyter notebook linked below (through Colab). If you encounter any issues with the notebook not functioning as described, please let us know!*
@@ -107,8 +105,6 @@ Now let's watch some videos on RL.
 
 * What is the purpose of a sigmoid function, and what does its value tell us? What about an error function?
 * Describe the idea of gradient descent and how we use it in reinforcement learning.
-
----
 
 ### Task 2
 

@@ -16,8 +16,6 @@ Hello and welcome to the _Machine Learning_ section of the i2 course! Our conten
 
 [i2 Grimoire: Machine Learning](https://grimoire.uw-i2.org/units/Machine%20Learning.pdf)
 
----
-
 ### Task 2
 
 *Solve the coding challenges within the Jupyter notebook linked below (through Colab). If you encounter any issues with the notebook not functioning as described, please let us know!*
@@ -217,8 +215,6 @@ One powerful example of unsupervised learning is **k-means clustering**. This al
 constains points that are similar to each other. There is no "right answer". Rather, we would like the algorithm to uncover these clusters on its own.
 
 ![Scatter plot of points grouped into three colored clusters, each with a center marker](./images/machine-learning/k-means-visual.png)
-
----
 
 ### Task 2
 

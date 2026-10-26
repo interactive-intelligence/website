@@ -16,8 +16,6 @@ Hello and welcome to the _Computer Vision_ section of the i2 course! Here we wil
 
 [i2 Grimoire: Computer Vision](https://grimoire.uw-i2.org/units/Computer%20Vision.pdf)
 
----
-
 ### Task 2
 
 *Solve the coding challenges within the Jupyter notebook linked below (through Colab). If you encounter any issues with the notebook not functioning as described, please let us know!*
@@ -136,8 +134,6 @@ This was a lot of information, so please reach out to someone if you’re having
     * When each element of the corresponding pixels are multiplied then summed.
 * Give an example of a 3x3 matrix that would not do anything to the image it convolves over. Why does it not impact the image?
     * This is also known as the "do-nothing" matrix
-
----
 
 ### Task 2
 

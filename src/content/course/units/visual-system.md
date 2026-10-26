@@ -76,8 +76,6 @@ Here’s some questions to think about as you watch the video:
 * How does each hemisphere receive information from the contralateral visual field?
 * What is the blind spot?
 
----
-
 ### Task 2
 
 *Complete the following writing activity.*
