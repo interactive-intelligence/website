@@ -55,7 +55,7 @@ Most content is Markdown with frontmatter under `src/content/`. Field definition
 | Intro Course units | `src/content/course/units/` | Copy `example-unit.md`. Each unit is a page under `/intro-course/`. Core units have a `unit` number; optional units leave it out. Images go in `images/<unit>/`. Math is written in LaTeX (`$x$` inline, or between `$$` lines for a block), and a `mermaid` code block becomes a diagram. A `Synthesis Questions` heading and the list right after it are shown in a box. |
 | Intro Course schedule | `src/content/course/weeks/` | Copy `example-week.md`. One file per week, shown in order on the course schedule page. |
 | Intro Course staff | `src/content/course/staff/` | Copy `example-staff.md`. One file per person per role. Photos go in `photos/`. Set `active: false` once someone's quarter is over. |
-| Intro Course resources | `src/content/course/resources.md` | A list of links to the course's forms, slides, and recordings, shown at `/intro-course/resources`. |
+| Intro Course resources | `src/content/course/resources.md` | Links to the course's forms, slides, and recordings, shown as cards at `/intro-course/resources`. Add each one under `links` in the frontmatter with a `title` and `url`. |
 | Intro Course graduates | `src/content/course/graduates.md` | Add a `##` heading for the quarter and list the names. |
 | Projects, Publications | `src/content/projects/`, `src/content/publications/` | Defined but not shown anywhere yet. Only the unpublished research page draft (`src/pages/_research.astro`) reads them. |
 

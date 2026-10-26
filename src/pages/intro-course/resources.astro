@@ -1,6 +1,7 @@
 ---
 import { getEntry, render } from 'astro:content'
 import CourseLayout from '../../layouts/CourseLayout.astro'
+import ListCard from '../../components/ListCard.astro'
 
 const resources = await getEntry('coursePages', 'resources')
 if (!resources) {
@@ -8,6 +9,7 @@ if (!resources) {
 }
 
 const { Content } = await render(resources)
+const links = resources.data.links ?? []
 ---
 
 <CourseLayout
@@ -17,4 +19,27 @@ const { Content } = await render(resources)
 	<div class="prose">
 		<Content />
 	</div>
+
+	<ul class="list-reset cards">
+		{
+			links.map((link) => (
+				<li>
+					<ListCard href={link.url} title={link.title} />
+				</li>
+			))
+		}
+	</ul>
 </CourseLayout>
+
+<style>
+	/* Two columns at most, like the page cards on the course home; one column when there isn't room for two. */
+	.cards {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(max(14rem, calc(50% - 0.25rem)), 1fr));
+		gap: 0.5rem;
+	}
+
+	.cards li > :global(a) {
+		height: 100%;
+	}
+</style>

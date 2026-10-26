@@ -181,9 +181,19 @@ const courseStaff = defineCollection({
 });
 
 // Single pages of course text: home.md (the course home), resources.md, and graduates.md.
+// resources.md lists its links in frontmatter so the page can show them as cards.
 const coursePages = defineCollection({
   loader: glob({ pattern: "*.md", base: "./src/content/course" }),
-  schema: z.object({}),
+  schema: z.object({
+    links: z
+      .array(
+        z.object({
+          title: z.string(),
+          url: z.url(),
+        }),
+      )
+      .optional(),
+  }),
 });
 
 export const collections = {
