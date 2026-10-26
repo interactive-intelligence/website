@@ -42,8 +42,8 @@ const links = await getOpenLinks()
 const heroFormats: ImageOutputFormat[] = ['avif', 'webp']
 
 const stats = [
-	{ value: '202', label: 'Intro Course graduates' },
-	{ value: '120', plus: true, label: 'Active members across 5 initiatives' },
+	{ value: '200', plus: true, label: 'Intro Course graduates' },
+	{ value: '100', plus: true, label: 'Active initiative members' },
 	{ value: '4', label: 'Research Room teams' },
 	{ value: '1', label: 'Talk hosted' }
 ]
@@ -107,7 +107,7 @@ const stats = [
 							{s.value}
 							{s.plus && <span class="plus">+</span>}
 						</div>
-						<div class="label">{s.label}</div>
+						<div class="stat-label">{s.label}</div>
 					</div>
 				))
 			}
@@ -327,8 +327,9 @@ const stats = [
 		color: var(--text-accent);
 	}
 
-	.stat .label {
-		font-size: 0.75rem;
+	.stat .stat-label {
+		font-size: 0.875rem;
+		color: var(--text-accent);
 	}
 
 	@media (max-width: 56rem) {
