@@ -13,6 +13,7 @@ import heroSmallA from '../assets/clubfair.jpg'
 import heroSmallB from '../assets/selfie.jpg'
 import allenLogo from '../assets/allen-school-logo.svg'
 import cntLogo from '../assets/cnt-logo.png'
+import janeStreetLogo from '../assets/jane-street-logo.svg'
 
 const description =
 	"interactive intelligence (i2) is the University of Washington's student-led NeuroAI education and research organization, exploring the intersection of AI, neuroscience, and philosophy."
@@ -165,6 +166,22 @@ const stats = [
 			</a>
 		</div>
 	</section>
+
+	<section class="sponsors">
+		<h2 id="sponsors">
+			Sponsors<a class="heading-anchor" href="#sponsors" aria-label="Link to section">#</a>
+		</h2>
+		<div class="affil-cards">
+			<a
+				href="https://www.janestreet.com"
+				target="_blank"
+				rel="noopener"
+				class="affil-card affil-jane-street"
+			>
+				<Image src={janeStreetLogo} alt="Jane Street" />
+			</a>
+		</div>
+	</section>
 </Layout>
 
 <style>
@@ -263,7 +280,7 @@ const stats = [
 
 	.affil-cards {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(max(16rem, 50% - 0.5rem), 1fr));
 		gap: 1rem;
 	}
 
@@ -294,6 +311,10 @@ const stats = [
 
 	.affil-cnt {
 		background: var(--black);
+	}
+
+	.affil-jane-street {
+		background: var(--text-inverse);
 	}
 
 	.affil-card :global(img) {
