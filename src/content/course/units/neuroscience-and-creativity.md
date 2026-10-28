@@ -9,6 +9,6 @@ Are you curious about the mysterious force of invention, art, mathematics, and m
 
 ## Task 1
 
-Listen or watch the following podcast (also available on Spotify if you prefer) and answer the Synthesis questions!
+Listen to or watch the following podcast (also available on Spotify if you prefer)!
 
 [The Science of Creativity & How to Enhance Creative Innovation - Huberman Lab](https://hubermanlab.com/the-science-of-creativity-and-how-to-enhance-creative-innovation/)
