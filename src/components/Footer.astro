@@ -247,6 +247,13 @@ const resources = [{ href: 'https://grimoire.uw-i2.org/', label: 'Textbook' }]
 		paint-order: stroke;
 	}
 
+	/* The shimmer is a SMIL animation CSS can't pause, so drop the gradient instead. */
+	@media (prefers-reduced-motion: reduce) {
+		.bigname text {
+			fill: var(--accent-light);
+		}
+	}
+
 	.bigname-defs .g-edge {
 		stop-color: var(--surface);
 	}
