@@ -21,7 +21,9 @@ const { name, role, image, tags = [], email, website } = Astro.props
 		{
 			image && (
 				<div class="photo">
-					<Image src={image} alt={name} sizes="7rem" loading="lazy" />
+					{/* Shown at 7rem (112px). These widths stay sharp on 2× and 3× screens, even for
+					a wide photo cropped to a square; Astro's defaults start at 640. */}
+					<Image src={image} alt={name} sizes="7rem" widths={[320, 640]} loading="lazy" />
 				</div>
 			)
 		}
