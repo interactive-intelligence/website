@@ -21,7 +21,7 @@ const { name, role, image, tags = [], email, website } = Astro.props
 		{
 			image && (
 				<div class="photo">
-					<Image src={image} alt={name} sizes="7rem" loading="lazy" />
+					<Image src={image} alt="" sizes="7rem" loading="lazy" />
 				</div>
 			)
 		}
