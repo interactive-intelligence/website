@@ -1,18 +1,11 @@
 ---
 import { Image } from 'astro:assets'
-import { closesAttr, getOpenLinks, getPublished, linksFor } from '../../lib/content'
+import { getInitiatives, getOpenLinks, initiativeHref } from '../../lib/content'
 import Layout from '../../layouts/Layout.astro'
-import LinkButton from '../../components/LinkButton.astro'
-import { courseHref } from '../../lib/course'
+import InitiativeButtons from '../../components/InitiativeButtons.astro'
 
-const initiatives = (await getPublished('initiatives')).sort((a, b) => a.data.order - b.data.order)
+const initiatives = await getInitiatives()
 const links = await getOpenLinks()
-
-const learnMoreHref = (data: { external_url?: string }, id: string) =>
-	data.external_url ?? `/initiatives/${id}`
-
-// With no sign-up open, the Intro Course card links to the course homepage instead.
-const showCourseHome = (id: string) => id === 'intro-course' && linksFor(links, id).length === 0
 ---
 
 <Layout
@@ -32,7 +25,7 @@ const showCourseHome = (id: string) => id === 'intro-course' && linksFor(links, 
 			initiatives.map((item, i) => (
 				<article class="card">
 					<a
-						href={learnMoreHref(item.data, item.id)}
+						href={initiativeHref(item)}
 						class="photo"
 						tabindex="-1"
 						aria-hidden="true"
@@ -48,21 +41,7 @@ const showCourseHome = (id: string) => id === 'intro-course' && linksFor(links, 
 						<h2>{item.data.name}</h2>
 						<p>{item.data.long_description}</p>
 						<div class="actions">
-							<LinkButton
-								href={learnMoreHref(item.data, item.id)}
-								variant="accent"
-								aria-label={`Learn more about ${item.data.name}`}
-							>
-								Learn more
-							</LinkButton>
-							{linksFor(links, item.id).map((link) => (
-								<LinkButton href={link.data.url} data-closes={closesAttr(link)}>
-									{link.data.title}
-								</LinkButton>
-							))}
-							{showCourseHome(item.id) && (
-								<LinkButton href={courseHref}>Course homepage</LinkButton>
-							)}
+							<InitiativeButtons initiative={item} links={links} />
 						</div>
 					</div>
 				</article>

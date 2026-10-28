@@ -1,0 +1,36 @@
+---
+import LinkButton from './LinkButton.astro'
+import { closesAttr, initiativeHref, linksFor, type Link } from '../lib/content'
+import { courseHref } from '../lib/course'
+
+// An initiative's buttons: "Learn more", then its open links. With no sign-up open, the
+// Intro Course links to the course homepage instead. The caller wraps them in its own row.
+interface Props {
+	initiative: { id: string; data: { name: string; external_url?: string } }
+	// Open links (see getOpenLinks); those tagged with this initiative become buttons.
+	links: Link[]
+}
+
+const { initiative, links } = Astro.props
+const open = linksFor(links, initiative.id)
+---
+
+<LinkButton
+	href={initiativeHref(initiative)}
+	variant="accent"
+	aria-label={`Learn more about ${initiative.data.name}`}
+>
+	Learn more
+</LinkButton>
+{
+	open.map((link) => (
+		<LinkButton href={link.data.url} data-closes={closesAttr(link)}>
+			{link.data.title}
+		</LinkButton>
+	))
+}
+{
+	initiative.id === 'intro-course' && open.length === 0 && (
+		<LinkButton href={courseHref}>Course homepage</LinkButton>
+	)
+}

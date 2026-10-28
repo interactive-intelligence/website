@@ -5,6 +5,14 @@ import { hasTime } from './dates'
 export const getPublished = <C extends CollectionKey>(collection: C) =>
 	getCollection(collection, (entry) => (entry.data as { published?: boolean }).published !== false)
 
+// Published initiatives, in their `order`.
+export const getInitiatives = async () =>
+	(await getPublished('initiatives')).sort((a, b) => a.data.order - b.data.order)
+
+// An initiative's page on this site, or its own site if it has one.
+export const initiativeHref = (initiative: { id: string; data: { external_url?: string } }) =>
+	initiative.data.external_url ?? `/initiatives/${initiative.id}`
+
 export type Link = CollectionEntry<'links'>
 
 const DAY = 24 * 60 * 60 * 1000

@@ -1,5 +1,6 @@
 ---
 import { getFeed } from '../../lib/feed'
+import { discordUrl } from '../../lib/links'
 import Layout from '../../layouts/Layout.astro'
 import AnnouncementList from '../../components/AnnouncementList.astro'
 
@@ -13,7 +14,7 @@ const items = await getFeed()
 	<h1>Announcements</h1>
 	<p class="lede">
 		What's happening at i2. For more updates, join the{' '}
-		<a href="https://discord.gg/Ph8njzHedC" target="_blank" rel="noopener" class="text-link"
+		<a href={discordUrl} target="_blank" rel="noopener" class="text-link"
 			>Discord</a
 		>.
 	</p>

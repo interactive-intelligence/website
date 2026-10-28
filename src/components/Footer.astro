@@ -1,5 +1,6 @@
 ---
 import logoRaw from '../assets/i2logo.svg?raw'
+import { discordUrl, socials } from '../lib/links'
 
 const links = [
 	{ href: '/about', label: 'About' },
@@ -11,13 +12,7 @@ const links = [
 	{ href: '/join', label: 'Join us' }
 ]
 
-const socials = [
-	{ href: 'https://discord.gg/Ph8njzHedC', label: 'Discord' },
-	{ href: 'https://www.instagram.com/uw_i2/', label: 'Instagram' },
-	{ href: 'https://www.youtube.com/channel/UCnOSBig3HbEHFUi2HBA7EtA', label: 'YouTube' },
-	{ href: 'https://x.com/InteractiveInt9', label: 'X (Twitter)' },
-	{ href: 'https://github.com/interactive-intelligence', label: 'GitHub' }
-]
+const follow = [{ href: discordUrl, label: 'Discord' }, ...socials]
 
 const resources = [{ href: 'https://grimoire.uw-i2.org/', label: 'Textbook' }]
 ---
@@ -49,7 +44,7 @@ const resources = [{ href: 'https://grimoire.uw-i2.org/', label: 'Textbook' }]
 			<div class="label">Follow</div>
 			<ul class="list-reset">
 				{
-					socials.map(({ href, label }) => (
+					follow.map(({ href, label }) => (
 						<li>
 							<a href={href} target="_blank" rel="noopener noreferrer">
 								{label}

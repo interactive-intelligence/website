@@ -1,13 +1,13 @@
 ---
 import { Font } from 'astro:assets'
 import QRCode from 'qrcode'
-import { discordUrl } from '../lib/links'
+import { discordUrl, instagramUrl } from '../lib/links'
 import '../styles/global.css'
 
 const links = [
 	{ name: 'website', label: 'uw-i2.org', url: 'https://uw-i2.org' },
 	{ name: 'discord', label: discordUrl.replace('https://', ''), url: discordUrl },
-	{ name: 'instagram', label: '@uw_i2', url: 'https://www.instagram.com/uw_i2/' }
+	{ name: 'instagram', label: '@uw_i2', url: instagramUrl }
 ]
 
 const codes = await Promise.all(

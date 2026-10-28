@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro'
 import { Icon } from 'astro-icon/components'
 import LinkButton from '../components/LinkButton.astro'
 import ListCard from '../components/ListCard.astro'
-import { discordUrl } from '../lib/links'
+import { discordUrl, socials } from '../lib/links'
 import { closesAttr, getOpenLinks } from '../lib/content'
 import { TIME_ZONE, hasTime } from '../lib/dates'
 
@@ -30,28 +30,6 @@ const closesLabel = (closes: Date) =>
 const linkMeta = (l: (typeof links)[number]) =>
 	[l.data.description, l.data.closes && closesLabel(l.data.closes)].filter(Boolean).join(' · ')
 
-const socials = [
-	{
-		href: 'https://www.instagram.com/uw_i2/',
-		label: 'Instagram',
-		icon: 'mingcute:instagram-line'
-	},
-	{
-		href: 'https://www.youtube.com/channel/UCnOSBig3HbEHFUi2HBA7EtA',
-		label: 'YouTube',
-		icon: 'mingcute:youtube-line'
-	},
-	{
-		href: 'https://twitter.com/InteractiveInt9',
-		label: 'X (Twitter)',
-		icon: 'mingcute:social-x-line'
-	},
-	{
-		href: 'https://github.com/interactive-intelligence',
-		label: 'GitHub',
-		icon: 'mingcute:github-line'
-	}
-]
 ---
 
 <Layout

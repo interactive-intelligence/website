@@ -1,7 +1,8 @@
 ---
 import { Image, Picture } from 'astro:assets'
 import type { ImageOutputFormat } from 'astro'
-import { getOpenLinks, getPublished } from '../lib/content'
+import { getInitiatives, getOpenLinks } from '../lib/content'
+import { socials } from '../lib/links'
 import { getFeed } from '../lib/feed'
 import InitiativesAccordion from '../components/InitiativesAccordion.astro'
 import AnnouncementList from '../components/AnnouncementList.astro'
@@ -26,15 +27,10 @@ const organizationSchema = {
 	logo: new URL('/favicon.svg', Astro.site).toString(),
 	description,
 	parentOrganization: { '@type': 'CollegeOrUniversity', name: 'University of Washington' },
-	sameAs: [
-		'https://www.instagram.com/uw_i2/',
-		'https://www.youtube.com/channel/UCnOSBig3HbEHFUi2HBA7EtA',
-		'https://twitter.com/InteractiveInt9',
-		'https://github.com/interactive-intelligence'
-	]
+	sameAs: socials.map((s) => s.href)
 }
 
-const initiatives = (await getPublished('initiatives')).sort((a, b) => a.data.order - b.data.order)
+const initiatives = await getInitiatives()
 
 const recentAnnouncements = await getFeed({ limit: 3 })
 const links = await getOpenLinks()

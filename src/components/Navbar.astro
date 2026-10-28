@@ -1,5 +1,5 @@
 ---
-import { getPublished } from '../lib/content'
+import { getInitiatives, initiativeHref } from '../lib/content'
 import { courseHref } from '../lib/course'
 import logoRaw from '../assets/i2logo.svg?raw'
 import { Icon } from 'astro-icon/components'
@@ -22,7 +22,7 @@ const links = [
 	{ href: '/initiatives', label: 'Initiatives', dropdown: true }
 ]
 
-const initiatives = (await getPublished('initiatives')).sort((a, b) => a.data.order - b.data.order)
+const initiatives = await getInitiatives()
 
 // The Intro Course's pages sit outside /initiatives but still belong to it.
 const isActive = (href: string) =>
@@ -30,9 +30,6 @@ const isActive = (href: string) =>
 		? currentPath === href
 		: currentPath.startsWith(href) ||
 			(href === '/initiatives' && currentPath.startsWith(courseHref))
-
-const initiativeHref = (data: { external_url?: string }, id: string) =>
-	data.external_url ?? `/initiatives/${id}`
 ---
 
 <nav aria-label="Main">
@@ -64,7 +61,7 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 								{initiatives.map((init) => (
 									<li>
 										<a
-											href={initiativeHref(init.data, init.id)}
+											href={initiativeHref(init)}
 											target={init.data.external_url ? '_blank' : undefined}
 											rel={init.data.external_url ? 'noopener' : undefined}
 										>

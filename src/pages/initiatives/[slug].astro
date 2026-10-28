@@ -3,6 +3,7 @@ import { Picture } from 'astro:assets'
 import { render } from 'astro:content'
 import { closesAttr, getOpenLinks, getPublished, linksFor } from '../../lib/content'
 import { getFeed } from '../../lib/feed'
+import { quarterStatus, splitTalks } from '../../lib/schedule'
 import { TIME_ZONE } from '../../lib/dates'
 import { Icon } from 'astro-icon/components'
 import Layout from '../../layouts/Layout.astro'
@@ -31,22 +32,26 @@ const [schedules, talks, updates, openLinks] = await Promise.all([
 ])
 const links = linksFor(openLinks, entry.id)
 
-const today = new Date()
-
 // Every quarter across all schedule years, annotated with whether this
 // initiative runs in it (and when it meets).
 const quarters = schedules
 	.flatMap((s) =>
 		s.data.quarters.map((q) => {
 			const slot = q.initiatives.find((i) => i.id === entry.id)
-			return { ...q, year: s.data.year, active: Boolean(slot), time: slot?.time }
+			return {
+				...q,
+				year: s.data.year,
+				status: quarterStatus(q),
+				active: Boolean(slot),
+				time: slot?.time
+			}
 		})
 	)
 	.sort((a, b) => a.start.getTime() - b.start.getTime())
 
-const current = quarters.find((q) => today >= q.start && today < q.end)
+const current = quarters.find((q) => q.status === 'current')
 const running = Boolean(current?.active)
-const next = quarters.find((q) => q.start > today && q.active)
+const next = quarters.find((q) => q.status === 'upcoming' && q.active)
 const focus = running ? current : next
 
 const dateFmt = new Intl.DateTimeFormat('en-US', {
@@ -58,12 +63,7 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
 const isTalks = entry.id === 'talks'
 // The Intro Course's materials have their own pages, linked beside any open sign-up.
 const isCourse = entry.id === 'intro-course'
-const upcomingTalks = talks
-	.filter((t) => t.data.date.getTime() >= today.getTime())
-	.sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
-const pastTalks = talks
-	.filter((t) => t.data.date.getTime() < today.getTime())
-	.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+const { upcoming: upcomingTalks, past: pastTalks } = splitTalks(talks)
 ---
 
 <Layout
