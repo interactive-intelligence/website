@@ -210,7 +210,7 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex
 			buttons.forEach((btn) => {
 				const dir = Number(btn.dataset.dir)
 				const target = index + dir
-				btn.disabled = target < 0 || target >= count
+				btn.ariaDisabled = String(target < 0 || target >= count)
 			})
 		}
 
@@ -273,12 +273,12 @@ const initialIndex = defaultIndex === -1 ? years.length - 1 : defaultIndex
 			opacity var(--duration-fast) var(--ease);
 	}
 
-	.year-nav:hover:not(:disabled) {
+	.year-nav:hover:not([aria-disabled='true']) {
 		background: var(--accent-light);
 		border-color: var(--accent-light-border);
 	}
 
-	.year-nav:disabled {
+	.year-nav[aria-disabled='true'] {
 		opacity: 0.3;
 		cursor: not-allowed;
 	}
