@@ -126,7 +126,7 @@ export default defineConfig({
 					rehypeAutolinkHeadings,
 					{
 						behavior: 'append',
-						properties: { className: 'heading-anchor', ariaLabel: 'Link to section' },
+						properties: { className: 'heading-anchor', ariaHidden: 'true', tabIndex: -1 },
 						content: { type: 'text', value: '#' },
 					},
 				],

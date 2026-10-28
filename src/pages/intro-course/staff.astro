@@ -58,7 +58,7 @@ const roleLine = (s: (typeof staff)[number]) => (s.quarter ? `TA, ${s.quarter}` 
 			<section>
 				<h2 id={group.slug}>
 					{group.title}
-					<a class="heading-anchor" href={`#${group.slug}`} aria-label="Link to section">
+					<a class="heading-anchor" href={`#${group.slug}`} aria-hidden="true" tabindex="-1">
 						#
 					</a>
 				</h2>
