@@ -7,6 +7,6 @@ link_label: Apply
 initiatives: [intro-course]
 ---
 
-The application is rolling and closes on October 5th, 2026 at 11:59 PM. It includes a few required essay questions, so we recommend starting early. The mandatory first meeting is on October 5th, 2026.
+The application is rolling and closes on October 5th, 2026 at 11:59 PM. It includes a few required essay questions, so we recommend starting early. The mandatory first meeting is on October 9th, 2026.
 
 You can read more on the [Intro Course page](/initiatives/intro-course).
