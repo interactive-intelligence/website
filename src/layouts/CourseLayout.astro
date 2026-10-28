@@ -1,5 +1,5 @@
 ---
-import 'katex/dist/katex.min.css'
+import katexCss from 'katex/dist/katex.min.css?url'
 import { Icon } from 'astro-icon/components'
 import Layout from './Layout.astro'
 import { courseHref, getUnits, unitHref } from '../lib/course'
@@ -12,9 +12,11 @@ interface Props {
 	description: string
 	lede?: string
 	headings?: { slug: string; text: string }[]
+	/** Load KaTeX's stylesheet, for content with math (`remarkPluginFrontmatter.math`). */
+	math?: boolean
 }
 
-const { title, description, lede, headings = [] } = Astro.props
+const { title, description, lede, headings = [], math = false } = Astro.props
 const { core, optional } = await getUnits()
 const current = Astro.url.pathname.replace(/\/$/, '')
 // The home page's heading is the course name, so its title says "Home" instead.
@@ -42,6 +44,7 @@ const groups = [
 ---
 
 <Layout title={pageTitle} description={description}>
+	{math && <link slot="head" rel="stylesheet" href={katexCss} />}
 	<button slot="navbar" class="btn btn-surface contents-toggle" popovertarget="course-nav">
 		<span class="long-label">Course contents</span>
 		<span class="short-label">Contents</span>
@@ -110,7 +113,8 @@ const groups = [
 
 <script>
 	// Draw ```mermaid code blocks as diagrams, themed from the site's colors.
-	// The library is only downloaded on pages that have one.
+	// The library (~190 KB) is only downloaded on pages that have one, once a diagram is
+	// within a screen of view.
 	const diagrams = [...document.querySelectorAll('pre > code.language-mermaid')].map((code) => {
 		const figure = document.createElement('figure')
 		figure.className = 'mermaid'
@@ -120,6 +124,17 @@ const groups = [
 	})
 
 	if (diagrams.length > 0) {
+		await new Promise<void>((resolve) => {
+			const observer = new IntersectionObserver(
+				(entries) => {
+					if (!entries.some((entry) => entry.isIntersecting)) return
+					observer.disconnect()
+					resolve()
+				},
+				{ rootMargin: '100% 0px' }
+			)
+			diagrams.forEach((diagram) => observer.observe(diagram))
+		})
 		const { default: mermaid } = await import('mermaid')
 		const style = getComputedStyle(document.documentElement)
 		const token = (name: string) => style.getPropertyValue(name).trim()
