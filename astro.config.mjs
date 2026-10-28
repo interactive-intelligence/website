@@ -100,6 +100,8 @@ export default defineConfig({
 			display: 'swap',
 			options: {
 				variants: [
+					{ src: ['./src/assets/fonts/OpenSauceSans-Light.woff2'], weight: 300, style: 'normal' },
+					{ src: ['./src/assets/fonts/OpenSauceSans-LightItalic.woff2'], weight: 300, style: 'italic' },
 					{ src: ['./src/assets/fonts/OpenSauceSans-Regular.woff2'], weight: 400, style: 'normal' },
 					{ src: ['./src/assets/fonts/OpenSauceSans-Italic.woff2'], weight: 400, style: 'italic' },
 					{ src: ['./src/assets/fonts/OpenSauceSans-Medium.woff2'], weight: 500, style: 'normal' },
@@ -108,6 +110,8 @@ export default defineConfig({
 					{ src: ['./src/assets/fonts/OpenSauceSans-SemiBoldItalic.woff2'], weight: 600, style: 'italic' },
 					{ src: ['./src/assets/fonts/OpenSauceSans-Bold.woff2'], weight: 700, style: 'normal' },
 					{ src: ['./src/assets/fonts/OpenSauceSans-BoldItalic.woff2'], weight: 700, style: 'italic' },
+					{ src: ['./src/assets/fonts/OpenSauceSans-ExtraBold.woff2'], weight: 800, style: 'normal' },
+					{ src: ['./src/assets/fonts/OpenSauceSans-ExtraBoldItalic.woff2'], weight: 800, style: 'italic' },
 				],
 			},
 		},
