@@ -6,4 +6,4 @@ photo: ./photos/talks.jpg
 order: 5
 ---
 
-Our talks series brings in researchers, industry experts, and students to share work spanning AI, neuroscience, and the connections between them. Sessions are open to anyone, no membership required, and leave time for questions and discussion afterward.
+Our talk series brings in researchers, industry experts, and students to share work spanning AI, neuroscience, and the connections between them. Sessions are open to anyone, no membership required, and leave time for questions and discussion afterward.

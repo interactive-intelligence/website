@@ -1,7 +1,7 @@
 ---
 ---
 
-Welcome to the Intro Course! Each week pairs a lecture with a unit: a reading from our course textbook, the [i2 Grimoire](https://grimoire.uw-i2.org), synthesis questions, and a project. Every unit has a technical track and a literacy track, so pick the one that fits your background. The [schedule](/intro-course/schedule) shows what each week covers.
+Welcome to the Intro Course! Each week pairs a lecture with a unit: a reading from our course textbook, the [i2 Grimoire](https://grimoire.uw-i2.org), synthesis questions, and a project. Every core unit has a technical track and a literacy track, so pick the one that fits your background. The [schedule](/intro-course/schedule) shows what each week covers.
 
 A few things to remember:
 
