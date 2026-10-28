@@ -31,7 +31,7 @@ When you are finished with your code, independently verify that it works and hav
 
 Remember that this is all for your learning, so do your best and don’t stress!
 
-Congratulations! You now understand the (_incredibly basic)_ basics of Deep RL!
+Congratulations! You now understand the (_incredibly basic_) basics of Deep RL!
 
 ---
 
@@ -65,7 +65,7 @@ Unfortunately, this new state is very bad for the computer because there’s no 
 
 ![Diagram of the environment after a punishment is given](./images/reinforcement-learning/bad_reward.png)
 
-The computer decides what steps to take using something called a **policy**. A computer uses a policy to decide what its next step should be. For example, maybe the computer’s policy is to maximize its rewards. Then, every single action it takes is the action that produces the highest reward. This helps it avoid undesirable actions, like knocking over the board, because they have such low rewards.
+The computer decides what steps to take using something called a **policy**. For example, maybe the computer’s policy is to greedily maximize its immediate reward. Then, every single action it takes is the action that produces the highest reward. This helps it avoid undesirable actions, like knocking over the board, because they have such low rewards.
 
 This isn’t always the best policy, though. We said earlier that capturing the opponent’s queen is a very high-reward action. Suppose the computer is in a position where it can capture its opponent’s queen, but in doing so leaves its king vulnerable. In this case, maybe taking the highest-reward action isn’t the best way to go. We would have to use a different policy in our decision-making.
 
@@ -79,7 +79,7 @@ Take a look at the short video below, which tries to teach a robot to walk using
 
 Notice that the robot wasn’t given any directions. It was given a target, and every action it took was rewarded or punished, but it ultimately had to learn the correct sequence of actions that would allow it to walk.
 
-If we apply this to our chess example, the target might be to win the game by capturing the opponent’s king. We won’t tell the computer how to do that, but every time it takes an action we can reward or punish it. That way, it starts to learn the correct sequence of actions that it needs to take in order to win the game.
+If we apply this to our chess example, the target might be to win the game by checkmating the opponent. We won’t tell the computer how to do that, but every time it takes an action we can reward or punish it. That way, it starts to learn the correct sequence of actions that it needs to take in order to win the game.
 
 Also, like in the video, we can put our chess computer in different environments to force it to learn new actions. For example, we can start it out in an environment where its opponent is a three-year-old. As the computer gets better, we can put it in new environments with more and more advanced opponents to force it to learn new skills, in the same way the robot in the video became better at walking by crossing more and more difficult terrain.
 
@@ -87,7 +87,7 @@ Also, like in the video, we can put our chess computer in different environments
 
 Now let's watch some videos on RL.
 
-### Video 1: [Reinforcement Learning: Crash Course AI #9](https://youtu.be/nIgIv4IfJ6s?si=_ppJ4srBtfy04L7x) (12 min)
+### Video 2: [Reinforcement Learning: Crash Course AI #9](https://youtu.be/nIgIv4IfJ6s?si=_ppJ4srBtfy04L7x) (12 min)
 
 <iframe src="https://www.youtube-nocookie.com/embed/nIgIv4IfJ6s" title="Reinforcement Learning: Crash Course AI #9" loading="lazy" allowfullscreen></iframe>
 
@@ -97,7 +97,7 @@ Now let's watch some videos on RL.
 * How do the agent, action, and environment interact in reinforcement learning?
 * Give an example of two different policies in a reinforcement learning environment that’s NOT the cookie-jar example from the video (but you can use the chess game, the walking robot, or something you come up with yourself!).
 
-### Video 2: [Reinforcement Learning from scratch](https://www.youtube.com/watch?v=vXtfdGphr3c) (8 min)
+### Video 3: [Reinforcement Learning from scratch](https://www.youtube.com/watch?v=vXtfdGphr3c) (8 min)
 
 <iframe src="https://www.youtube-nocookie.com/embed/vXtfdGphr3c" title="Reinforcement Learning from scratch" loading="lazy" allowfullscreen></iframe>
 
@@ -115,5 +115,5 @@ The non-technical project for this unit will involve some writing! **Choose 3** 
 * Can you provide examples of experimental evidence linking reinforcement learning algorithms to observed synaptic changes in the brain?
 * How do human neural systems encode reward signals and how does this relate to the concept of rewards in reinforcement learning models?
 * What ethical considerations should be taken into account when developing interventions based on neuroscientific findings, and how can accountability be established for the potential impacts of such interventions?
-* Reflecting on you have learned from this unit, what is one thing you found to be most interesting?
+* Reflecting on what you have learned from this unit, what is one thing you found to be most interesting?
 * What is one concept from this unit that you would like to learn more about and why?
