@@ -101,9 +101,9 @@ These are exactly the questions that this course aims to answer. We’ll learn h
 #### Synthesis Questions
 
 * What are the limitations of early “if this, then that” logic?
-* Why do we need a teach-build cycle to get our machine to learn?
-* Why does this teach-build-teach-build cycle work? How do the "bots" get better over time?
-* Why is it so important for companies to use a good dataset to teach their bots?
+* Why do we need a cycle of guessing and correcting to get our machine to learn?
+* Why does this guess-and-correct cycle work? How does the computer get better over time?
+* Why is it so important for companies to use a good dataset to teach their models?
 
 #### Data Splitting: Train and Test Sets
 
