@@ -62,15 +62,37 @@ const stats = [
 				src={heroLarge}
 				formats={heroFormats}
 				alt=""
-				loading="eager"
-				fetchpriority="high"
+				sizes="(min-width: 70rem) 33rem, 50vw"
+				priority
 			/>
 		</div>
 		<div class="cell cell-wide">
-			<Picture src={heroWide} formats={heroFormats} alt="" loading="eager" />
+			<Picture
+				src={heroWide}
+				formats={heroFormats}
+				alt=""
+				sizes="(min-width: 70rem) 34rem, 50vw"
+				priority
+			/>
 		</div>
-		<div class="cell"><Picture src={heroSmallA} formats={heroFormats} alt="" /></div>
-		<div class="cell"><Picture src={heroSmallB} formats={heroFormats} alt="" /></div>
+		<div class="cell">
+			<Picture
+				src={heroSmallA}
+				formats={heroFormats}
+				alt=""
+				sizes="(min-width: 70rem) 17rem, 25vw"
+				priority
+			/>
+		</div>
+		<div class="cell">
+			<Picture
+				src={heroSmallB}
+				formats={heroFormats}
+				alt=""
+				sizes="(min-width: 70rem) 17rem, 25vw"
+				priority
+			/>
+		</div>
 	</div>
 
 	<p class="lede">

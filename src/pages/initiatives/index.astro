@@ -29,7 +29,7 @@ const showCourseHome = (id: string) => id === 'intro-course' && linksFor(links, 
 
 	<div class="grid">
 		{
-			initiatives.map((item) => (
+			initiatives.map((item, i) => (
 				<article class="card">
 					<a
 						href={learnMoreHref(item.data, item.id)}
@@ -41,6 +41,7 @@ const showCourseHome = (id: string) => id === 'intro-course' && linksFor(links, 
 							src={item.data.photo}
 							alt={item.data.name}
 							sizes="(max-width: 48rem) 100vw, 32rem"
+							priority={i === 0}
 						/>
 					</a>
 					<div class="body">
