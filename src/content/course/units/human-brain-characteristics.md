@@ -18,14 +18,14 @@ Complete the following lecture and synthesis questions.
 ### Synthesis Questions
 
 * Describe the false belief paradigm and what function it serves.
-* What part of the brain is/are specifically involved in thinking about others' thoughts? Where is it located? What are several close by modules and their functions?
+* What part of the brain is/are specifically involved in thinking about others' thoughts? Where is it located? What are several nearby modules and their functions?
 * Google the terms TMS, EEG, and DBS. What are several differences and similarities between these cognitive science methods?
 
 ## Task 2
 
-Depending on your level of comfort with languge modeling, take a look at the following resources below, and then watch the *Attention and Awareness* lecture. If you are familiar with Attention in Transformers, try comparing and contrasting to what the lecture says about the brain. If you are not familiar with Attention in Transformers, just learn what you can from the video purely from a neuroscience standpoint.
+Depending on your level of comfort with language modeling, take a look at the following resources below, and then watch the *Attention and Awareness* lecture. If you are familiar with Attention in Transformers, try comparing and contrasting to what the lecture says about the brain. If you are not familiar with Attention in Transformers, just learn what you can from the video purely from a neuroscience standpoint.
 
-If we have not completed the LM unit yet, Attention in ML may not be the most familiar. If you would like, here are some resources to prime your understanding:
+If you have not completed the LM unit yet, Attention in ML may not be the most familiar. If you would like, here are some resources to prime your understanding:
 
 Optional: A very comprehensive and visually helpful intuition for what the attention mechanism actually does: [Attention Mechanism In a Nutshell](https://www.youtube.com/watch?v=oMeIDqRguLY)
 
@@ -35,9 +35,9 @@ Optional: If you want to play with the math behind LLMs, this is pretty cool: [3
 
 <iframe src="https://www.youtube-nocookie.com/embed/eMlx5fFNoYc" title="3Blue1Brown: Attention in Transformers" loading="lazy" allowfullscreen></iframe>
 
-Optional: [Self Attention Colab Notebook](https://github.com/udlbook/udlbook/blob/main/Notebooks/Chap12/12_1_Self_Attention.ipynb)
+Optional: [Self Attention Colab Notebook](https://colab.research.google.com/github/udlbook/udlbook/blob/main/Notebooks/Chap12/12_1_Self_Attention.ipynb)
 
-For a deeper dive, feel free to take a look at the Language Modeling chapter of this document. Now we will dive into the capabilities of the brain and its own beautiful, endogenous attention mechanisms!
+For a deeper dive, feel free to take a look at the [Language Modeling](/intro-course/language-modeling) unit. Now we will dive into the capabilities of the brain and its own beautiful, endogenous attention mechanisms!
 
 [24. Attention and Awareness](https://www.youtube.com/watch?v=B4a0WdGp52g&list=PLUl4u3cNGP60IKRN_pFptIBxeiMc0MCJP&index=17)
 
@@ -45,9 +45,9 @@ For a deeper dive, feel free to take a look at the Language Modeling chapter of 
 
 ### Synthesis Questions
 
-* Describe the brain's ability to multitask? What are some scenarios where parallel processing is feasible and some where it is not?
+* Describe the brain's ability to multitask. What are some scenarios where parallel processing is feasible and some where it is not?
 * Describe covert and overt attention.
-* Describe "priming the visual cortex" why it might be useful.
+* Describe "priming the visual cortex" and why it might be useful.
 * "You have 10x as many connections going down from cortex, down to the LGN ([lateral geniculate nucleus](https://en.wikipedia.org/wiki/Lateral_geniculate_nucleus))… than going forward. One of the things you're doing is setting up selective filters so that only the stuff you want to process makes it to higher stages." Compare this fact to deep learning algorithms.
 * Describe the role of the Fronto-Parietal Attention Network
 * If familiar with Attention in ML: Research some machine learning attention mechanisms. Compare and contrast the mechanism and the capabilities of one with what you learned about our biological attention mechanism.
