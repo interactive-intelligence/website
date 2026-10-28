@@ -6,9 +6,9 @@ export const isExternal = (href: string) => /^https?:\/\//.test(href)
 export function websiteLabel(url: string): string {
 	try {
 		const host = new URL(url).hostname.replace(/^www\./, '')
-		if (host.includes('linkedin.com')) return 'Linkedin'
+		if (host.includes('linkedin.com')) return 'LinkedIn'
 		if (host.includes('instagram.com')) return 'Instagram'
-		if (host.includes('github.com')) return 'Github'
+		if (host.includes('github.com')) return 'GitHub'
 		if (host === 'twitter.com' || host === 'x.com') return 'Twitter'
 	} catch {}
 	return 'Website'

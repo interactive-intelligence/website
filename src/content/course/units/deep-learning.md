@@ -22,7 +22,7 @@ Hello and welcome to the _Deep Learning_ section of the i2 course! Like the mach
 
 Please ask questions as you work through this project. Be sure to discuss with others in your group if you have one! Share your answers as you like, the goal is to learn and we’re not holding grades over your head.
 
-In this project, you will be implementing a Deep Neural Network (DNN)! I would suggest to **read up on what [MNIST](https://wiki.pathmind.com/mnist) is** before starting since this is the data you will be working with.
+In this project, you will be implementing a Deep Neural Network (DNN)! I would suggest **reading up on what [MNIST](https://wiki.pathmind.com/mnist) is** before starting since this is the data you will be working with.
 
 **Colab Link:**
 [Deep Learning Colab Template](https://colab.research.google.com/github/interactive-intelligence/intro-neuro-ai-website/blob/main/notebooks/unit-03/mnist-dnn.ipynb) **(1 hr)**
@@ -51,7 +51,7 @@ First, let’s look at the structure of a neural network. You may have seen an i
 
 The **<mark>input layer</mark>** is where we feed in the information we want our network to process. We give it information in the form of a single column vector.
 
-The **<mark>output layer</mark>** gives us the probabilities corresponding with our inputs, with one node corresponding to each outcome. For example, suppose we want our neural network to identify pictures of dogs. First, we’d input a picture of a dog (more on how inputs work later!). Our output layer would have two nodes: one representing the probability that the image was a dog, and one representing the probability that it wasn’t. Note that the values in the output nodes always sum up to one! If our neural network was, say 90% sure that the inputted image had a dog, the “yes dog” output node would output 90%, and the “not dog” output node would output 10%.
+The **<mark>output layer</mark>** gives us the probabilities corresponding with our inputs, with one node corresponding to each outcome. For example, suppose we want our neural network to identify pictures of dogs. First, we’d input a picture of a dog (more on how inputs work later!). Our output layer would have two nodes: one representing the probability that the image was a dog, and one representing the probability that it wasn’t. Note that the values in the output nodes can be made to sum up to one, for example with a softmax! If our neural network was, say, 90% sure that the inputted image had a dog, the “yes dog” output node would output 90%, and the “not dog” output node would output 10%.
 
 Finally, the **<mark>hidden layer</mark>** is where all the processing happens. Going back to our dog example, this is where the computer figures out whether the picture has a dog or not. It does this by identifying common features between all pictures that have dogs and distinguishing features between all pictures that don’t.
 
@@ -59,7 +59,7 @@ This hidden layer gets developed using **training data**. This is input data tha
 
 This is where the learning happens. The computer uses the right answer to “learn” from its mistakes and adjust the weights and connections between the nodes. It does this via a process called **backpropagation**, which we’ll learn more about in the rest of the homework.
 
-This layer is called a hidden layer because often times, humans can’t understand the math involved in these computations. Remember, we aren’t telling the computer what makes a dog different from a non-dog: it makes these connections itself using math. These connections are so intricate that we humans can’t understand them, in the same way we can’t understand the fine details of how neurons transmit information in the human brain. Like the human brain, we can control the input state, or what information is provided, and we can give feedback on the output state, or what information is spit out.
+This layer is called a hidden layer because it’s neither the input nor the output: we never see its values directly. Oftentimes, humans can’t understand the math involved in these computations. Remember, we aren’t telling the computer what makes a dog different from a non-dog: it makes these connections itself using math. These connections are so intricate that we humans can’t understand them, in the same way we can’t understand the fine details of how neurons transmit information in the human brain. As with the human brain, we can control the input state, or what information is provided, and we can give feedback on the output state, or what information is spit out.
 
 Let’s look at an example. Imagine I want my computer to recognize handwritten numbers and convert them into text. How might we do that?
 
@@ -85,7 +85,7 @@ The first several are going to be pretty bad because the computer is still figur
 
 Once we’ve exhausted our training data, and the computer has made all its connections, we can test our network. In addition to training data, the dataset has 10,000 designated testing images. Like the training data, these are also labeled: the difference is that the network doesn’t learn from them. We just use them to verify the accuracy of our network.
 
-This was a good introduction. Now lets turn to some amazing videos on the topic of Neural Networks that will deepen your understanding. Watch the following videos and answer the associated questions.
+This was a good introduction. Now let’s turn to some amazing videos on the topic of Neural Networks that will deepen your understanding. Watch the following videos and answer the associated questions.
 
 ### Video 1: [But what is a neural network? | Chapter 1, Deep learning](https://www.youtube.com/watch?v=aircAruvnKk&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi) (20 min)
 
@@ -102,7 +102,7 @@ This was a good introduction. Now lets turn to some amazing videos on the topic 
 * A neural network **IS/IS NOT** just a very highly parameterized function (Choose one)
 * What is the purpose of the sigmoid function?
 
-### Video 2: [Gradient descent, how neural networks learn | Chapter 2, Deep learning](https://www.youtube.com/watch?v=IHZwWFHWa-w&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3piå) (20 min)
+### Video 2: [Gradient descent, how neural networks learn | Chapter 2, Deep learning](https://www.youtube.com/watch?v=IHZwWFHWa-w&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi) (20 min)
 
 <iframe src="https://www.youtube-nocookie.com/embed/IHZwWFHWa-w" title="Gradient descent, how neural networks learn | Chapter 2, Deep learning" loading="lazy" allowfullscreen></iframe>
 
@@ -135,5 +135,5 @@ The non-technical project for this unit will involve some writing! **Choose 3** 
 * How are ANNs inspired by the structure and function of neurons in the brain?
 * What are some common applications of neural networks in real-world scenarios? Feel free to do some research on these!
 * How do neural networks relate to the broader field of machine learning? What are their strengths and weaknesses compared to other algorithms?
-* Reflecting on you learning from this unit, what is one thing you found to be most interesting about DNNs?
+* Reflecting on your learning from this unit, what is one thing you found to be most interesting about DNNs?
 * What is one concept from this unit that you would like to learn more about and why?

@@ -21,7 +21,7 @@ Read the sections entitled “Feed forward control systems” and “The cerebel
 
 [Cerebellum – The University of Texas Medical School](https://nba.uth.tmc.edu/neuroscience/m/s3/chapter05.html)
 
-Then, watch the following brief videos, take notes if you’d like!
+Then, watch the following brief videos, and take notes if you’d like!
 
 [2-Minute Neuroscience: Cerebellum](https://www.youtube.com/watch?v=Fir-v6EoZNE)
 
@@ -35,7 +35,7 @@ Then, watch the following brief videos, take notes if you’d like!
 
 * Explain the difference between mossy fibers and climbing fibers and their respective functions.
 * Which cells or fibers may be responsible for sending error signals to the cerebellum?
-* What is the function of a Purkinje cell? To what do they output? What do they look like? Why might they look like this?
+* What is the function of a Purkinje cell? Where do they send their output? What do they look like? Why might they look like this?
 * What are the primary input sources of the cerebellum? Where do these signals originate?
 
 For more depth on these topics, here are some more fabulous resources.

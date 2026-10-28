@@ -1,17 +1,17 @@
 ---
 # Each link is shown as a card.
 links:
-  - title: Attendance Form
+  - title: Attendance form
     url: https://forms.gle/gJjUvdwkcRnyEpnx7
-  - title: Submission Form
+  - title: Submission form
     url: https://forms.gle/7dmc16LXvUKRJCLb8
-  - title: Extension Request Form
+  - title: Extension request form
     url: https://forms.gle/QPaYRwoa3qLzhb1d9
-  - title: Weekly Slides
+  - title: Weekly slides
     url: https://drive.google.com/drive/folders/1n522lVll5g4XIgMs2Y9eLwsNAnKFjLGj
-  - title: Lecture Recordings
+  - title: Lecture recordings
     url: https://www.youtube.com/playlist?list=PLEUv6R9Qm66k
-  - title: Lecture Verification Forms
+  - title: Lecture verification forms
     url: https://drive.google.com/drive/folders/1__mCzCYWws6k2-1A9xWBcPmtZuyexmoD
 ---
 

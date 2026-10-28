@@ -30,7 +30,7 @@ Welcome to the AI Ethics section of the i2 course! In this pivotal module, we'll
 
 * How have the core principles of AI ethics evolved over time?
 * In what ways does AI ethics differ from ethics in traditional technologies?
-* Why is ethics crucial in the realm of AI more than ever?
+* Why is ethics more crucial than ever in the realm of AI?
 * Relate a historical event or invention to the current ethical concerns in AI.
 * How can understanding the past inform our future ethical decisions in AI?
 
@@ -69,7 +69,7 @@ Welcome to the AI Ethics section of the i2 course! In this pivotal module, we'll
 ### Synthesis Questions
 
 * How do self-driving cars display the ethical challenges posed by AI?
-* Do you think an increase in self driving vehicles would be beneficial or not?
+* Do you think an increase in self-driving vehicles would be beneficial or not?
 * Relate the lessons from a real-world healthcare AI failure to broader AI ethics.
 * How can companies ensure they're ethically responsible while innovating?
 * Do the pros outweigh the cons when it comes to autonomous robots in healthcare?

@@ -22,7 +22,7 @@ Hello and welcome to the _Computer Vision_ section of the i2 course! Here we wil
 
 Please ask questions as you work through this project. Be sure to discuss with others in your group if you have one! Share your answers as you like, the goal is to learn and we’re not holding grades over your head.
 
-In this project, you will be implementing a Convolutional Neural Network (CNN)! I would suggest to **read up on what [CIFAR-10](https://en.wikipedia.org/wiki/CIFAR-10) is.** before starting since this is the data you will be working with.
+In this project, you will be implementing a Convolutional Neural Network (CNN)! I would suggest **reading up on what [CIFAR-10](https://en.wikipedia.org/wiki/CIFAR-10) is** before starting since this is the data you will be working with.
 
 **Colab Link:** [Computer Vision Colab Notebook](https://colab.research.google.com/github/interactive-intelligence/intro-neuro-ai-website/blob/main/notebooks/unit-04/conv-net.ipynb) **(1 hr)**
 
@@ -30,7 +30,7 @@ When you are finished with your code, independently verify that it works and hav
 
 Remember that this is all for your learning, so do your best and don’t stress!
 
-Congratulations! You now understand the basics of Convolutional Neural networks!
+Congratulations! You now understand the basics of Convolutional Neural Networks!
 
 ---
 
@@ -40,9 +40,9 @@ Congratulations! You now understand the basics of Convolutional Neural networks!
 
 *Read the article below, and answer any synthesis questions placed along the way.*
 
-In the deep learning unit, we talked about how deep neural networks work on a very general level. Today, we’re going to talk about a new type of neural network, called a Convolutional Neural Network (CNN). These are neural networks that are specifically designed to process images. While neural networks resemble the way the human brain works, CNNs resemble the way the human vision system works. Often, a CNN is a subsection of a larger neural network: it’s like a group of layers that exists to process images really efficiently.
+In the deep learning unit, we talked about how deep neural networks work on a very general level. Today, we’re going to talk about a new type of neural network, called a Convolutional Neural Network (CNN). These are neural networks that are specifically designed to process images. While neural networks resemble the way the human brain works, CNNs resemble the way the human visual system works. Often, a CNN is a subsection of a larger neural network: it’s like a group of layers that exists to process images really efficiently.
 
-Let’s think back to our discussion of neural networks in unit 2. Recall that we used the MNIST dataset, which contains images of handwritten numbers (here’s a picture to remind you, with [credit](https://etzold.medium.com/mnist-dataset-of-handwritten-digits-f8cf28edafe)):
+Let’s think back to our discussion of neural networks in Unit 3. Recall that we used the MNIST dataset, which contains images of handwritten numbers (here’s a picture to remind you, with [credit](https://etzold.medium.com/mnist-dataset-of-handwritten-digits-f8cf28edafe)):
 
 ![Labeled images from the MNIST database](./images/deep-learning/labeled_mnist.webp)
 
@@ -62,19 +62,19 @@ Also, the patterns associated with a given number are not exactly the same every
 
 ![Various numbers in the MNIST dataset](./images/computer-vision/various_numbers.png)
 
-CNNs account for both of these things, reducing the number of input nodes and allowing for variations in the pixels when identifying features in an image.
+CNNs account for both of these things, reducing the number of connections and weights and allowing for variations in the pixels when identifying features in an image.
 
 Now we’re going to get into how CNNs actually work, using a very simple image of a handwritten number.
 
-Take a look at the image below, which shows the number 8. We’ve assigned a numerical value to each pixel, like was discussed in Unit 2.
+Take a look at the image below, which shows the number 8. We’ve assigned a numerical value to each pixel, like was discussed in Unit 3.
 
 ![Sample image showing the number 8, with pixels labeled and numbered](./images/computer-vision/cnn_sample_8.png)
 
 The first thing a CNN does is use filters to identify the locations of features in the image. In our example, the most important feature of an 8 is an ellipse, because an 8 is made of two ellipses stacked on top of each other. So let’s use a filter to identify any ellipses in the image. At first, our filter just contains random numbers—but through backpropagation, it starts to resemble the shape of the feature we’re looking for (an ellipse). Below is an example of what the correct filter would look like.
 
-![Sample filter for above image](./images/computer-vision/cnn_filter.png)
+![A 3 by 3 filter with 1s around the edge and a 0 in the center, forming a ring that matches the ellipse feature](./images/computer-vision/cnn_filter.png)
 
-Next, we put the filter over the image and compute the **dot product** of the filter and the portion of the image that it overlaps. This involves multiplying the value in the filter by the value of the pixel underneath, and adding up all the products.
+Next, we put the filter over the image and compute the **dot product** of the filter and the portion of the image that it overlaps. This involves multiplying each value in the filter by the value of the pixel underneath it, and adding up all the products.
 
 Take a look at the example below. Notice that the feature in the filter (the ellipse) doesn’t perfectly match up with the pixels underneath it, so our dot product ends up being 4.
 
@@ -92,9 +92,9 @@ Remember, we said that when the filter perfectly matched the pixels underneath (
 
 The entire process we just did, of converting an image into a feature map, is called a **convolution**.
 
-The image we’re using, again, is really simple: it only has one distinguishing feature, which is its ellipses. If our image has multiple features (e.g. multiple lines, angles, edges, curves, etc.), we would use a different feature map for each one, and do convolutions for each feature all at the same time!
+The image we’re using, again, is really simple: it only has one distinguishing feature, which is its ellipses. If our image has multiple features (e.g. multiple lines, angles, edges, curves, etc.), we would use a different filter for each one, each producing its own feature map, and do convolutions for each feature all at the same time!
 
-Next, we’re going to simplify this information a little bit using a strategy called **pooling**. Pooling means to reduce our feature map into an even smaller matrix that contains the most important information from each “region” of the image. Our image is a little too simple to pool any further, but below is an example of how that would work ([credit](https://paperswithcode.com/method/max-pooling)). Here, the entire top left corner is simplified to just the largest value, and so on for the other regions. This gives us a simplified understanding of the feature map overall.
+Next, we’re going to simplify this information a little bit using a strategy called **pooling**. Pooling means to reduce our feature map into an even smaller matrix that contains the most important information from each “region” of the image. Our image is a little too simple to pool any further, but below is an example of how that would work ([credit](https://web.archive.org/web/20250711094017/https://paperswithcode.com/method/max-pooling)). Here, the entire top left corner is simplified to just the largest value, and so on for the other regions. This gives us a simplified understanding of the feature map overall.
 
 The example below uses “max pooling,” which means it takes the largest value from each region to represent the region as a whole. There are other types of pooling as well, such as “average pooling,” which takes the average of the region to represent the overall region.
 
@@ -104,9 +104,9 @@ We repeat the convolution-pooling cycle until our feature map (or maps, if we ha
 
 ![Example of fully connected layer](./images/computer-vision/fully_connected.png)
 
-This was a lot of information, so please reach out to someone if you’re having trouble with these concepts! Now lets watch the following videos and answer the associated questions.
+This was a lot of information, so please reach out to someone if you’re having trouble with these concepts! Now let’s watch the following videos and answer the associated questions.
 
-### Video 1: [How Convolutional Neural Networks work](https://youtu.be/FmpDIaiMIeA?t=840) (12 min)
+### Video 1: [How Convolutional Neural Networks work](https://youtu.be/FmpDIaiMIeA?t=834) (12 min)
 
 **Note:** Watch from 13:54 onward to answer the questions below. Before that is mainly review from this article (but you may find it useful to skim through, as it covers helpful math concepts!).
 
@@ -131,7 +131,7 @@ This was a lot of information, so please reach out to someone if you’re having
 * What are some examples of what you can do to images if you convolve them with special matrices?
 * How does Gaussian blur "work"?
 * What is the name for the actual operation that occurs when the smaller grid is overlaid on the larger one?
-    * When each element of the corresponding pixels are multiplied then summed.
+    * When the corresponding elements are multiplied, then summed.
 * Give an example of a 3x3 matrix that would not do anything to the image it convolves over. Why does it not impact the image?
     * This is also known as the "do-nothing" matrix
 
@@ -144,6 +144,6 @@ The non-technical project for this unit will involve some writing! **Choose 3** 
 * How are CNNs inspired by the human visual system?
 * What are some similarities and differences between CNNs and the human visual system?
 * How is the pooling layer in CNNs related to the brain's visual processing?
-* What ways does the convolutional layer in CNNs resemble the receptive field in the visual system?
-* Reflecting on you have learned from this unit, what is one thing you found to be most interesting?
+* In what ways does the convolutional layer in CNNs resemble the receptive field in the visual system?
+* Reflecting on what you have learned from this unit, what is one thing you found to be most interesting?
 * What is one concept from this unit that you would like to learn more about and why?

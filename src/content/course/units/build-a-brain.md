@@ -3,7 +3,7 @@ title: Build a Brain
 description: How brains develop and connect, then design your own.
 ---
 
-It would be negligent not to begin by acknowledging the inadequacy of this chapter. The connectivity and wiring of the brain as well as the genetics and epigenetics that comprise it are far from fully understood, and these resources are merely scratching the surface of a profound ocean of literature and undiscovered territory of building the systems of a mind. Nonetheless, we begin with a lecture investigating the genetic and learned nature of human behaviors.
+It would be negligent not to begin by acknowledging the inadequacy of this chapter. The connectivity and wiring of the brain as well as the genetics and epigenetics that shape it are far from fully understood, and these resources are merely scratching the surface of a profound ocean of literature and undiscovered territory of building the systems of a mind. Nonetheless, we begin with a lecture investigating the genetic and learned nature of human behaviors.
 
 ---
 
@@ -26,7 +26,7 @@ Next, briefly skim the questions below then indulge in this scintillating lectur
 
 Start watching at 8:40, [21. Brain Networks](https://www.youtube.com/watch?v=SchmVoc5NzY&list=PLUl4u3cNGP60IKRN_pFptIBxeiMc0MCJP&index=16)
 
-For your reference, a voxel is a 3D pixel. Think of it as a minecraft block of the brain. Also a term used in computer graphics.
+For your reference, a voxel is a 3D pixel. Think of it as a Minecraft block of the brain. The term is also used in computer graphics.
 
 ### Synthesis Questions
 
@@ -49,11 +49,11 @@ For your reference, a voxel is a 3D pixel. Think of it as a minecraft block of t
 I would recommend taking a look at [Overleaf](https://www.overleaf.com/project) to edit/compile $\LaTeX$ code. Simply copy the code in the template into a blank
 Overleaf project and type your answers into the `TODO` areas. Be sure to hit the "Recompile" button to see your work.
 
-**GH Link:** [Unit 11 Template](https://github.com/interactive-intelligence/intro-neuro-ai-website/blob/main/notebooks/unit-11/build_a_brain.tex) **(40 min)**
+**GH Link:** [Build a Brain Template](https://github.com/interactive-intelligence/intro-neuro-ai-website/blob/main/notebooks/unit-11/build_a_brain.tex) **(40 min)**
 
 The questions in the template are also written below:
 
-Ohhh this one’s good. I’m tapping my fingers together like Dr. Evil.
+Ohhh this one’s good. I’m tapping my fingers together like Mr. Burns.
 
 You are designing an egg. It will become a lifeform on a new planet. The planet is almost completely covered in water. Small islands made from underwater volcanoes dot the surface. The gravity is stronger on this planet and the biodiversity is lower than on Earth. There is less direct sunlight and fewer living organisms in general.
 

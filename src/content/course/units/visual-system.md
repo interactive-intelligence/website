@@ -20,7 +20,7 @@ First, some vocab.
 
 > **Ventral:** Underside or underbelly of something
 
-> **Receptive Field:** An input that produces the biggest response in some area or neuron is said to be its receptive field
+> **Receptive Field:** The region of the visual field where a stimulus changes a neuron's firing.
 
 Watch the following videos and answer the questions! You know the drill. The first one will teach us about the physiology of processing light, the complex first layer of our own biological neural network.
 
@@ -32,7 +32,7 @@ Watch the following videos and answer the questions! You know the drill. The fir
 
 * Where in the brain do signals from the retina go before reaching the visual cortex?
 * What are some differences between rods and cones?
-* Describe the phenomena of retinal neurons that "get tired". Do you think there are analogous processes in deep learning or convolutional neural networks?
+* Describe the phenomenon of retinal neurons that "get tired". Do you think there are analogous processes in deep learning or convolutional neural networks?
 
 The next video will describe the path of information flow through the visual cortex and some core properties of the structure of this process.
 
@@ -46,7 +46,7 @@ The next video will describe the path of information flow through the visual cor
 * What is V1 in the visual cortex? What are those cells most sensitive to?
 * What is the fovea best at detecting?
 * Describe the retinotopic nature of the visual cortex (7:58) in your own words. Hypothesize whether convolutional neural networks might be organized as "retinotopic".
-* Describe cortical magnification and the causes of the trade-off between acuity and sensitivity. What are several reasons we can't see details from extremely far away, as for example, hawks can?
+* Describe cortical magnification and the causes of the trade-off between acuity and sensitivity. What are several reasons we can't see details from extremely far away, as hawks can, for example?
 * Brains are constrained by space, which as we have seen with vision, drives trade-offs in our processing. Do neural networks have analogous constraints? What are the effects of this?
 
 This final video gives a swift overview of many functional modules of visual processing. This is a great time to start thinking about how all this vision processing compares to our methods of processing information with neural networks!
@@ -68,7 +68,7 @@ This last video is optional but it’s highly recommended that you watch it. Thi
 
 <iframe src="https://www.youtube-nocookie.com/embed/MgMNUne9j9c" title="Visual Processing and the Visual Cortex" loading="lazy" allowfullscreen></iframe>
 
-Here’s some questions to think about as you watch the video:
+Here are some questions to think about as you watch the video:
 
 * What direction does light go versus information in the retina?
 * What cells are in the retina?
@@ -80,7 +80,7 @@ Here’s some questions to think about as you watch the video:
 
 *Complete the following writing activity.*
 
-Imagine you got a little too into neural networks and decided to replace your eyes with convolutional neural networks. You may use any sensors, hardware, brain computer interfaces, fungi, wires, Von Neumann computing, neuromorphic computing, or robots that you like (that seem vaguely feasible). How would you replace the algorithms run by the visual cortex with algorithms like those of convolution neural networks? Be creative and let your imagination run free!
+Imagine you got a little too into neural networks and decided to replace your eyes with convolutional neural networks. You may use any sensors, hardware, brain-computer interfaces, fungi, wires, Von Neumann computing, neuromorphic computing, or robots that you like (that seem vaguely feasible). How would you replace the algorithms run by the visual cortex with algorithms like those of convolutional neural networks? Be creative and let your imagination run free!
 
 Draw your system in detail and write a short paragraph on the following:
 

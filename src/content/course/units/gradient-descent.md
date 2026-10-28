@@ -21,13 +21,13 @@ Additionally, please implement the ReLU nonlinearity for the Value class.
 
 * (Note: if you're having a hard time with this, take a look at [micrograd's `engine.py`](https://github.com/karpathy/micrograd/blob/master/micrograd/engine.py).)
 
-Implement and train a small neural network using micrograd. The training, validation, and test data will be included in the starter code. - Try to find the best network you can!
+Implement and train a small neural network using micrograd. The training, validation, and test data will be included in the starter code. Try to find the best network you can!
 
-You might want to change the learning rate, size of the network, or Note your training, validation, and test loss for your best network.
+You might want to change the learning rate, size of the network, or number of training steps. Note your training, validation, and test loss for your best network.
 
 ### Synthesis Questions
 
-* In what direction do gradients flow (with regards to loss)?
+* In what direction do gradients flow (with regard to loss)?
 * How do gradients flow through addition? How do they flow through the ReLU function?
 * What was your best loss for the test dataset?
 * Was there something that stood out to you? Something that confused you?

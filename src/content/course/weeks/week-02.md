@@ -18,7 +18,7 @@ Welcome to a beginner's introduction to neuroscience! We will
 ### Assignment
 
 - Complete Unit 2 (synthesis questions included)
-- Basic Neuroanatomy Project (LaTeX template in github)
+- Basic Neuroanatomy Project (LaTeX template in GitHub)
 
 ### Summary Questions
 

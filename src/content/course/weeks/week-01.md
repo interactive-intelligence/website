@@ -8,7 +8,7 @@ title: Introduction to Machine Learning
 An introduction to the foundation of modern AI!
 
 - Introduction to Machine Learning (ML)
-- Math behind Linear Regression, SVM, PCA
+- Math behind Linear Regression, PCA
 - Basic Unsupervised Clustering
 
 ### Resources

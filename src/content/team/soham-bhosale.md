@@ -3,7 +3,7 @@ name: Soham Bhosale
 role: Officer
 active: true
 image: ./photos/soham_bhosale.jpg
-email: sohamsbhosale@gmail.com
+email: sohamb5@uw.edu
 tags: ["Research"]
 ---
 

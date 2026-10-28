@@ -12,6 +12,6 @@ What's new:
 
 - **Initiatives** each have their own page with current details and related updates.
 - **Schedule** shows which initiatives run each quarter, plus upcoming talks and the shared calendar.
-- **Announcements** like this one are posted here first.
+- **Announcements** like this one are posted here and on Discord.
 
 The site is built with [Astro](https://astro.build). If you spot a mistake, open an issue or pull request on [GitHub](https://github.com/interactive-intelligence/website).

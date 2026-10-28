@@ -14,3 +14,12 @@ We will
 ### Resources
 
 - [Unit 5: Visual System](/intro-course/visual-system)
+
+### Assignment
+
+- Complete Unit 5 (synthesis questions included)
+- Writing Activity (in the unit)
+
+### Summary Questions
+
+- Synthesis questions in the unit

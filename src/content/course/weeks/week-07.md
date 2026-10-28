@@ -13,6 +13,7 @@ title: AI Ethics
 
 ### Assignment
 
+- Complete Unit 7 (synthesis questions included)
 - Create a slideshow, details in the unit
 
 ### Summary Questions
