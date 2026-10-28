@@ -44,8 +44,12 @@ import numpy as np
 w = np.linalg.solve(X.T @ X, X.T @ y)
 ```
 
+<!-- Start each diagram with an `accTitle` (a short name) and an `accDescr` (what it shows, in words) so screen readers can read it. -->
+
 ```mermaid
 flowchart LR
+    accTitle: Machine learning pipeline
+    accDescr: Data goes into a model, which outputs a prediction.
     A[Data] --> B[Model] --> C[Prediction]
 ```
 

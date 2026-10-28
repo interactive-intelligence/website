@@ -35,7 +35,7 @@ const initiativeHref = (data: { external_url?: string }, id: string) =>
 	data.external_url ?? `/initiatives/${id}`
 ---
 
-<nav>
+<nav aria-label="Main">
 	<a href="/" class="logo" aria-label="Home">
 		<Fragment set:html={logoRaw} />
 	</a>

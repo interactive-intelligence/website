@@ -190,8 +190,7 @@ h4 {
 	transition: opacity var(--duration-fast) var(--ease);
 }
 
-:is(h1, h2, h3, h4):hover > .heading-anchor,
-.heading-anchor:focus-visible {
+:is(h1, h2, h3, h4):hover > .heading-anchor {
 	opacity: 1;
 }
 

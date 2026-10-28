@@ -182,6 +182,8 @@ features and break them up into small logical decisions. You might end up with a
 
 ```mermaid
 flowchart TD
+    accTitle: Decision tree for classifying an animal
+    accDescr: First ask whether it is a mammal. If it is, ask whether it has fur: yes means dog, no means dolphin. If it is not a mammal, ask whether it has feathers: yes means bird. Otherwise ask whether it lives in water: yes means fish, no means reptile.
     A[Is it a Mammal?]
     A -->|Yes| D[Has Fur?]
     A -->|No| E[Has Feathers?]

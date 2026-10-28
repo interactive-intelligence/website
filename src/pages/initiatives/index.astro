@@ -31,7 +31,12 @@ const showCourseHome = (id: string) => id === 'intro-course' && linksFor(links, 
 		{
 			initiatives.map((item, i) => (
 				<article class="card">
-					<a href={learnMoreHref(item.data, item.id)} class="photo">
+					<a
+						href={learnMoreHref(item.data, item.id)}
+						class="photo"
+						tabindex="-1"
+						aria-hidden="true"
+					>
 						<Image
 							src={item.data.photo}
 							alt={item.data.name}
@@ -43,7 +48,11 @@ const showCourseHome = (id: string) => id === 'intro-course' && linksFor(links, 
 						<h2>{item.data.name}</h2>
 						<p>{item.data.long_description}</p>
 						<div class="actions">
-							<LinkButton href={learnMoreHref(item.data, item.id)} variant="accent">
+							<LinkButton
+								href={learnMoreHref(item.data, item.id)}
+								variant="accent"
+								aria-label={`Learn more about ${item.data.name}`}
+							>
 								Learn More
 							</LinkButton>
 							{linksFor(links, item.id).map((link) => (

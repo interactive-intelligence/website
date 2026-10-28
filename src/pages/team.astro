@@ -57,6 +57,7 @@ const activeWithBody = await Promise.all(
 	</header>
 
 	<section class="active">
+		<h2 class="sr-only">Officers and advisors</h2>
 		<div class="grid">
 			{
 				activeWithBody.map(({ data, Content }) => (
@@ -80,7 +81,7 @@ const activeWithBody = await Promise.all(
 			<section class="alumni">
 				<h2 id="alumni">
 					Alumni
-					<a class="heading-anchor" href="#alumni" aria-label="Link to section">
+					<a class="heading-anchor" href="#alumni" aria-hidden="true" tabindex="-1">
 						#
 					</a>
 				</h2>
@@ -91,7 +92,7 @@ const activeWithBody = await Promise.all(
 								<div class="alum-photo">
 									<Image
 										src={data.image}
-										alt={data.name}
+										alt=""
 										sizes="(max-width: 40rem) 25vw, 12rem"
 										loading="lazy"
 									/>
