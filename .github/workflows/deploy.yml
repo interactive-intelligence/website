@@ -22,6 +22,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.compare.outputs.changed }}
+      hash: ${{ steps.compare.outputs.hash }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -39,12 +42,32 @@ jobs:
           key: astro-assets-${{ github.run_id }}
           restore-keys: astro-assets-
       - run: npm run build
-      - uses: actions/upload-pages-artifact@v5
+      # Every deploy resets the dates GitHub Pages sends with each file, so browsers download
+      # all of it again. Daily runs skip the deploy when the site is the same as what's live,
+      # by comparing a hash of dist with the one saved after the last deploy.
+      - uses: actions/cache/restore@v5
+        with:
+          path: .last-deploy
+          key: last-deploy-${{ github.run_id }}
+          restore-keys: last-deploy-
+      - id: compare
+        run: |
+          hash=$(find dist -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum | cut -d' ' -f1)
+          echo "hash=$hash" >> "$GITHUB_OUTPUT"
+          if [ "$GITHUB_EVENT_NAME" = schedule ] && [ "$(cat .last-deploy 2>/dev/null)" = "$hash" ]; then
+            echo "Unchanged since the last deploy."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.compare.outputs.changed == 'true'
+        uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
   deploy:
     needs: build
+    if: needs.build.outputs.changed == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -52,3 +75,8 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v5
+      - run: echo "${{ needs.build.outputs.hash }}" > .last-deploy
+      - uses: actions/cache/save@v5
+        with:
+          path: .last-deploy
+          key: last-deploy-${{ github.run_id }}

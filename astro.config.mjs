@@ -9,11 +9,22 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
 // `$...$` is math only in course content. Everywhere else the original text goes back,
-// so "$5 to $10" in an announcement stays a price.
+// so "$5 to $10" in an announcement stays a price. Course pages with math get `math: true`
+// in their remark frontmatter, so only they load KaTeX's stylesheet (see CourseLayout.astro).
 /** @type {import('@astrojs/markdown-remark').RemarkPlugin} */
 function remarkMathOnlyInCourse() {
+	/** @param {import('mdast').Nodes} node @returns {boolean} */
+	const hasMath = (node) =>
+		node.type === 'math' ||
+		node.type === 'inlineMath' ||
+		('children' in node && node.children.some(hasMath));
+
 	return (tree, file) => {
-		if (file.path?.includes('/src/content/course/')) return;
+		if (file.path?.includes('/src/content/course/')) {
+			const frontmatter = file.data.astro?.frontmatter;
+			if (frontmatter && hasMath(tree)) frontmatter.math = true;
+			return;
+		}
 		/** @param {import('mdast').Parent} node */
 		const restore = (node) =>
 			node.children.forEach((child, i) => {
@@ -72,6 +83,14 @@ function rehypeSynthesisBoxes() {
 export default defineConfig({
 	site: 'https://uw-i2.org',
 	integrations: [icon(), sitemap({ filter: (page) => !page.includes('/qr-codes') })],
+	// Fetch a page when its link is hovered or tapped, so moving around the site feels instant.
+	prefetch: { prefetchAll: true },
+	build: {
+		// GitHub Pages only lets browsers cache files for 10 minutes, so a separate stylesheet costs
+		// returning visitors a round trip before the page can draw. The site's CSS is small enough
+		// to put in each page instead.
+		inlineStylesheets: 'always',
+	},
 	fonts: [
 		{
 			provider: fontProviders.local(),
