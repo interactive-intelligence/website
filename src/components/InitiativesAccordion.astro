@@ -40,7 +40,11 @@ const showCourseHome = (id: string) => id === 'intro-course' && linksFor(links, 
 					<div class="body">
 						<p>{item.data.short_description}</p>
 						<div class="actions">
-							<LinkButton href={learnMoreHref(item)} variant="accent">
+							<LinkButton
+								href={learnMoreHref(item)}
+								variant="accent"
+								aria-label={`Learn more about ${item.data.name}`}
+							>
 								Learn More
 							</LinkButton>
 							{linksFor(links, item.id).map((link) => (
