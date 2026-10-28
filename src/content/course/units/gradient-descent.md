@@ -15,11 +15,11 @@ Watch the following video and implement _micrograd_ as specified:
 
 <iframe src="https://www.youtube-nocookie.com/embed/VMj-3S1tku0" title="The spelled-out intro to neural networks and backpropagation: building micrograd" loading="lazy" allowfullscreen></iframe>
 
-The templates we made for you can be found [here](https://colab.research.google.com/github/interactive-intelligence/intro-neuro-ai-website/blob/main/notebooks/unit-A/starter_micrograd.ipynb).
+The templates we made for you are in the [micrograd starter notebook](https://colab.research.google.com/github/interactive-intelligence/intro-neuro-ai-website/blob/main/notebooks/unit-A/starter_micrograd.ipynb).
 
 Additionally, please implement the ReLU nonlinearity for the Value class.
 
-* (Note: if you're having a hard time with this, take a look at [this](https://github.com/karpathy/micrograd/blob/master/micrograd/engine.py) code.)
+* (Note: if you're having a hard time with this, take a look at [micrograd's `engine.py`](https://github.com/karpathy/micrograd/blob/master/micrograd/engine.py).)
 
 Implement and train a small neural network using micrograd. The training, validation, and test data will be included in the starter code. - Try to find the best network you can!
 
