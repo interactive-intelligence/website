@@ -5,7 +5,6 @@ title: Language Modeling
 
 ### Purpose
 
-- Learn about word embeddings
 - Learn about Recurrent Neural Networks
 - Learn about Transformers
 - Learn about fine-tuning foundation models like GPT
@@ -18,8 +17,8 @@ title: Language Modeling
 ### Assignment
 
 - Complete Unit 8 (synthesis questions included)
-- HuggingFace Project Part 1 (in the unit)
-- HuggingFace Project Part 2 (in the unit)
+- Hugging Face Project Part 1 (in the unit)
+- Hugging Face Project Part 2 (in the unit)
 
 ### Summary Questions
 
