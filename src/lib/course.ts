@@ -1,3 +1,4 @@
+import type { MarkdownHeading } from 'astro'
 import type { CollectionEntry } from 'astro:content'
 import { getPublished } from './content'
 
@@ -5,6 +6,13 @@ import { getPublished } from './content'
 export const courseHref = '/intro-course'
 
 export type Unit = CollectionEntry<'courseUnits'>
+
+// A Markdown page's `##` sections, for the course rail. Heading text ends with the "#" of
+// its anchor link, so that comes off.
+export const sectionsOf = (headings: MarkdownHeading[]) =>
+	headings
+		.filter((h) => h.depth === 2)
+		.map((h) => ({ slug: h.slug, text: h.text.replace(/#$/, '').trim() }))
 
 // Core units in teaching order, then optional units alphabetically.
 export async function getUnits() {

@@ -1,6 +1,7 @@
 ---
 import { getEntry, render } from 'astro:content'
 import CourseLayout from '../../layouts/CourseLayout.astro'
+import { sectionsOf } from '../../lib/course'
 
 const graduates = await getEntry('coursePages', 'graduates')
 if (!graduates) {
@@ -8,15 +9,12 @@ if (!graduates) {
 }
 
 const { Content, headings } = await render(graduates)
-const sections = headings
-	.filter((h) => h.depth === 2)
-	.map((h) => ({ slug: h.slug, text: h.text.replace(/#$/, '').trim() }))
 ---
 
 <CourseLayout
 	title="Graduates"
 	description="Students who have completed i2's Intro Course, by quarter."
-	headings={sections}
+	headings={sectionsOf(headings)}
 >
 	<div class="prose graduates">
 		<Content />
