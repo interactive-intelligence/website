@@ -83,6 +83,14 @@ function rehypeSynthesisBoxes() {
 export default defineConfig({
 	site: 'https://uw-i2.org',
 	integrations: [icon(), sitemap({ filter: (page) => !page.includes('/qr-codes') })],
+	// Fetch a page when its link is hovered or tapped, so moving around the site feels instant.
+	prefetch: { prefetchAll: true },
+	build: {
+		// GitHub Pages only lets browsers cache files for 10 minutes, so a separate stylesheet costs
+		// returning visitors a round trip before the page can draw. The site's CSS is small enough
+		// to put in each page instead.
+		inlineStylesheets: 'always',
+	},
 	fonts: [
 		{
 			provider: fontProviders.local(),
@@ -92,8 +100,6 @@ export default defineConfig({
 			display: 'swap',
 			options: {
 				variants: [
-					{ src: ['./src/assets/fonts/OpenSauceSans-Light.woff2'], weight: 300, style: 'normal' },
-					{ src: ['./src/assets/fonts/OpenSauceSans-LightItalic.woff2'], weight: 300, style: 'italic' },
 					{ src: ['./src/assets/fonts/OpenSauceSans-Regular.woff2'], weight: 400, style: 'normal' },
 					{ src: ['./src/assets/fonts/OpenSauceSans-Italic.woff2'], weight: 400, style: 'italic' },
 					{ src: ['./src/assets/fonts/OpenSauceSans-Medium.woff2'], weight: 500, style: 'normal' },
@@ -102,8 +108,6 @@ export default defineConfig({
 					{ src: ['./src/assets/fonts/OpenSauceSans-SemiBoldItalic.woff2'], weight: 600, style: 'italic' },
 					{ src: ['./src/assets/fonts/OpenSauceSans-Bold.woff2'], weight: 700, style: 'normal' },
 					{ src: ['./src/assets/fonts/OpenSauceSans-BoldItalic.woff2'], weight: 700, style: 'italic' },
-					{ src: ['./src/assets/fonts/OpenSauceSans-ExtraBold.woff2'], weight: 800, style: 'normal' },
-					{ src: ['./src/assets/fonts/OpenSauceSans-ExtraBoldItalic.woff2'], weight: 800, style: 'italic' },
 				],
 			},
 		},
