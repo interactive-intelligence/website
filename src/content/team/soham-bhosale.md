@@ -1,7 +1,7 @@
 ---
 name: Soham Bhosale
-role: Officer
-active: true
+role: Alumni
+active: false
 image: ./photos/soham_bhosale.jpg
 email: sohamb5@uw.edu
 tags: ["Research"]

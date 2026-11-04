@@ -4,7 +4,7 @@ role: Officer
 active: true
 image: ./photos/heather_p.png
 email: hwpark22@uw.edu
-tags: ["Curriculum"]
+tags: ["Neuroscience"]
 ---
 
 Hi I'm Heather majoring in Psychology! I am interested in how human behavior and biopsych can be applicable in machine learning and AI! I know I'm not in the very traditional way of exploring AI systems, but I enjoy new things all the time.
