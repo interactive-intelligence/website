@@ -8,4 +8,4 @@ website: https://refact0r.dev
 tags: ["Technical"]
 ---
 
-Hi, I'm Yifan, a 1st year majoring in CS. I joined i2 to sharpen my AI/ML skills and to learn more about neuroscience. Outside of those topics, I'm also passionate about design and UX. I built this website! In my free time, I like bouldering and biking around Seattle.
+Hi, I'm Yifan, a 2nd year majoring in CS. I joined i2 to sharpen my AI/ML skills and to learn more about neuroscience. Outside of those topics, I'm also passionate about design and UX. I built this website! In my free time, I like bouldering and biking around Seattle.

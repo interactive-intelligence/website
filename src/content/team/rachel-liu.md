@@ -7,4 +7,4 @@ email: rlliu@uw.edu
 tags: ["Administrative"]
 ---
 
-Hello, I'm Rachel! I'm a second-year computer science major, and I joined i2 to learn more about the intersections between CS and neuroscience. In my free time I like to watch movies, type, and create art.
+Hello, I'm Rachel! I'm a third-year computer science major, and I joined i2 to learn more about the intersections between CS and neuroscience. In my free time I like to watch movies, type, and create art.

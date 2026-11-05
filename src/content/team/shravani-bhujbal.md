@@ -1,7 +1,7 @@
 ---
 name: Shravani Bhujbal
-role: Officer
-active: true
+role: Alumni
+active: false
 image: ./photos/shravani_bhujbal.png
 email: sbhujb21@uw.edu
 tags: ["Research"]

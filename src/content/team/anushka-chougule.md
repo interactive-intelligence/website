@@ -1,7 +1,7 @@
 ---
 name: Anushka Chougule
-role: Officer
-active: true
+role: Alumni
+active: false
 image: ./photos/anushka_c.png
 email: anuchoug@uw.edu
 tags: ["Curriculum"]

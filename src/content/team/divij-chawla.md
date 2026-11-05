@@ -1,7 +1,7 @@
 ---
 name: Divij Chawla
-role: Officer
-active: true
+role: Alumni
+active: false
 image: ./photos/divij_c.png
 email: dc245@uw.edu
 tags: ["Curriculum"]

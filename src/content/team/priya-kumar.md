@@ -1,7 +1,7 @@
 ---
 name: Priya Kumar
-role: Officer
-active: true
+role: Alumni
+active: false
 image: ./photos/priya_k.png
 email: pkumar7@uw.edu
 tags: ["Social Media"]
